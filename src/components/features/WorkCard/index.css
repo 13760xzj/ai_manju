@@ -1,0 +1,85 @@
+.work-card {
+  background-color: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.work-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.work-card.list-item {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 16px;
+}
+
+.work-cover {
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: linear-gradient(135deg, #f0f4ff 0%, #e6ecff 100%);
+  overflow: hidden;
+  position: relative;
+}
+
+.work-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.work-card.list-item .work-cover {
+  width: 160px;
+  flex-shrink: 0;
+  aspect-ratio: 16/9;
+  border-radius: 8px;
+}
+
+.work-info {
+  padding: 16px;
+}
+
+.work-card.list-item .work-info {
+  flex: 1;
+  padding: 0;
+}
+
+.work-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.work-meta {
+  font-size: 12px;
+  color: #999;
+}
+
+.status-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 500;
+  color: white;
+}
+
+.status-completed {
+  background-color: #52c41a;
+}
+
+.status-editing {
+  background-color: #1890ff;
+}
+
+.status-draft {
+  background-color: #d9d9d9;
+}

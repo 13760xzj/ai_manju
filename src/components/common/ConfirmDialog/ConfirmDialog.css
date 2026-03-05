@@ -1,0 +1,34 @@
+.confirm-dialog-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.confirm-dialog-icon {
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.confirm-dialog-message {
+  font-size: 15px;
+  color: #333;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.confirm-dialog-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.confirm-dialog-danger .confirm-dialog-icon {
+  color: #ff4d4f;
+}
+
+.confirm-dialog-warning .confirm-dialog-icon {
+  color: #faad14;
+}
+
+.confirm-dialog-info .confirm-dialog-icon {
+  color: #1890ff;
+}

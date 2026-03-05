@@ -1,0 +1,93 @@
+.personal-assets-page {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  overflow: hidden;
+}
+
+.assets-sidebar {
+  width: 220px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  padding: 20px 0;
+  flex-shrink: 0;
+}
+
+.assets-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 0 10px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 15px;
+  font-weight: 500;
+  color: #333;
+}
+
+.nav-item:hover {
+  background-color: #f0f4ff;
+  color: #4a6cf7;
+}
+
+.nav-item.active {
+  background: linear-gradient(135deg, #4a6cf7 0%, #7b5fff 100%);
+  color: white;
+  box-shadow: 0 4px 12px rgba(74, 108, 247, 0.3);
+}
+
+.nav-icon {
+  font-size: 18px;
+}
+
+.nav-text {
+  font-size: 15px;
+}
+
+.assets-main {
+  flex: 1;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.assets-content {
+  flex: 1;
+  padding: 24px;
+  overflow-y: auto;
+}
+
+.material-grid, .works-grid {
+  display: grid;
+  gap: 20px;
+}
+
+.material-grid.view-card {
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+}
+
+.material-grid.view-list {
+  grid-template-columns: 1fr;
+}
+
+.works-grid.view-card {
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+}
+
+.works-grid.view-list {
+  grid-template-columns: 1fr;
+}

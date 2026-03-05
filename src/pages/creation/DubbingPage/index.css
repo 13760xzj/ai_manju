@@ -1,0 +1,548 @@
+.settings-page {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 15px 20px;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.page-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding: 0 10px;
+  flex-shrink: 0;
+}
+
+.toolbar-left {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.toolbar-right {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.btn-small {
+  padding: 6px 12px;
+  font-size: 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-primary-small {
+  background: linear-gradient(135deg, #4a6cf7 0%, #7b5fff 100%);
+  color: white;
+}
+
+.btn-primary-small:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(74, 108, 247, 0.3);
+}
+
+.btn-secondary {
+  background-color: white;
+  color: #666;
+  border: 1px solid #d0d0d0;
+}
+
+.btn-secondary:hover {
+  border-color: #4a6cf7;
+  color: #4a6cf7;
+  background-color: #f0f4ff;
+}
+
+.toggle-group {
+  display: flex;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.toggle-btn {
+  padding: 6px 16px;
+  font-size: 12px;
+  border: none;
+  background: white;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.toggle-btn.active {
+  background: #4a6cf7;
+  color: white;
+}
+
+.progress-info {
+  font-size: 13px;
+  color: #666;
+}
+
+.list-view-container {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+.dubbing-card {
+  background-color: white;
+  border-radius: 12px;
+  padding: 18px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.dubbing-card:hover {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+}
+
+.dubbing-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.dubbing-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #333;
+  background: linear-gradient(135deg, #4a6cf7 0%, #7b5fff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.dubbing-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-mini {
+  padding: 5px 12px;
+  font-size: 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.btn-cyan {
+  background-color: #13c2c2;
+  color: white;
+}
+
+.btn-cyan:hover {
+  background-color: #36cfc9;
+}
+
+.btn-blue {
+  background-color: #4a6cf7;
+  color: white;
+}
+
+.btn-blue:hover {
+  background-color: #3a57e8;
+}
+
+.btn-gray {
+  background-color: #f5f5f5;
+  color: #666;
+}
+
+.btn-gray:hover {
+  background-color: #e8e8e8;
+  color: #333;
+}
+
+.btn-red {
+  background: linear-gradient(135deg, #ff4d4f 0%, #ff7875 100%);
+  color: white;
+}
+
+.btn-red:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(255, 77, 79, 0.3);
+}
+
+.dubbing-grid {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 20px;
+}
+
+.dubbing-image-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dubbing-image-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #666;
+}
+
+.dubbing-image-box {
+  width: 100%;
+  height: 160px;
+  background: linear-gradient(135deg, #f0f4ff 0%, #e6ecff 100%);
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+}
+
+.dubbing-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.dubbing-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dubbing-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #666;
+}
+
+.dubbing-text {
+  font-size: 12px;
+  color: #666;
+  line-height: 1.6;
+  padding: 12px;
+  background-color: #fafafa;
+  border-radius: 6px;
+  min-height: 60px;
+}
+
+.dubbing-text.empty {
+  color: #999;
+  font-style: italic;
+}
+
+.voice-settings {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.voice-setting-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.voice-setting-label {
+  font-size: 12px;
+  color: #666;
+  font-weight: 500;
+}
+
+.voice-setting-value {
+  font-size: 12px;
+  color: #333;
+  padding: 4px 12px;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+}
+
+.btn-tiny {
+  padding: 4px 12px;
+  font-size: 11px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  background: white;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-tiny:hover {
+  border-color: #4a6cf7;
+  color: #4a6cf7;
+  background-color: #f0f4ff;
+}
+
+.btn-tiny.primary {
+  background: linear-gradient(135deg, #4a6cf7 0%, #7b5fff 100%);
+  color: white;
+  border: none;
+}
+
+.btn-tiny.primary:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.card-view-container {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+  padding: 10px 0;
+}
+
+.dubbing-card-compact {
+  background-color: white;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+}
+
+.dubbing-card-compact:hover {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+}
+
+.dubbing-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.dubbing-card-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  background: linear-gradient(135deg, #4a6cf7 0%, #7b5fff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.dubbing-card-menu-btn {
+  width: 24px;
+  height: 24px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: #666;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.dubbing-card-menu-btn:hover {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.dubbing-card-image-box {
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: linear-gradient(135deg, #f0f4ff 0%, #e6ecff 100%);
+  border-radius: 8px;
+  border: 2px dashed #d0d0d0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #999;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dubbing-card-image-box:hover {
+  border-color: #4a6cf7;
+  background: linear-gradient(135deg, #e6ecff 0%, #d0d9ff 100%);
+}
+
+.dubbing-card-image-box::before {
+  content: '🎙️';
+  font-size: 32px;
+  margin-bottom: 8px;
+  opacity: 0.5;
+}
+
+.dubbing-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dubbing-card-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: #666;
+}
+
+.dubbing-card-text {
+  font-size: 11px;
+  color: #999;
+  line-height: 1.5;
+  padding: 8px;
+  background-color: #fafafa;
+  border-radius: 4px;
+  font-style: italic;
+}
+
+.dubbing-card-voice-settings {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 8px;
+  background-color: #f9f9f9;
+  border-radius: 6px;
+}
+
+.dubbing-card-voice-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  color: #666;
+}
+
+.dubbing-card-voice-value {
+  font-weight: 500;
+  color: #333;
+}
+
+.dubbing-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 8px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.dubbing-card-info {
+  font-size: 11px;
+  color: #666;
+}
+
+.dubbing-card-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.dubbing-card-action-btn {
+  padding: 4px 10px;
+  font-size: 11px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  background: white;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.dubbing-card-action-btn:hover {
+  border-color: #4a6cf7;
+  color: #4a6cf7;
+  background-color: #f0f4ff;
+}
+
+.dubbing-card-action-btn.primary {
+  background: linear-gradient(135deg, #4a6cf7 0%, #7b5fff 100%);
+  color: white;
+  border: none;
+}
+
+.dubbing-card-action-btn.primary:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.dubbing-card-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  min-width: 180px;
+  z-index: 1000;
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+.dubbing-card-dropdown.show {
+  display: block;
+}
+
+.dubbing-card-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  font-size: 13px;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  background: transparent;
+  width: 100%;
+  text-align: left;
+}
+
+.dubbing-card-dropdown-item:hover {
+  background-color: #f5f7fa;
+}
+
+.dubbing-card-dropdown-item.danger {
+  color: #ff4d4f;
+}
+
+.dubbing-card-dropdown-item.danger:hover {
+  background-color: #fff1f0;
+}
+
+.dubbing-card-dropdown-item .icon {
+  font-size: 14px;
+  width: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dubbing-card-dropdown-divider {
+  height: 1px;
+  background-color: #f0f0f0;
+  margin: 4px 0;
+}
+
+@media (max-width: 768px) {
+  .dubbing-grid {
+    grid-template-columns: 1fr;
+  }
+}
