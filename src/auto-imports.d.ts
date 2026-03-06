@@ -6,7 +6,6 @@
 // biome-ignore lint: disable
 export {}
 declare global {
-  const AButton: typeof import('antd').Button
   const AImage: typeof import('antd').Image
   const Activity: typeof import('react').Activity
   const Fragment: typeof import('react').Fragment
@@ -29,11 +28,11 @@ declare global {
   const useActionState: typeof import('react').useActionState
   const useCallback: typeof import('react').useCallback
   const useContext: typeof import('react').useContext
-  const useCopy: typeof import('./src/hooks/useCopy').useCopy
-  const useCreationData: typeof import('./src/hooks/useCreationData').useCreationData
+  const useCopy: typeof import('./hooks/useCopy').useCopy
+  const useCreationData: typeof import('./hooks/useCreationData').useCreationData
   const useDebugValue: typeof import('react').useDebugValue
   const useDeferredValue: typeof import('react').useDeferredValue
-  const useDownload: typeof import('./src/hooks/useDownload').useDownload
+  const useDownload: typeof import('./hooks/useDownload').useDownload
   const useEffect: typeof import('react').useEffect
   const useEffectEvent: typeof import('react').useEffectEvent
   const useHref: typeof import('react-router-dom').useHref
@@ -45,7 +44,7 @@ declare global {
   const useLinkClickHandler: typeof import('react-router-dom').useLinkClickHandler
   const useLocation: typeof import('react-router-dom').useLocation
   const useMemo: typeof import('react').useMemo
-  const useModal: typeof import('./src/hooks/useModal').useModal
+  const useModal: typeof import('./hooks/useModal').useModal
   const useNavigate: typeof import('react-router-dom').useNavigate
   const useNavigationType: typeof import('react-router-dom').useNavigationType
   const useOptimistic: typeof import('react').useOptimistic
@@ -56,11 +55,11 @@ declare global {
   const useRef: typeof import('react').useRef
   const useResolvedPath: typeof import('react-router-dom').useResolvedPath
   const useRoutes: typeof import('react-router-dom').useRoutes
-  const useSearch: typeof import('./src/hooks/useSearch').useSearch
+  const useSearch: typeof import('./hooks/useSearch').useSearch
   const useSearchParams: typeof import('react-router-dom').useSearchParams
   const useState: typeof import('react').useState
   const useSyncExternalStore: typeof import('react').useSyncExternalStore
-  const useToast: typeof import('./src/hooks/useToast').useToast
-  const useToggle: typeof import('./src/hooks/useToggle').useToggle
+  const useToast: typeof import('./hooks/useToast').useToast
+  const useToggle: typeof import('./hooks/useToggle').useToggle
   const useTransition: typeof import('react').useTransition
 }

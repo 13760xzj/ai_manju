@@ -1,4 +1,3 @@
-import { Button } from "@/components/common";
 import type { ViewMode } from "@/types";
 import { classNames } from "@/utils";
 import "./index.css";
@@ -78,14 +77,14 @@ export function Toolbar({
           </button>
         </div>
         {showCreate && (
-          <Button variant="primary" size="small">
+          <HButton variant="primary" size="small">
             新建
-          </Button>
+          </HButton>
         )}
         {showBatch && (
-          <Button variant="secondary" size="small">
+          <HButton variant="secondary" size="small">
             批量操作
-          </Button>
+          </HButton>
         )}
       </div>
     </div>

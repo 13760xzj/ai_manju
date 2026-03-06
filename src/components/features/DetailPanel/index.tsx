@@ -1,5 +1,4 @@
 import type { Asset, Work, AssetCategoryInfo } from "@/types";
-import { Button } from "@/components/common";
 import { getStatusLabel } from "@/utils";
 import "./index.css";
 
@@ -80,10 +79,10 @@ export function DetailPanel({
           </div>
         </div>
         <div className="detail-actions">
-          <Button variant="primary">使用</Button>
-          <Button variant="secondary">编辑</Button>
-          <Button variant="secondary">下载</Button>
-          <Button variant="danger">删除</Button>
+          <HButton variant="primary">使用</HButton>
+          <HButton variant="secondary">编辑</HButton>
+          <HButton variant="secondary">下载</HButton>
+          <HButton variant="danger">删除</HButton>
         </div>
       </div>
     </div>

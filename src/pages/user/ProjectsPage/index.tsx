@@ -5,7 +5,7 @@ import {
   deleteProject,
   setCurrentProject,
 } from "@/store/slices/projectSlice";
-import { Button, Modal, Input } from "@/components/common";
+import { Input } from "@/components/common";
 import type { Project } from "@/types";
 import "./ProjectsPage.css";
 
@@ -77,9 +77,9 @@ export function ProjectsPage() {
     <div className="projects-page">
       <div className="projects-header">
         <h1 className="projects-title">我的项目</h1>
-        <Button variant="primary" onClick={() => setShowCreateModal(true)}>
+        <HButton variant="primary" onClick={() => setShowCreateModal(true)}>
           + 新建项目
-        </Button>
+        </HButton>
       </div>
 
       {projects.length === 0 ? (
@@ -116,20 +116,20 @@ export function ProjectsPage() {
                 </div>
               </div>
               <div className="project-actions">
-                <Button
+                <HButton
                   variant="primary"
                   size="small"
                   onClick={() => handleOpenProject(project)}
                 >
                   打开
-                </Button>
-                <Button
+                </HButton>
+                <HButton
                   variant="ghost"
                   size="small"
                   onClick={() => handleDeleteClick(project)}
                 >
                   删除
-                </Button>
+                </HButton>
               </div>
             </div>
           ))}
@@ -143,12 +143,12 @@ export function ProjectsPage() {
         size="small"
         footer={
           <>
-            <Button variant="ghost" onClick={() => setShowCreateModal(false)}>
+            <HButton variant="ghost" onClick={() => setShowCreateModal(false)}>
               取消
-            </Button>
-            <Button variant="primary" onClick={handleCreateProject}>
+            </HButton>
+            <HButton variant="primary" onClick={handleCreateProject}>
               创建
-            </Button>
+            </HButton>
           </>
         }
       >
@@ -182,12 +182,12 @@ export function ProjectsPage() {
         size="small"
         footer={
           <>
-            <Button variant="ghost" onClick={() => setShowDeleteModal(false)}>
+            <HButton variant="ghost" onClick={() => setShowDeleteModal(false)}>
               取消
-            </Button>
-            <Button variant="danger" onClick={handleConfirmDelete}>
+            </HButton>
+            <HButton variant="danger" onClick={handleConfirmDelete}>
               删除
-            </Button>
+            </HButton>
           </>
         }
       >

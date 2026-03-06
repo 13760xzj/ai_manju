@@ -3,12 +3,6 @@ import { useAppDispatch } from "@/store/hooks";
 import type { Asset, Work, AssetCategory } from "@/types";
 import { ASSET_CATEGORIES } from "@/utils";
 import {
-  Toolbar,
-  AssetCard,
-  WorkCard,
-  DetailPanel,
-} from "@/components/features";
-import {
   setSelectedCategory,
   setViewMode,
   setSearchQuery,

@@ -1,4 +1,3 @@
-import { MarkdownPreview } from "@/components/common";
 import { markdownContent } from "@/mocks";
 import "./index.css";
 

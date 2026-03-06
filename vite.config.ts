@@ -14,19 +14,23 @@ export default defineConfig({
           prefix: "A",
         }),
       ],
+      dts: "src/auto-imports.d.ts", // 指定生成 TS 声明
       dirs: ["src/hooks"],
       imports: ["react", "react-router-dom"],
     }),
     Components({
-      dirs: ["src/components"],
-      extensions: ["tsx"],
-      deep: true, // 递归扫描 common layout business
-      dts: "src/components.d.ts",
+      rootDir: "src/components", // 替代 dirs
+      dts: true, // 或者 { path: "..." }，但必须符合类型
+      local: true, // 可选
+      include: ["**/*.tsx", "**/*.ts"], // 匹配文件
+      exclude: ["**/*.test.tsx"], // 排除文件
+      resolvers: [], // 如果有自定义解析器
     }),
   ],
 
   resolve: {
     alias: {
+      src: path.resolve(__dirname, "src"),
       "@": path.resolve(__dirname, "./src"),
       "@components": path.resolve(__dirname, "./src/components"),
       "@pages": path.resolve(__dirname, "./src/pages"),

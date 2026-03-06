@@ -12,8 +12,8 @@ import {
   login as loginAction,
   logout as logoutAction,
 } from "@/store/slices/authSlice";
-import { Header, MainLayout, Footer } from "@/components/layout";
-import { Toast, PageLoading, ErrorBoundary } from "@/components/common";
+import { Header } from "@/components/layout";
+import { ErrorBoundary } from "@/components/common";
 
 const CasePage = lazy(() =>
   import("@/pages/home/CasePage").then((m) => ({ default: m.CasePage })),

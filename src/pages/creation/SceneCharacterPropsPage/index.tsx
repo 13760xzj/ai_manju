@@ -36,7 +36,7 @@ export function SceneCharacterPropsPage() {
     }
   };
 
-  const getRegenerateButtonText = () => {
+  const getRegenerateHButtonText = () => {
     if (activeTab === "character") return "重新生成角色图";
     if (activeTab === "props") return "重新生成道具图";
     return "重新生成场景图";
@@ -74,7 +74,7 @@ export function SceneCharacterPropsPage() {
           }}
         >
           <button className="btn-small btn-success-small">
-            {getRegenerateButtonText()}
+            {getRegenerateHButtonText()}
           </button>
           <button className="btn-small btn-primary-small" onClick={handleNext}>
             下一步

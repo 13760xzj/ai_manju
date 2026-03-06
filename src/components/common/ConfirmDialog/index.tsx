@@ -1,4 +1,5 @@
 import "./ConfirmDialog.css";
+import { HButton } from "@components/common";
 
 export interface ConfirmDialogProps {
   isOpen: boolean;
@@ -34,15 +35,15 @@ export function ConfirmDialog({
       size="small"
       footer={
         <div className="confirm-dialog-actions">
-          <Button variant="ghost" onClick={onClose}>
+          <HButton variant="ghost" onClick={onClose}>
             {cancelText}
-          </Button>
-          <Button
+          </HButton>
+          <HButton
             variant={variant === "danger" ? "danger" : "primary"}
             onClick={handleConfirm}
           >
             {confirmText}
-          </Button>
+          </HButton>
         </div>
       }
     >

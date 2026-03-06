@@ -1,4 +1,4 @@
-import { Button, Modal, Input } from "@/components/common";
+import { HButton, Input } from "@/components/common";
 import "./index.css";
 
 export interface HeaderProps {
@@ -196,23 +196,23 @@ export function Header({ isLoggedIn, onLogin, onLogout }: HeaderProps) {
             个人资产库
           </button>
           {isLoggedIn ? (
-            <Button
+            <HButton
               variant="danger"
               size="small"
               onClick={handleLogoutClick}
               className="logout-btn"
             >
               退出登录
-            </Button>
+            </HButton>
           ) : (
-            <Button
+            <HButton
               variant="ghost"
               size="small"
               onClick={handleLoginClick}
               className="user-btn"
             >
               登录
-            </Button>
+            </HButton>
           )}
         </div>
       </header>
@@ -372,7 +372,7 @@ export function Header({ isLoggedIn, onLogin, onLogout }: HeaderProps) {
             </div>
           )}
 
-          <Button
+          <HButton
             type="submit"
             variant="primary"
             className="login-btn"
@@ -385,7 +385,7 @@ export function Header({ isLoggedIn, onLogin, onLogout }: HeaderProps) {
               : isRegisterMode
               ? "注册"
               : "登录"}
-          </Button>
+          </HButton>
 
           <div className="register-link">
             {isRegisterMode ? (
