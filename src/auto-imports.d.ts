@@ -6,6 +6,7 @@
 // biome-ignore lint: disable
 export {}
 declare global {
+  const ADivider: typeof import('antd').Divider
   const AImage: typeof import('antd').Image
   const Activity: typeof import('react').Activity
   const Fragment: typeof import('react').Fragment

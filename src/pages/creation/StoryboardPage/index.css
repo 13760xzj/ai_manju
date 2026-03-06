@@ -212,7 +212,7 @@
 }
 
 .storyboard-image-box::before {
-  content: '🎬';
+  content: "🎬";
   font-size: 32px;
   margin-bottom: 8px;
   opacity: 0.5;

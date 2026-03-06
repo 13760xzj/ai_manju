@@ -25,9 +25,9 @@ export const ContentModal: React.FC<ModalProps> = ({
   const [animate, setAnimate] = useState(false);
 
   useEffect(() => {
-    let enterTimer: NodeJS.Timeout;
-    let animateTimer: NodeJS.Timeout;
-    let leaveTimer: NodeJS.Timeout;
+    let enterTimer: number;
+    let animateTimer: number;
+    let leaveTimer: number;
 
     if (visible) {
       // 延迟挂载 DOM，避免同步 setState 报警

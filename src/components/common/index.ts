@@ -8,3 +8,4 @@ export { ErrorBoundary } from "./ErrorBoundary";
 export { ConfirmDialog } from "./ConfirmDialog";
 export { MarkdownPreview, MarkdownView } from "./MarkdownPreview";
 export { ContentModal } from "./ContentModal";
+export { ImagePreview } from "./ImagePreview";

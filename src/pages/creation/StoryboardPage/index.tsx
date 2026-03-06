@@ -1,4 +1,5 @@
 import "./index.css";
+import { PlusCircleOutlined } from "@ant-design/icons";
 
 export function StoryboardPage() {
   const navigate = useNavigate();
@@ -159,14 +160,32 @@ export function StoryboardPage() {
       )}
 
       {viewMode === "card" && (
-        <div className="card-view-container active">
+        <div className="card-view-container active overflow-visible!">
           <div className="card-grid">
             {[
               { title: "分镜 1-1", scene: "古代寺庙" },
               { title: "分镜 1-2", scene: "暴风雨天空" },
               { title: "分镜 1-3", scene: "古代寺庙内" },
             ].map((card, index) => (
-              <div key={index} className="storyboard-card-compact">
+              <div key={index} className="storyboard-card-compact relative ">
+                <div className="h-full w-5 absolute left-0 -translate-x-5! top-0 z-10 group">
+                  <div className="opacity-0 flex h-full flex-col items-center group-hover:opacity-100">
+                    <PlusCircleOutlined
+                      className="scale-125"
+                      style={{ color: "var(--primary-color)" }}
+                      onClick={() => alert()}
+                    />
+                    <ADivider
+                      type="vertical"
+                      dashed={true}
+                      style={{
+                        flex: 1,
+                        borderWidth: "1px",
+                        borderColor: "var(--primary-color)",
+                      }}
+                    />
+                  </div>
+                </div>
                 <div className="card-header">
                   <div className="card-title">{card.title}</div>
                   <button className="card-menu-btn">⋮</button>

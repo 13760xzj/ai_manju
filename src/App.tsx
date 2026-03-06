@@ -90,6 +90,8 @@ const SHOW_HEADER_PATHS = [
   "/",
 ];
 
+const HIDE_SLIDEBAR_PATHS = ["/case", "/works", "/personal-assets", "/"];
+
 function PageLoader() {
   return (
     <div
@@ -121,6 +123,7 @@ function AppContent() {
   };
 
   const shouldShowHeader = SHOW_HEADER_PATHS.includes(location.pathname);
+  const hideSlidebar = !HIDE_SLIDEBAR_PATHS.includes(location.pathname);
 
   const handleLogin = () => {
     dispatch(loginAction({ userId: Date.now(), username: "用户" }));
@@ -140,7 +143,7 @@ function AppContent() {
         />
       )}
 
-      <MainLayout activeStep={getActiveStep()}>
+      <MainLayout activeStep={getActiveStep()} showSidebar={hideSlidebar}>
         <Suspense fallback={<PageLoader />}>
           <Routes>
             <Route path="/" element={<Navigate to="/case" replace />} />

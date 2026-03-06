@@ -1,3 +1,4 @@
+import { ImagePreview } from "@/components/common";
 import "./index.css";
 
 export function SceneCharacterPropsPage() {
@@ -131,7 +132,13 @@ export function SceneCharacterPropsPage() {
                       <span>暂无图片</span>
                     </div>
                     <div className="view-actions">
-                      <button className="view-action-btn">预览</button>
+                      <ImagePreview
+                        images={[
+                          "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=bamboo%20forest%20misty&image_size=square",
+                        ]}
+                      >
+                        <button className="view-action-btn">预览</button>
+                      </ImagePreview>
                       <button className="view-action-btn">替换</button>
                       <button className="view-action-btn">下载</button>
                     </div>
