@@ -3,7 +3,7 @@
   height: 100%;
   display: flex;
   gap: 16px;
-  padding: 0;
+  padding: 20px;
   overflow: hidden;
 }
 
@@ -57,7 +57,11 @@
 }
 
 .tree-item.active {
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--primary-color) 0%,
+    var(--secondary-color) 100%
+  );
   color: white;
 }
 
@@ -128,13 +132,17 @@
 }
 
 .tab-btn.active::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--primary-color) 0%,
+    var(--secondary-color) 100%
+  );
   border-radius: 3px 3px 0 0;
 }
 
@@ -184,7 +192,8 @@
   color: var(--text-faint);
 }
 
-.material-grid, .works-grid {
+.material-grid,
+.works-grid {
   display: grid;
   gap: 20px;
 }
