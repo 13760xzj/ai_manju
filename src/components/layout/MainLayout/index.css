@@ -16,14 +16,14 @@
 
 .content {
   flex: 1;
-  padding: 20px;
+  padding: var(--page-padding);
   overflow-y: auto;
-  background-color: #f5f7fa;
-  transition: all 0.3s ease;
+  background-color: var(--bg-color);
+  transition: var(--transition);
   height: 100%;
   min-height: 0;
 }
 
 .content.expanded {
-  padding: 20px 30px;
+  padding: var(--page-padding) var(--page-padding-expanded);
 }

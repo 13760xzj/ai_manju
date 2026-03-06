@@ -71,10 +71,10 @@ export function StoryboardVideoPage() {
               <div className="storyboard-header">
                 <div className="storyboard-title">分镜视频 {num}：分镜 1-{num}</div>
                 <div className="storyboard-actions">
-                  <button className="btn-mini btn-cyan">配音对口型</button>
-                  <button className="btn-mini btn-blue">编辑分镜视频</button>
-                  <button className="btn-mini btn-gray">复制分镜</button>
-                  <button className="btn-mini btn-red">删除分镜</button>
+                  <Button variant="info" size="mini">配音对口型</Button>
+                  <Button variant="primary" size="mini">编辑分镜视频</Button>
+                  <Button variant="secondary" size="mini">复制分镜</Button>
+                  <Button variant="danger" size="mini">删除分镜</Button>
                 </div>
               </div>
               <div className="storyboard-grid">
@@ -82,7 +82,7 @@ export function StoryboardVideoPage() {
                   <div className="storyboard-label">分镜视频：</div>
                   <div className="storyboard-image-box">
                     <div style={{ fontSize: '12px', marginTop: '8px' }}>编辑分镜视频</div>
-                    <div style={{ fontSize: '10px', color: '#999', marginTop: '4px' }}>点击生成或编辑分镜视频</div>
+                    <div style={{ fontSize: '10px', color: 'var(--text-faint)', marginTop: '4px' }}>点击生成或编辑分镜视频</div>
                   </div>
                 </div>
                 <div className="storyboard-item">
@@ -93,7 +93,7 @@ export function StoryboardVideoPage() {
                 </div>
                 <div className="storyboard-item">
                   <div className="storyboard-label">详情描述：</div>
-                  <div style={{ fontSize: '12px', color: '#666', lineHeight: 1.6 }}>
+                  <div style={{ fontSize: '12px', color: 'var(--text-weak)', lineHeight: 1.6 }}>
                     可点击"自动生成视频"或"编辑视频"生成视频
                   </div>
                 </div>
@@ -145,7 +145,7 @@ export function StoryboardVideoPage() {
                 <div className="video-card-footer">
                   <div className="video-card-info">分镜 1-{num}</div>
                   <div className="video-card-actions">
-                    <button className="video-card-action-btn primary">编辑</button>
+                    <Button variant="primary" size="mini">编辑</Button>
                   </div>
                 </div>
               </div>

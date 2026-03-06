@@ -2,7 +2,7 @@
   width: 100%;
   height: 100%;
   margin: 0;
-  padding: 15px 20px;
+  padding: 0;
   display: flex;
   flex-direction: column;
   min-height: 0;
@@ -30,27 +30,27 @@
 
 .toggle-group {
   display: flex;
-  border: 1px solid #e0e0e0;
-  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-md);
   overflow: hidden;
 }
 
-.toggle-group .btn {
+.toggle-group .toggle-btn {
   border-radius: 0;
   border: none;
 }
 
-.toggle-group .btn:first-child {
-  border-radius: 6px 0 0 6px;
+.toggle-group .toggle-btn:first-child {
+  border-radius: var(--border-radius-md) 0 0 var(--border-radius-md);
 }
 
-.toggle-group .btn:last-child {
-  border-radius: 0 6px 6px 0;
+.toggle-group .toggle-btn:last-child {
+  border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
 }
 
 .progress-info {
   font-size: 13px;
-  color: #666;
+  color: var(--text-weak);
 }
 
 .list-view-container {
@@ -60,16 +60,17 @@
 }
 
 .dubbing-card {
-  background-color: white;
-  border-radius: 12px;
+  background-color: var(--surface-1);
+  border-radius: var(--border-radius-xl);
   padding: 18px;
   margin-bottom: 20px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-  transition: all 0.3s ease;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+  border: 1px solid var(--border-light);
 }
 
 .dubbing-card:hover {
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+  box-shadow: var(--shadow-md);
   transform: translateY(-2px);
 }
 
@@ -79,14 +80,14 @@
   align-items: center;
   margin-bottom: 16px;
   padding-bottom: 12px;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid var(--border-light);
 }
 
 .dubbing-title {
   font-size: 15px;
   font-weight: 600;
-  color: #333;
-  background: linear-gradient(135deg, #4a6cf7 0%, #7b5fff 100%);
+  color: var(--text-strong);
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -95,54 +96,6 @@
 .dubbing-actions {
   display: flex;
   gap: 8px;
-}
-
-.btn-mini {
-  padding: 5px 12px;
-  font-size: 12px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-weight: 500;
-}
-
-.btn-cyan {
-  background-color: #13c2c2;
-  color: white;
-}
-
-.btn-cyan:hover {
-  background-color: #36cfc9;
-}
-
-.btn-blue {
-  background-color: #4a6cf7;
-  color: white;
-}
-
-.btn-blue:hover {
-  background-color: #3a57e8;
-}
-
-.btn-gray {
-  background-color: #f5f5f5;
-  color: #666;
-}
-
-.btn-gray:hover {
-  background-color: #e8e8e8;
-  color: #333;
-}
-
-.btn-red {
-  background: linear-gradient(135deg, #ff4d4f 0%, #ff7875 100%);
-  color: white;
-}
-
-.btn-red:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(255, 77, 79, 0.3);
 }
 
 .dubbing-grid {
@@ -160,13 +113,13 @@
 .dubbing-image-label {
   font-size: 12px;
   font-weight: 500;
-  color: #666;
+  color: var(--text-weak);
 }
 
 .dubbing-image-box {
   width: 100%;
   height: 160px;
-  background: linear-gradient(135deg, #f0f4ff 0%, #e6ecff 100%);
+  background: linear-gradient(135deg, var(--bg-primary-light) 0%, var(--bg-primary-lighter) 100%);
   border-radius: 8px;
   overflow: hidden;
   position: relative;
@@ -187,21 +140,21 @@
 .dubbing-label {
   font-size: 12px;
   font-weight: 500;
-  color: #666;
+  color: var(--text-weak);
 }
 
 .dubbing-text {
   font-size: 12px;
-  color: #666;
+  color: var(--text-weak);
   line-height: 1.6;
   padding: 12px;
-  background-color: #fafafa;
+  background-color: rgba(15, 23, 42, 0.04);
   border-radius: 6px;
   min-height: 60px;
 }
 
 .dubbing-text.empty {
-  color: #999;
+  color: var(--text-faint);
   font-style: italic;
 }
 
@@ -220,44 +173,16 @@
 
 .voice-setting-label {
   font-size: 12px;
-  color: #666;
+  color: var(--text-weak);
   font-weight: 500;
 }
 
 .voice-setting-value {
   font-size: 12px;
-  color: #333;
+  color: var(--text-strong);
   padding: 4px 12px;
-  background-color: #f5f5f5;
+  background-color: rgba(15, 23, 42, 0.06);
   border-radius: 4px;
-}
-
-.btn-tiny {
-  padding: 4px 12px;
-  font-size: 11px;
-  border: 1px solid #e0e0e0;
-  border-radius: 4px;
-  background: white;
-  color: #666;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.btn-tiny:hover {
-  border-color: #4a6cf7;
-  color: #4a6cf7;
-  background-color: #f0f4ff;
-}
-
-.btn-tiny.primary {
-  background: linear-gradient(135deg, #4a6cf7 0%, #7b5fff 100%);
-  color: white;
-  border: none;
-}
-
-.btn-tiny.primary:hover {
-  opacity: 0.9;
-  transform: translateY(-1px);
 }
 
 .card-view-container {
@@ -286,7 +211,7 @@
 }
 
 .dubbing-card-compact:hover {
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+  box-shadow: var(--shadow-md);
   transform: translateY(-2px);
 }
 
@@ -295,14 +220,14 @@
   justify-content: space-between;
   align-items: center;
   padding-bottom: 10px;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid var(--border-light);
 }
 
 .dubbing-card-title {
   font-size: 14px;
   font-weight: 600;
-  color: #333;
-  background: linear-gradient(135deg, #4a6cf7 0%, #7b5fff 100%);
+  color: var(--text-strong);
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -319,35 +244,35 @@
   align-items: center;
   justify-content: center;
   font-size: 16px;
-  color: #666;
+  color: var(--text-weak);
   transition: all 0.2s ease;
   padding: 0;
 }
 
 .dubbing-card-menu-btn:hover {
-  background-color: #f0f0f0;
-  color: #333;
+  background-color: rgba(15, 23, 42, 0.06);
+  color: var(--text-strong);
 }
 
 .dubbing-card-image-box {
   width: 100%;
   aspect-ratio: 16/9;
-  background: linear-gradient(135deg, #f0f4ff 0%, #e6ecff 100%);
+  background: linear-gradient(135deg, var(--bg-primary-light) 0%, var(--bg-primary-lighter) 100%);
   border-radius: 8px;
-  border: 2px dashed #d0d0d0;
+  border: 2px dashed rgba(15, 23, 42, 0.18);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: #999;
+  color: var(--text-faint);
   font-size: 13px;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .dubbing-card-image-box:hover {
-  border-color: #4a6cf7;
-  background: linear-gradient(135deg, #e6ecff 0%, #d0d9ff 100%);
+  border-color: var(--primary-color);
+  background: linear-gradient(135deg, var(--bg-primary-lighter) 0%, rgba(74, 108, 247, 0.14) 100%);
 }
 
 .dubbing-card-image-box::before {
@@ -366,15 +291,15 @@
 .dubbing-card-label {
   font-size: 11px;
   font-weight: 500;
-  color: #666;
+  color: var(--text-weak);
 }
 
 .dubbing-card-text {
   font-size: 11px;
-  color: #999;
+  color: var(--text-faint);
   line-height: 1.5;
   padding: 8px;
-  background-color: #fafafa;
+  background-color: rgba(15, 23, 42, 0.04);
   border-radius: 4px;
   font-style: italic;
 }
@@ -385,7 +310,7 @@
   align-items: center;
   flex-wrap: wrap;
   padding: 8px;
-  background-color: #f9f9f9;
+  background-color: rgba(15, 23, 42, 0.03);
   border-radius: 6px;
 }
 
@@ -394,12 +319,12 @@
   align-items: center;
   gap: 4px;
   font-size: 10px;
-  color: #666;
+  color: var(--text-weak);
 }
 
 .dubbing-card-voice-value {
   font-weight: 500;
-  color: #333;
+  color: var(--text-strong);
 }
 
 .dubbing-card-footer {
@@ -407,12 +332,12 @@
   justify-content: space-between;
   align-items: center;
   padding-top: 8px;
-  border-top: 1px solid #f0f0f0;
+  border-top: 1px solid var(--border-light);
 }
 
 .dubbing-card-info {
   font-size: 11px;
-  color: #666;
+  color: var(--text-weak);
 }
 
 .dubbing-card-actions {
@@ -420,46 +345,18 @@
   gap: 6px;
 }
 
-.dubbing-card-action-btn {
-  padding: 4px 10px;
-  font-size: 11px;
-  border: 1px solid #e0e0e0;
-  border-radius: 4px;
-  background: white;
-  color: #666;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-weight: 500;
-}
-
-.dubbing-card-action-btn:hover {
-  border-color: #4a6cf7;
-  color: #4a6cf7;
-  background-color: #f0f4ff;
-}
-
-.dubbing-card-action-btn.primary {
-  background: linear-gradient(135deg, #4a6cf7 0%, #7b5fff 100%);
-  color: white;
-  border: none;
-}
-
-.dubbing-card-action-btn.primary:hover {
-  opacity: 0.9;
-  transform: translateY(-1px);
-}
-
 .dubbing-card-dropdown {
   position: absolute;
   top: 100%;
   right: 0;
-  background: white;
+  background: var(--surface-1);
   border-radius: 8px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   min-width: 180px;
   z-index: 1000;
   overflow: hidden;
   margin-top: 4px;
+  border: 1px solid var(--border-light);
 }
 
 .dubbing-card-dropdown.show {
@@ -472,7 +369,7 @@
   gap: 10px;
   padding: 12px 16px;
   font-size: 13px;
-  color: #333;
+  color: var(--text-strong);
   cursor: pointer;
   transition: all 0.2s ease;
   border: none;
@@ -482,7 +379,7 @@
 }
 
 .dubbing-card-dropdown-item:hover {
-  background-color: #f5f7fa;
+  background-color: rgba(15, 23, 42, 0.05);
 }
 
 .dubbing-card-dropdown-item.danger {
@@ -503,7 +400,7 @@
 
 .dubbing-card-dropdown-divider {
   height: 1px;
-  background-color: #f0f0f0;
+  background-color: var(--border-light);
   margin: 4px 0;
 }
 

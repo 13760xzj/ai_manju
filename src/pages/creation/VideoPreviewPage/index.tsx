@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useToast } from '@/hooks/useToast';
 import { ConfirmDialog } from '@/components/common';
-import { Button } from '@/components/common/Button';
+import { Button } from '@/components/common';
 import './index.css';
 
 export function VideoPreviewPage() {

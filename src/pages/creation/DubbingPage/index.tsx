@@ -71,11 +71,11 @@ export function DubbingPage() {
               <div className="dubbing-header">
                 <div className="dubbing-title">分镜配音 {num}：分镜 1-{num}</div>
                 <div className="dubbing-actions">
-                  <button className="btn-mini btn-cyan">分镜脚本</button>
-                  <button className="btn-mini btn-cyan">分镜视频</button>
-                  <button className="btn-mini btn-blue">编辑分镜配音</button>
-                  <button className="btn-mini btn-gray">复制分镜</button>
-                  <button className="btn-mini btn-red">删除分镜</button>
+                  <Button variant="secondary" size="mini">分镜脚本</Button>
+                  <Button variant="secondary" size="mini">分镜视频</Button>
+                  <Button variant="primary" size="mini">编辑分镜配音</Button>
+                  <Button variant="secondary" size="mini">复制分镜</Button>
+                  <Button variant="danger" size="mini">删除分镜</Button>
                 </div>
               </div>
               <div className="dubbing-grid">
@@ -101,8 +101,8 @@ export function DubbingPage() {
                         <span className="voice-setting-label">发言角色：</span>
                         <span className="voice-setting-value">未选择</span>
                       </div>
-                      <button className="btn-tiny primary">试听</button>
-                      <button className="btn-tiny">未配置</button>
+                      <Button variant="primary" size="mini">试听</Button>
+                      <Button variant="secondary" size="mini">未配置</Button>
                     </div>
                   </div>
                 </div>
@@ -161,7 +161,7 @@ export function DubbingPage() {
                 <div className="dubbing-card-footer">
                   <div className="dubbing-card-info">未配置</div>
                   <div className="dubbing-card-actions">
-                    <button className="dubbing-card-action-btn primary">试听</button>
+                    <Button variant="primary" size="mini">试听</Button>
                   </div>
                 </div>
               </div>

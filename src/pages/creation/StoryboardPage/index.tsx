@@ -105,11 +105,11 @@ export function StoryboardPage() {
               <div className="storyboard-header">
                 <div className="storyboard-title">分镜脚本 {num}：分镜 1-{num}</div>
                 <div className="storyboard-actions">
-                  <button className="btn-mini btn-cyan">配音对口型</button>
-                  <button className="btn-mini btn-gray">修改脚本描述</button>
-                  <button className="btn-mini btn-blue">编辑分镜图片</button>
-                  <button className="btn-mini btn-gray">复制分镜</button>
-                  <button className="btn-mini btn-red">删除分镜</button>
+                  <Button variant="info" size="mini">配音对口型</Button>
+                  <Button variant="secondary" size="mini">修改脚本描述</Button>
+                  <Button variant="primary" size="mini">编辑分镜图片</Button>
+                  <Button variant="secondary" size="mini">复制分镜</Button>
+                  <Button variant="danger" size="mini">删除分镜</Button>
                 </div>
               </div>
               <div className="storyboard-grid">
@@ -117,36 +117,27 @@ export function StoryboardPage() {
                   <div className="storyboard-label">分镜图片：</div>
                   <div className="storyboard-image-box">
                     <div style={{ fontSize: '12px', marginTop: '8px' }}>编辑分镜图片</div>
-                    <div style={{ fontSize: '10px', color: '#999', marginTop: '4px' }}>点击生成或编辑分镜图片</div>
+                    <div style={{ fontSize: '10px', color: 'var(--text-faint)', marginTop: '4px' }}>点击生成或编辑分镜图片</div>
                   </div>
                 </div>
                 <div className="storyboard-item">
                   <div className="storyboard-label">参考图片：</div>
-                  <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                  <div className="ref-grid">
                     {[1, 2, 3, 4].map((i) => (
-                      <div 
-                        key={i} 
-                        style={{ 
-                          width: '80px', 
-                          height: '80px', 
-                          background: 'linear-gradient(135deg, #f0f4ff 0%, #e6ecff 100%)', 
-                          borderRadius: '6px', 
-                          border: '2px dashed #d0d0d0', 
-                          display: 'flex', 
-                          alignItems: 'center', 
-                          justifyContent: 'center', 
-                          cursor: 'pointer', 
-                          transition: 'all 0.2s ease' 
-                        }}
+                      <button
+                        key={i}
+                        type="button"
+                        className="ref-tile"
+                        aria-label={i === 4 ? '添加参考图' : `参考图 ${i}`}
                       >
-                        <span style={{ fontSize: i === 4 ? '24px' : '20px', color: i === 4 ? '#4a6cf7' : '#999', fontWeight: i === 4 ? 'bold' : 'normal' }}>+</span>
-                      </div>
+                        <span className={`ref-plus ${i === 4 ? 'is-add' : ''}`}>+</span>
+                      </button>
                     ))}
                   </div>
                 </div>
                 <div className="storyboard-item">
                   <div className="storyboard-label">脚本描述：</div>
-                  <div style={{ fontSize: '12px', color: '#666', lineHeight: 1.8 }}>
+                  <div style={{ fontSize: '12px', color: 'var(--text-weak)', lineHeight: 1.8 }}>
                     <div style={{ marginBottom: '6px' }}><strong>镜号：</strong>1-{num}</div>
                     <div style={{ marginBottom: '6px' }}><strong>剧本内容：</strong></div>
                     <div style={{ marginBottom: '6px' }}><strong>画面描述：</strong></div>
@@ -219,15 +210,14 @@ export function StoryboardPage() {
             ))}
             
             <div 
-              className="storyboard-card-compact" 
-              style={{ background: 'linear-gradient(135deg, #fafafa 0%, #ffffff 100%)', border: '2px dashed #d0d0d0' }}
+              className="storyboard-card-compact storyboard-card-add"
               onClick={handleAddStoryboard}
             >
               <div className="card-header">
                 <div className="card-title">添加新分镜</div>
               </div>
-              <div className="card-image-container" style={{ border: 'none', background: 'transparent' }}>
-                <span style={{ fontSize: '24px', color: '#666' }}>+</span>
+              <div className="card-image-container card-image-container-add">
+                <span className="card-add-plus">+</span>
               </div>
             </div>
           </div>

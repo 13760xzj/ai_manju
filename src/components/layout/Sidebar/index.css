@@ -1,9 +1,9 @@
 .sidebar {
   width: 200px;
-  background-color: white;
-  border-right: 1px solid #e0e0e0;
+  background-color: var(--surface-1);
+  border-right: 1px solid var(--border-color);
   overflow-y: auto;
-  transition: all 0.3s ease;
+  transition: var(--transition);
   flex-shrink: 0;
 }
 
@@ -21,19 +21,19 @@
 }
 
 .step:hover {
-  background-color: #f0f4ff;
+  background-color: var(--bg-primary-light);
 }
 
 .step.active {
-  background-color: #e6ecff;
-  border-left-color: #4a6cf7;
+  background-color: var(--bg-primary-lighter);
+  border-left-color: var(--primary-color);
 }
 
 .step-number {
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  background-color: #e0e0e0;
+  background-color: var(--border-color);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -44,19 +44,19 @@
 }
 
 .step.active .step-number {
-  background-color: #4a6cf7;
+  background-color: var(--primary-color);
   color: white;
 }
 
 .step-name {
   font-size: 14px;
   font-weight: 500;
-  color: #333;
+  color: var(--text-strong);
   white-space: nowrap;
 }
 
 .step.active .step-name {
-  color: #4a6cf7;
+  color: var(--primary-color);
   font-weight: 600;
 }
 
@@ -64,16 +64,16 @@
   position: absolute;
   left: 200px;
   top: 20px;
-  background: linear-gradient(135deg, #4a6cf7 0%, #7b5fff 100%);
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
   border: none;
   border-radius: 0 8px 8px 0;
   font-size: 14px;
   cursor: pointer;
   color: white;
   padding: 10px 8px;
-  transition: all 0.3s ease;
+  transition: var(--transition);
   z-index: 100;
-  box-shadow: 2px 2px 8px rgba(74, 108, 247, 0.3);
+  box-shadow: var(--shadow-primary);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -84,16 +84,27 @@
 
 .collapse-btn:hover {
   transform: translateX(2px);
-  box-shadow: 3px 3px 12px rgba(74, 108, 247, 0.4);
+  box-shadow: 0 8px 24px rgba(74, 108, 247, 0.35);
 }
 
 .collapse-btn.show {
   left: 0;
   border-radius: 8px 0 0 8px;
-  box-shadow: -2px 2px 8px rgba(74, 108, 247, 0.3);
+  box-shadow: var(--shadow-primary);
 }
 
 .collapse-btn.show:hover {
   transform: translateX(-2px);
-  box-shadow: -3px 3px 12px rgba(74, 108, 247, 0.4);
+  box-shadow: 0 8px 24px rgba(74, 108, 247, 0.35);
+}
+
+@media (max-width: 900px) {
+  .sidebar {
+    width: 180px;
+  }
+
+  .collapse-btn {
+    left: 180px;
+    top: 12px;
+  }
 }

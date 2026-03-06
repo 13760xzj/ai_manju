@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/useToast';
+import { Button } from '@/components/common';
 import './index.css';
 
 export function GlobalSettingsPage() {
@@ -21,16 +22,18 @@ export function GlobalSettingsPage() {
 
   return (
     <div className="global-settings-page">
-
-
-        <div className="setting-card">
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-            <h3>基本设置</h3>
-            <div className="action-buttons" style={{ marginTop: 0, display: 'flex', justifyContent: 'flex-end', gap: '10px', flexShrink: 0 }}>
-              <button className="btn btn-primary" onClick={handleSave}>保存设置</button>
-              <button className="btn btn-primary" onClick={handleNext}>下一步</button>
-            </div>
+      <div className="setting-card ui-card">
+        <div className="setting-card-header">
+          <h3>基本设置</h3>
+          <div className="action-buttons">
+            <Button variant="secondary" onClick={handleSave}>
+              保存设置
+            </Button>
+            <Button variant="primary" onClick={handleNext}>
+              下一步
+            </Button>
           </div>
+        </div>
           
           <div className="setting-group">
             <label>默认画面比例</label>
@@ -100,40 +103,38 @@ export function GlobalSettingsPage() {
           
           <div className="setting-group">
             <label>选择画面风格</label>
-            <div style={{ marginTop: '10px' }}>
-              <h4 style={{ fontSize: '14px', fontWeight: 500, marginBottom: '10px' }}>已选风格</h4>
-              <div style={{ display: 'flex', gap: '15px', marginBottom: '20px' }}>
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                  <div style={{ width: '100px', height: '120px', backgroundColor: '#f0f4ff', borderRadius: '8px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '10px' }}>
-                    <img 
-                      src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=anime%20style%20character%20in%20city%20background&image_size=square" 
-                      alt="2D 死亡之神" 
-                      style={{ width: '80px', height: '80px', objectFit: 'cover', borderRadius: '4px' }}
-                    />
-                    <div style={{ marginTop: '8px', fontSize: '12px', textAlign: 'center' }}>2D 死亡之神</div>
-                  </div>
+            <div className="style-section">
+              <h4 className="style-subtitle">已选风格</h4>
+              <div className="style-grid">
+                <div className="style-card">
+                  <img
+                    src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=anime%20style%20character%20in%20city%20background&image_size=square"
+                    alt="2D 死亡之神"
+                    className="style-image"
+                  />
+                  <div className="style-name">2D 死亡之神</div>
                 </div>
               </div>
-              <h4 style={{ fontSize: '14px', fontWeight: 500, marginBottom: '10px' }}>我的风格库</h4>
-              <div style={{ display: 'flex', gap: '15px' }}>
-                <div style={{ width: '100px', height: '120px', border: '2px dashed #e0e0e0', borderRadius: '8px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', transition: 'all 0.3s ease' }}>
-                  <div style={{ fontSize: '32px', color: '#4a6cf7', marginBottom: '8px' }}>+</div>
-                  <div style={{ fontSize: '12px', textAlign: 'center', color: '#666' }}>添加风格</div>
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                  <div style={{ width: '100px', height: '120px', backgroundColor: '#f0f4ff', borderRadius: '8px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '10px' }}>
-                    <img 
-                      src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=anime%20style%20character%20portrait&image_size=square" 
-                      alt="2D 精品漫" 
-                      style={{ width: '80px', height: '80px', objectFit: 'cover', borderRadius: '4px' }}
-                    />
-                    <div style={{ marginTop: '8px', fontSize: '12px', textAlign: 'center' }}>2D 精品漫</div>
-                  </div>
+
+              <h4 className="style-subtitle">我的风格库</h4>
+              <div className="style-grid">
+                <button type="button" className="style-card style-add-card">
+                  <div className="style-add-icon">+</div>
+                  <div className="style-add-text">添加风格</div>
+                </button>
+
+                <div className="style-card">
+                  <img
+                    src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=anime%20style%20character%20portrait&image_size=square"
+                    alt="2D 精品漫"
+                    className="style-image"
+                  />
+                  <div className="style-name">2D 精品漫</div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+      </div>
       </div>
   );
 }

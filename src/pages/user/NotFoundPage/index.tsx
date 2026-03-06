@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { Button } from '@/components/common';
 import './NotFoundPage.css';
 
 export function NotFoundPage() {
@@ -21,12 +22,12 @@ export function NotFoundPage() {
           抱歉，您访问的页面不存在或已被移除。
         </p>
         <div className="not-found-actions">
-          <button className="not-found-btn primary" onClick={handleGoHome}>
+          <Button variant="primary" size="large" onClick={handleGoHome}>
             返回首页
-          </button>
-          <button className="not-found-btn" onClick={handleGoBack}>
+          </Button>
+          <Button variant="secondary" size="large" onClick={handleGoBack}>
             返回上一页
-          </button>
+          </Button>
         </div>
       </div>
     </div>

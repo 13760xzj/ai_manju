@@ -1,6 +1,6 @@
 .header {
   height: 60px;
-  background: linear-gradient(135deg, #4a6cf7 0%, #7b5fff 100%);
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -54,7 +54,7 @@
 
 .nav-btn.active {
   background-color: white;
-  color: #4a6cf7;
+  color: var(--primary-color);
   font-weight: 600;
 }
 
@@ -108,12 +108,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #666;
+  color: var(--text-weak);
 }
 
 .password-toggle:hover {
   opacity: 1;
-  color: #333;
+  color: var(--text-strong);
 }
 
 .password-toggle svg {
@@ -131,7 +131,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  color: #666;
+  color: var(--text-weak);
   cursor: pointer;
 }
 
@@ -142,14 +142,14 @@
 }
 
 .forgot-password {
-  color: #4a6cf7;
+  color: var(--primary-color);
   text-decoration: none;
   transition: all 0.3s ease;
   font-size: 15px;
 }
 
 .forgot-password:hover {
-  color: #7b5fff;
+  color: var(--secondary-color);
   text-decoration: underline;
 }
 
@@ -162,16 +162,42 @@
 .register-link {
   text-align: center;
   font-size: 15px;
-  color: #666;
+  color: var(--text-weak);
 }
 
 .register-link a {
-  color: #4a6cf7;
+  color: var(--primary-color);
   text-decoration: none;
   font-weight: 500;
 }
 
 .register-link a:hover {
-  color: #7b5fff;
+  color: var(--secondary-color);
   text-decoration: underline;
+}
+
+@media (max-width: 900px) {
+  .header {
+    padding: 0 12px;
+  }
+
+  .logo h1 {
+    font-size: 16px;
+  }
+
+  .nav-buttons {
+    position: static;
+    transform: none;
+    pointer-events: auto;
+    margin: 0 8px;
+    flex: 1;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .nav-btn {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
 }

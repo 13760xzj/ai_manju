@@ -55,4 +55,8 @@
   --spacing-xl: 20px;
   --spacing-2xl: 24px;
   --spacing-3xl: 30px;
+
+  /* 页面布局 */
+  --page-padding: 20px;
+  --page-padding-expanded: 30px;
 }
