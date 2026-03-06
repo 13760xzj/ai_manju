@@ -1,6 +1,7 @@
-import { useState } from 'react';
-import type { ReactNode } from 'react';
-import './index.css';
+import { useState } from "react";
+import type { ReactNode } from "react";
+import { ImagePreview } from "@/components/common";
+import "./index.css";
 
 export interface AngleCardProps {
   title: string;
@@ -15,11 +16,11 @@ export interface AngleCardProps {
 export function AngleCard({
   title,
   imageUrl,
-  onPreview,
+  // onPreview,
   onReplace,
   onDownload,
   onDelete,
-  children
+  children,
 }: AngleCardProps) {
   const [showDropdown, setShowDropdown] = useState(false);
 
@@ -28,7 +29,7 @@ export function AngleCard({
       <div className="angle-card-header">
         <div className="angle-card-title">{title}</div>
         <div className="angle-card-menu">
-          <button 
+          <button
             className="angle-card-menu-btn"
             onClick={() => setShowDropdown(!showDropdown)}
           >
@@ -36,7 +37,7 @@ export function AngleCard({
           </button>
           {showDropdown && (
             <div className="angle-card-dropdown">
-              <button 
+              <button
                 className="angle-card-dropdown-item"
                 onClick={() => {
                   onDownload?.();
@@ -45,7 +46,7 @@ export function AngleCard({
               >
                 📥 下载
               </button>
-              <button 
+              <button
                 className="angle-card-dropdown-item danger"
                 onClick={() => {
                   onDelete?.();
@@ -58,7 +59,7 @@ export function AngleCard({
           )}
         </div>
       </div>
-      
+
       <div className="angle-card-image">
         {imageUrl ? (
           <img src={imageUrl} alt={title} />
@@ -68,13 +69,25 @@ export function AngleCard({
           </div>
         )}
       </div>
-      
+
       <div className="angle-card-actions">
-        <button className="angle-action-btn" onClick={onPreview}>👁 预览</button>
-        <button className="angle-action-btn" onClick={onReplace}>⇄ 替换</button>
-        <button className="angle-action-btn" onClick={onDownload}>⬇ 下载</button>
+        <ImagePreview
+          images={[
+            "https://picsum.photos/id/1015/800/600",
+            "https://picsum.photos/id/1016/800/600",
+            "https://picsum.photos/id/1018/800/600",
+          ]}
+        >
+          <button className="angle-action-btn">👁 </button>
+        </ImagePreview>
+        <button className="angle-action-btn" onClick={onReplace}>
+          ⇄ 替换
+        </button>
+        <button className="angle-action-btn" onClick={onDownload}>
+          ⬇ 下载
+        </button>
       </div>
-      
+
       {children}
     </div>
   );

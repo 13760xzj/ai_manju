@@ -2,7 +2,6 @@
   width: 100%;
   height: 100%;
   margin: 0;
-  padding: 0;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -18,6 +17,12 @@
   justify-content: space-between;
   width: 100%;
   box-sizing: border-box;
+}
+
+.list-view-container {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
 }
 
 .nav-left {
@@ -91,7 +96,11 @@
   font-size: 15px;
   font-weight: 600;
   color: var(--text-strong);
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--primary-color) 0%,
+    var(--secondary-color) 100%
+  );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -129,7 +138,11 @@
 .ref-tile {
   width: 80px;
   height: 80px;
-  background: linear-gradient(135deg, var(--bg-primary-light) 0%, var(--bg-primary-lighter) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--bg-primary-light) 0%,
+    var(--bg-primary-lighter) 100%
+  );
   border-radius: var(--border-radius-md);
   border: 2px dashed rgba(15, 23, 42, 0.18);
   display: flex;
@@ -142,7 +155,11 @@
 
 .ref-tile:hover {
   border-color: var(--primary-color);
-  background: linear-gradient(135deg, var(--bg-primary-lighter) 0%, rgba(74, 108, 247, 0.14) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--bg-primary-lighter) 0%,
+    rgba(74, 108, 247, 0.14) 100%
+  );
 }
 
 .ref-tile:focus-visible {
@@ -165,7 +182,11 @@
 .storyboard-image-box {
   width: 100%;
   height: 180px;
-  background: linear-gradient(135deg, var(--bg-primary-light) 0%, var(--bg-primary-lighter) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--bg-primary-light) 0%,
+    var(--bg-primary-lighter) 100%
+  );
   border-radius: 8px;
   display: flex;
   flex-direction: column;
@@ -180,11 +201,15 @@
 
 .storyboard-image-box:hover {
   border-color: var(--primary-color);
-  background: linear-gradient(135deg, var(--bg-primary-lighter) 0%, rgba(74, 108, 247, 0.14) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--bg-primary-lighter) 0%,
+    rgba(74, 108, 247, 0.14) 100%
+  );
 }
 
 .storyboard-image-box::before {
-  content: '🎬';
+  content: "🎬";
   font-size: 32px;
   margin-bottom: 8px;
   opacity: 0.5;
@@ -216,7 +241,11 @@
 }
 
 .storyboard-card-add {
-  background: linear-gradient(135deg, rgba(15, 23, 42, 0.03) 0%, var(--surface-1) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(15, 23, 42, 0.03) 0%,
+    var(--surface-1) 100%
+  );
   border: 2px dashed rgba(15, 23, 42, 0.18);
 }
 
@@ -241,7 +270,11 @@
   font-size: 14px;
   font-weight: 600;
   color: var(--text-strong);
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--primary-color) 0%,
+    var(--secondary-color) 100%
+  );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -328,7 +361,11 @@
 .card-image-container {
   width: 100%;
   aspect-ratio: 1;
-  background: linear-gradient(135deg, var(--bg-primary-light) 0%, var(--bg-primary-lighter) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--bg-primary-light) 0%,
+    var(--bg-primary-lighter) 100%
+  );
   border-radius: 8px;
   display: flex;
   align-items: center;
@@ -386,7 +423,11 @@
 }
 
 .card-action-btn.primary {
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--primary-color) 0%,
+    var(--secondary-color) 100%
+  );
   color: white;
   border: none;
 }

@@ -2,7 +2,7 @@
   width: 100%;
   height: 100%;
   margin: 0;
-  padding: 0;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   min-height: 0;
@@ -87,7 +87,11 @@
   font-size: 15px;
   font-weight: 600;
   color: var(--text-strong);
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--primary-color) 0%,
+    var(--secondary-color) 100%
+  );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -119,7 +123,11 @@
 .dubbing-image-box {
   width: 100%;
   height: 160px;
-  background: linear-gradient(135deg, var(--bg-primary-light) 0%, var(--bg-primary-lighter) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--bg-primary-light) 0%,
+    var(--bg-primary-lighter) 100%
+  );
   border-radius: 8px;
   overflow: hidden;
   position: relative;
@@ -227,7 +235,11 @@
   font-size: 14px;
   font-weight: 600;
   color: var(--text-strong);
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--primary-color) 0%,
+    var(--secondary-color) 100%
+  );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -257,7 +269,11 @@
 .dubbing-card-image-box {
   width: 100%;
   aspect-ratio: 16/9;
-  background: linear-gradient(135deg, var(--bg-primary-light) 0%, var(--bg-primary-lighter) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--bg-primary-light) 0%,
+    var(--bg-primary-lighter) 100%
+  );
   border-radius: 8px;
   border: 2px dashed rgba(15, 23, 42, 0.18);
   display: flex;
@@ -272,11 +288,15 @@
 
 .dubbing-card-image-box:hover {
   border-color: var(--primary-color);
-  background: linear-gradient(135deg, var(--bg-primary-lighter) 0%, rgba(74, 108, 247, 0.14) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--bg-primary-lighter) 0%,
+    rgba(74, 108, 247, 0.14) 100%
+  );
 }
 
 .dubbing-card-image-box::before {
-  content: '🎙️';
+  content: "🎙️";
   font-size: 32px;
   margin-bottom: 8px;
   opacity: 0.5;

@@ -16,7 +16,7 @@
 
 .content {
   flex: 1;
-  padding: var(--page-padding);
+  /* padding: var(--page-padding); */
   overflow-y: auto;
   background-color: var(--bg-color);
   transition: var(--transition);

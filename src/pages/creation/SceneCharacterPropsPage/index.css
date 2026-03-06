@@ -1,7 +1,7 @@
 .scene-character-props-page {
   width: 100%;
   height: 100%;
-  padding: 0;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   min-height: 0;
@@ -10,7 +10,7 @@
 .tab-content {
   flex: 1;
   overflow-y: auto;
-  padding: 12px 20px 20px;
+  /* padding: 12px 20px 20px; */
   background: var(--bg-color);
 }
 
@@ -79,8 +79,6 @@
   grid-template-columns: repeat(1, 1fr);
   max-width: 400px;
 }
-
-
 
 .character-page-header,
 .scene-page-header,
@@ -159,7 +157,7 @@
   .angles-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-  
+
   .angles-grid-1 {
     max-width: 100%;
   }

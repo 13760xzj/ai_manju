@@ -1,9 +1,12 @@
-import { Button } from '@/components/common';
-import { useNavigate } from 'react-router-dom';
-import './index.css';
+import { Button, MarkdownPreview } from "@/components/common";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { markdownContent } from "@/mocks";
+import "./index.css";
 
 export function CasePage() {
   const navigate = useNavigate();
+  const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   return (
     <div className="case-page">
       <div className="hero-section">
@@ -13,7 +16,9 @@ export function CasePage() {
             variant="primary"
             size="large"
             className="create-btn"
-            onClick={() => navigate('/create-work', { state: { backgroundPath: '/case' } })}
+            onClick={() =>
+              navigate("/create-work", { state: { backgroundPath: "/case" } })
+            }
           >
             我要创作 →
           </Button>
@@ -22,7 +27,10 @@ export function CasePage() {
           <div className="banner-card card-1">
             <div className="card-content">AI 生成</div>
           </div>
-          <div className="banner-card card-2">
+          <div
+            className="banner-card card-2"
+            onClick={() => setIsPreviewOpen(true)}
+          >
             <div className="card-content">智能剪辑</div>
           </div>
           <div className="banner-card card-3">
@@ -44,6 +52,13 @@ export function CasePage() {
           ))}
         </div>
       </div>
+
+      <MarkdownPreview
+        visible={isPreviewOpen}
+        title="我的第一动漫.md"
+        onCancel={() => setIsPreviewOpen(false)}
+        content={markdownContent}
+      />
     </div>
   );
 }
