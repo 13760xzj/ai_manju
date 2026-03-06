@@ -1,7 +1,7 @@
-import { Button } from '@/components/common';
-import type { ViewMode } from '@/types';
-import { classNames } from '@/utils';
-import './index.css';
+import { Button } from "@/components/common";
+import type { ViewMode } from "@/types";
+import { classNames } from "@/utils";
+import "./index.css";
 
 export interface ToolbarProps {
   title: string;
@@ -26,18 +26,21 @@ export function Toolbar({
   selectedCategory,
   onCategoryChange,
   showCreate = true,
-  showBatch = true
+  showBatch = true,
 }: ToolbarProps) {
   return (
     <div className="assets-toolbar">
       <div className="toolbar-left">
-        <h2 className="section-title">{title}</h2>
+        <h2 className="section-title shrink-0">{title}</h2>
         {categories && onCategoryChange && (
           <div className="category-filter">
-            {categories.map(cat => (
+            {categories.map((cat) => (
               <button
                 key={cat.id}
-                className={classNames('filter-btn', selectedCategory === cat.id ? 'active' : '')}
+                className={classNames(
+                  "filter-btn",
+                  selectedCategory === cat.id ? "active" : "",
+                )}
                 onClick={() => onCategoryChange(cat.id)}
               >
                 {cat.name}
@@ -56,20 +59,34 @@ export function Toolbar({
         />
         <div className="view-toggle">
           <button
-            className={classNames('toggle-btn', viewMode === 'card' ? 'active' : '')}
-            onClick={() => onViewModeChange('card')}
+            className={classNames(
+              "toggle-btn",
+              viewMode === "card" ? "active" : "",
+            )}
+            onClick={() => onViewModeChange("card")}
           >
             卡片
           </button>
           <button
-            className={classNames('toggle-btn', viewMode === 'list' ? 'active' : '')}
-            onClick={() => onViewModeChange('list')}
+            className={classNames(
+              "toggle-btn",
+              viewMode === "list" ? "active" : "",
+            )}
+            onClick={() => onViewModeChange("list")}
           >
             列表
           </button>
         </div>
-        {showCreate && <Button variant="primary" size="small">新建</Button>}
-        {showBatch && <Button variant="secondary" size="small">批量操作</Button>}
+        {showCreate && (
+          <Button variant="primary" size="small">
+            新建
+          </Button>
+        )}
+        {showBatch && (
+          <Button variant="secondary" size="small">
+            批量操作
+          </Button>
+        )}
       </div>
     </div>
   );

@@ -1,19 +1,16 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useToast } from '@/hooks/useToast';
-import { ConfirmDialog } from '@/components/common';
-import './index.css';
+import { ConfirmDialog } from "@/components/common";
+import "./index.css";
 
 export function StoryboardVideoPage() {
   const navigate = useNavigate();
   const toast = useToast();
-  const [viewMode, setViewMode] = useState<'list' | 'card'>('list');
+  const [viewMode, setViewMode] = useState<"list" | "card">("list");
   const [progressCount] = useState(0);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
 
   const handleNext = () => {
-    navigate('/dubbing');
+    navigate("/dubbing");
   };
 
   const handleRegenerate = () => {
@@ -21,7 +18,7 @@ export function StoryboardVideoPage() {
   };
 
   const confirmRegenerate = () => {
-    toast.info('正在重新生成分镜...');
+    toast.info("正在重新生成分镜...");
   };
 
   const toggleDropdown = (dropdownId: string) => {
@@ -37,15 +34,21 @@ export function StoryboardVideoPage() {
       <div className="page-toolbar">
         <div className="toolbar-left">
           <div className="toggle-group">
-            <button 
-              className={`toggle-btn ${viewMode === 'list' ? 'active' : ''}`}
-              onClick={(e) => { e.stopPropagation(); setViewMode('list'); }}
+            <button
+              className={`toggle-btn ${viewMode === "list" ? "active" : ""}`}
+              onClick={(e) => {
+                e.stopPropagation();
+                setViewMode("list");
+              }}
             >
               列表
             </button>
-            <button 
-              className={`toggle-btn ${viewMode === 'card' ? 'active' : ''}`}
-              onClick={(e) => { e.stopPropagation(); setViewMode('card'); }}
+            <button
+              className={`toggle-btn ${viewMode === "card" ? "active" : ""}`}
+              onClick={(e) => {
+                e.stopPropagation();
+                setViewMode("card");
+              }}
             >
               卡片
             </button>
@@ -55,17 +58,26 @@ export function StoryboardVideoPage() {
           </div>
         </div>
         <div className="toolbar-right">
-          <button className="btn-small btn-secondary" onClick={handleRegenerate}>重新生成分镜</button>
-          <button className="btn-small btn-primary-small" onClick={handleNext}>下一步</button>
+          <button
+            className="btn-small btn-secondary"
+            onClick={handleRegenerate}
+          >
+            重新生成分镜
+          </button>
+          <button className="btn-small btn-primary-small" onClick={handleNext}>
+            下一步
+          </button>
         </div>
       </div>
 
-      {viewMode === 'list' && (
+      {viewMode === "list" && (
         <div className="list-view-container">
           {[1, 2, 3].map((num) => (
             <div key={num} className="storyboard-card">
               <div className="storyboard-header">
-                <div className="storyboard-title">分镜视频 {num}：分镜 1-{num}</div>
+                <div className="storyboard-title">
+                  分镜视频 {num}：分镜 1-{num}
+                </div>
                 <div className="storyboard-actions">
                   <button className="btn-mini btn-cyan">配音对口型</button>
                   <button className="btn-mini btn-blue">编辑分镜视频</button>
@@ -77,19 +89,34 @@ export function StoryboardVideoPage() {
                 <div className="storyboard-item">
                   <div className="storyboard-label">分镜视频：</div>
                   <div className="storyboard-image-box">
-                    <div style={{ fontSize: '12px', marginTop: '8px' }}>编辑分镜视频</div>
-                    <div style={{ fontSize: '10px', color: '#999', marginTop: '4px' }}>点击生成或编辑分镜视频</div>
+                    <div style={{ fontSize: "12px", marginTop: "8px" }}>
+                      编辑分镜视频
+                    </div>
+                    <div
+                      style={{
+                        fontSize: "10px",
+                        color: "#999",
+                        marginTop: "4px",
+                      }}
+                    >
+                      点击生成或编辑分镜视频
+                    </div>
                   </div>
                 </div>
                 <div className="storyboard-item">
                   <div className="storyboard-label">图生视频：</div>
-                  <div className="storyboard-image-box" style={{ width: '200px', height: '180px' }}>
+                  <div
+                    className="storyboard-image-box"
+                    style={{ width: "200px", height: "180px" }}
+                  >
                     <span>暂无图片</span>
                   </div>
                 </div>
                 <div className="storyboard-item">
                   <div className="storyboard-label">详情描述：</div>
-                  <div style={{ fontSize: '12px', color: '#666', lineHeight: 1.6 }}>
+                  <div
+                    style={{ fontSize: "12px", color: "#666", lineHeight: 1.6 }}
+                  >
                     可点击"自动生成视频"或"编辑视频"生成视频
                   </div>
                 </div>
@@ -99,16 +126,21 @@ export function StoryboardVideoPage() {
         </div>
       )}
 
-      {viewMode === 'card' && (
+      {viewMode === "card" && (
         <div className="card-view-container active">
           <div className="card-grid">
             {[1, 2, 3].map((num) => (
               <div key={num} className="video-card-compact">
                 <div className="video-card-header">
-                  <div className="video-card-title">分镜视频 0{num}：分镜 1-{num}</div>
-                  <button 
-                    className="video-card-menu-btn" 
-                    onClick={(e) => { e.stopPropagation(); toggleDropdown(`video-dropdown${num}`); }}
+                  <div className="video-card-title">
+                    分镜视频 0{num}：分镜 1-{num}
+                  </div>
+                  <button
+                    className="video-card-menu-btn"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleDropdown(`video-dropdown${num}`);
+                    }}
                   >
                     ⋮
                   </button>
@@ -141,7 +173,9 @@ export function StoryboardVideoPage() {
                 <div className="video-card-footer">
                   <div className="video-card-info">分镜 1-{num}</div>
                   <div className="video-card-actions">
-                    <button className="video-card-action-btn primary">编辑</button>
+                    <button className="video-card-action-btn primary">
+                      编辑
+                    </button>
                   </div>
                 </div>
               </div>

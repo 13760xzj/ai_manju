@@ -1,2 +1,104 @@
-@import './variables.css';
-@import './global.css';
+@import "./variables.css";
+@import "./global.css";
+
+@import "tailwindcss";
+
+@layer utilities {
+  /* ===== 颜色 - 背景 ===== */
+  .bg-primary {
+    background-color: var(--primary-color);
+  }
+  .bg-secondary {
+    background-color: var(--secondary-color);
+  }
+  .bg-danger {
+    background-color: var(--danger-color);
+  }
+  .bg-success {
+    background-color: var(--success-color);
+  }
+  .bg-warning {
+    background-color: var(--warning-color);
+  }
+  .bg-info {
+    background-color: var(--info-color);
+  }
+
+  .bg-bg {
+    background-color: var(--bg-color);
+  }
+  .bg-bg-white {
+    background-color: var(--bg-white);
+  }
+  .bg-bg-light {
+    background-color: var(--bg-light);
+  }
+  .bg-primary-light {
+    background-color: var(--bg-primary-light);
+  }
+  .bg-primary-lighter {
+    background-color: var(--bg-primary-lighter);
+  }
+
+  /* ===== 文字颜色 ===== */
+  .text-primary {
+    color: var(--primary-color);
+  }
+  .text-secondary {
+    color: var(--text-secondary);
+  }
+  .text-muted {
+    color: var(--text-muted);
+  }
+  .text-danger {
+    color: var(--danger-color);
+  }
+  .text-success {
+    color: var(--success-color);
+  }
+  .text-warning {
+    color: var(--warning-color);
+  }
+  .text-info {
+    color: var(--info-color);
+  }
+
+  /* ===== 边框 ===== */
+  .border-default {
+    border-color: var(--border-color);
+  }
+  .border-light {
+    border-color: var(--border-light);
+  }
+
+  /* ===== 阴影 ===== */
+  .shadow-sm-custom {
+    box-shadow: var(--shadow-sm);
+  }
+  .shadow-md-custom {
+    box-shadow: var(--shadow-md);
+  }
+  .shadow-lg-custom {
+    box-shadow: var(--shadow-lg);
+  }
+  .shadow-primary {
+    box-shadow: var(--shadow-primary);
+  }
+
+  /* ===== 圆角 ===== */
+  .rounded-sm {
+    border-radius: var(--border-radius-sm);
+  }
+  .rounded-md {
+    border-radius: var(--border-radius-md);
+  }
+  .rounded-lg {
+    border-radius: var(--border-radius-lg);
+  }
+  .rounded-xl {
+    border-radius: var(--border-radius-xl);
+  }
+  .rounded-round {
+    border-radius: var(--border-radius-round);
+  }
+}

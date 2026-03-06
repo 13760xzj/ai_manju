@@ -1,47 +1,48 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAppSelector, useAppDispatch } from '@/store/hooks';
-import type { RootState } from '@/store';
-import { createProject, deleteProject, setCurrentProject } from '@/store/slices/projectSlice';
-import { useToast } from '@/hooks/useToast';
-import { Button, Modal, Input } from '@/components/common';
-import type { Project } from '@/types';
-import './ProjectsPage.css';
+import { useAppSelector, useAppDispatch } from "@/store/hooks";
+import type { RootState } from "@/store";
+import {
+  createProject,
+  deleteProject,
+  setCurrentProject,
+} from "@/store/slices/projectSlice";
+import { Button, Modal, Input } from "@/components/common";
+import type { Project } from "@/types";
+import "./ProjectsPage.css";
 
 export function ProjectsPage() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const toast = useToast();
   const projects = useAppSelector((state: RootState) => state.project.projects);
-  
+
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [projectToDelete, setProjectToDelete] = useState<Project | null>(null);
-  const [newProjectName, setNewProjectName] = useState('');
-  const [newProjectDescription, setNewProjectDescription] = useState('');
+  const [newProjectName, setNewProjectName] = useState("");
+  const [newProjectDescription, setNewProjectDescription] = useState("");
 
   const handleCreateProject = () => {
     if (!newProjectName.trim()) {
-      toast.error('请输入项目名称');
+      toast.error("请输入项目名称");
       return;
     }
 
     dispatch(
       createProject({
         name: newProjectName.trim(),
-        description: newProjectDescription.trim()
-      })
+        description: newProjectDescription.trim(),
+      }),
     );
 
-    toast.success('项目创建成功');
+    toast.success("项目创建成功");
     setShowCreateModal(false);
-    setNewProjectName('');
-    setNewProjectDescription('');
+    setNewProjectName("");
+    setNewProjectDescription("");
   };
 
   const handleOpenProject = (project: Project) => {
     dispatch(setCurrentProject(project.id));
-    navigate('/global-settings');
+    navigate("/global-settings");
   };
 
   const handleDeleteClick = (project: Project) => {
@@ -52,7 +53,7 @@ export function ProjectsPage() {
   const handleConfirmDelete = () => {
     if (projectToDelete) {
       dispatch(deleteProject(projectToDelete.id));
-      toast.success('项目已删除');
+      toast.success("项目已删除");
     }
     setShowDeleteModal(false);
     setProjectToDelete(null);
@@ -60,16 +61,16 @@ export function ProjectsPage() {
 
   const getStatusLabel = (status: string) => {
     const statusMap: Record<string, string> = {
-      draft: '草稿',
-      in_progress: '进行中',
-      completed: '已完成',
-      archived: '已归档'
+      draft: "草稿",
+      in_progress: "进行中",
+      completed: "已完成",
+      archived: "已归档",
     };
     return statusMap[status] || status;
   };
 
   const getStatusClass = (status: string) => {
-    return `status-${status.replace('_', '-')}`;
+    return `status-${status.replace("_", "-")}`;
   };
 
   return (
@@ -156,7 +157,9 @@ export function ProjectsPage() {
             label="项目名称"
             type="text"
             value={newProjectName}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewProjectName(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setNewProjectName(e.target.value)
+            }
             placeholder="请输入项目名称"
             required
           />
@@ -164,7 +167,9 @@ export function ProjectsPage() {
             label="项目描述"
             type="text"
             value={newProjectDescription}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewProjectDescription(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setNewProjectDescription(e.target.value)
+            }
             placeholder="请输入项目描述（可选）"
           />
         </div>

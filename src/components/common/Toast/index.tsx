@@ -1,8 +1,10 @@
-import { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { removeToast } from '@/store/slices/uiSlice';
-import type { Toast as ToastType, ToastType as ToastVariant } from '@/store/slices/uiSlice';
-import './Toast.css';
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { removeToast } from "@/store/slices/uiSlice";
+import type {
+  Toast as ToastType,
+  ToastType as ToastVariant,
+} from "@/store/slices/uiSlice";
+import "./Toast.css";
 
 function ToastItem({ toast }: { toast: ToastType }) {
   const dispatch = useAppDispatch();
@@ -18,16 +20,16 @@ function ToastItem({ toast }: { toast: ToastType }) {
 
   const getIcon = (type: ToastVariant): string => {
     switch (type) {
-      case 'success':
-        return '✓';
-      case 'error':
-        return '✕';
-      case 'warning':
-        return '⚠';
-      case 'info':
-        return 'ℹ';
+      case "success":
+        return "✓";
+      case "error":
+        return "✕";
+      case "warning":
+        return "⚠";
+      case "info":
+        return "ℹ";
       default:
-        return 'ℹ';
+        return "ℹ";
     }
   };
 

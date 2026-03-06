@@ -1,12 +1,17 @@
-import { Button } from '@/components/common';
-import './index.css';
+import { Button } from "@/components/common";
+import "./index.css";
 
 export function CasePage() {
   return (
     <div className="case-page">
       <div className="hero-section">
         <h2>三倍速出片，电影级质感</h2>
-        <Button variant="primary" size="large" className="create-btn" onClick={() => window.open('/global-settings', '_blank')}>
+        <Button
+          variant="primary"
+          size="large"
+          className="create-btn"
+          onClick={() => window.open("/global-settings", "_blank")}
+        >
           我要创作 →
         </Button>
         <div className="hero-image">

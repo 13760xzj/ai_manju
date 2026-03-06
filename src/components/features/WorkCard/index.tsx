@@ -1,22 +1,31 @@
-import type { Work } from '@/types';
-import { classNames, getStatusLabel } from '@/utils';
-import './index.css';
+import type { Work } from "@/types";
+import { classNames, getStatusLabel } from "@/utils";
+import "./index.css";
 
 export interface WorkCardProps {
   work: Work;
-  viewMode: 'card' | 'list';
+  viewMode: "card" | "list";
   onClick: (work: Work) => void;
 }
 
 export function WorkCard({ work, viewMode, onClick }: WorkCardProps) {
   return (
     <div
-      className={classNames('work-card', viewMode === 'list' ? 'list-item' : '')}
+      className={classNames(
+        "work-card",
+        viewMode === "list" ? "list-item" : "",
+      )}
       onClick={() => onClick(work)}
     >
       <div className="work-cover">
         <img src={work.cover} alt={work.name} />
-        <div className={classNames('status-badge', `status-${work.status}`)}>
+        <div
+          className={classNames(
+            "status-badge",
+            "status-badge-position",
+            `status-${work.status}`,
+          )}
+        >
           {getStatusLabel(work.status)}
         </div>
       </div>

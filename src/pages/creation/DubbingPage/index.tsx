@@ -1,19 +1,16 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useToast } from '@/hooks/useToast';
-import { ConfirmDialog } from '@/components/common';
-import './index.css';
+import { ConfirmDialog } from "@/components/common";
+import "./index.css";
 
 export function DubbingPage() {
   const navigate = useNavigate();
   const toast = useToast();
-  const [viewMode, setViewMode] = useState<'list' | 'card'>('list');
+  const [viewMode, setViewMode] = useState<"list" | "card">("list");
   const [progressCount] = useState(0);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
 
   const handleNext = () => {
-    navigate('/video-preview');
+    navigate("/video-preview");
   };
 
   const handleRegenerate = () => {
@@ -21,7 +18,7 @@ export function DubbingPage() {
   };
 
   const confirmRegenerate = () => {
-    toast.info('正在重新生成配音...');
+    toast.info("正在重新生成配音...");
   };
 
   const toggleDropdown = (dropdownId: string) => {
@@ -37,15 +34,21 @@ export function DubbingPage() {
       <div className="page-toolbar">
         <div className="toolbar-left">
           <div className="toggle-group">
-            <button 
-              className={`toggle-btn ${viewMode === 'list' ? 'active' : ''}`}
-              onClick={(e) => { e.stopPropagation(); setViewMode('list'); }}
+            <button
+              className={`toggle-btn ${viewMode === "list" ? "active" : ""}`}
+              onClick={(e) => {
+                e.stopPropagation();
+                setViewMode("list");
+              }}
             >
               列表
             </button>
-            <button 
-              className={`toggle-btn ${viewMode === 'card' ? 'active' : ''}`}
-              onClick={(e) => { e.stopPropagation(); setViewMode('card'); }}
+            <button
+              className={`toggle-btn ${viewMode === "card" ? "active" : ""}`}
+              onClick={(e) => {
+                e.stopPropagation();
+                setViewMode("card");
+              }}
             >
               卡片
             </button>
@@ -55,17 +58,26 @@ export function DubbingPage() {
           </div>
         </div>
         <div className="toolbar-right">
-          <button className="btn-small btn-secondary" onClick={handleRegenerate}>重新生成配音</button>
-          <button className="btn-small btn-primary-small" onClick={handleNext}>下一步</button>
+          <button
+            className="btn-small btn-secondary"
+            onClick={handleRegenerate}
+          >
+            重新生成配音
+          </button>
+          <button className="btn-small btn-primary-small" onClick={handleNext}>
+            下一步
+          </button>
         </div>
       </div>
 
-      {viewMode === 'list' && (
+      {viewMode === "list" && (
         <div className="list-view-container">
           {[1, 2, 3].map((num) => (
             <div key={num} className="dubbing-card">
               <div className="dubbing-header">
-                <div className="dubbing-title">分镜配音 {num}：分镜 1-{num}</div>
+                <div className="dubbing-title">
+                  分镜配音 {num}：分镜 1-{num}
+                </div>
                 <div className="dubbing-actions">
                   <button className="btn-mini btn-cyan">分镜脚本</button>
                   <button className="btn-mini btn-cyan">分镜视频</button>
@@ -108,16 +120,21 @@ export function DubbingPage() {
         </div>
       )}
 
-      {viewMode === 'card' && (
+      {viewMode === "card" && (
         <div className="card-view-container active">
           <div className="card-grid">
             {[1, 2, 3].map((num) => (
               <div key={num} className="dubbing-card-compact">
                 <div className="dubbing-card-header">
-                  <div className="dubbing-card-title">分镜配音 {num}：分镜 1-{num}</div>
-                  <button 
-                    className="dubbing-card-menu-btn" 
-                    onClick={(e) => { e.stopPropagation(); toggleDropdown(`dropdown-${num}`); }}
+                  <div className="dubbing-card-title">
+                    分镜配音 {num}：分镜 1-{num}
+                  </div>
+                  <button
+                    className="dubbing-card-menu-btn"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleDropdown(`dropdown-${num}`);
+                    }}
                   >
                     ⋮
                   </button>
@@ -147,7 +164,9 @@ export function DubbingPage() {
                 <div className="dubbing-card-voice-settings">
                   <div className="dubbing-card-voice-item">
                     <span>类型：</span>
-                    <span className="dubbing-card-voice-value">旁白/画外音</span>
+                    <span className="dubbing-card-voice-value">
+                      旁白/画外音
+                    </span>
                   </div>
                   <div className="dubbing-card-voice-item">
                     <span>角色：</span>
@@ -157,7 +176,9 @@ export function DubbingPage() {
                 <div className="dubbing-card-footer">
                   <div className="dubbing-card-info">未配置</div>
                   <div className="dubbing-card-actions">
-                    <button className="dubbing-card-action-btn primary">试听</button>
+                    <button className="dubbing-card-action-btn primary">
+                      试听
+                    </button>
                   </div>
                 </div>
               </div>
