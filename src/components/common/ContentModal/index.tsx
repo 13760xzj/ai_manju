@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 interface ModalProps {
   visible: boolean;
   title?: string;
+  showHeader?: boolean;
   children?: React.ReactNode;
   footer?: React.ReactNode;
   headerRight?: React.ReactNode;
@@ -15,6 +16,7 @@ interface ModalProps {
 export const ContentModal: React.FC<ModalProps> = ({
   visible,
   title = "标题",
+  showHeader = true,
   children,
   footer,
   headerRight,
@@ -81,33 +83,35 @@ export const ContentModal: React.FC<ModalProps> = ({
         onClick={(e) => e.stopPropagation()} // 阻止点击穿透到遮罩
       >
         {/* Header */}
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            padding: "16px 24px",
-            borderBottom: "1px solid #f0f0f0",
-            fontWeight: 600,
-            fontSize: 16,
-            flexShrink: 0,
-          }}
-        >
-          <span>{title}</span>
-          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-            {headerRight}
-            <div
-              onClick={onCancel}
-              style={{
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <IoClose style={{ fontSize: "18px" }} />
+        {showHeader && (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              padding: "16px 24px",
+              borderBottom: "1px solid #f0f0f0",
+              fontWeight: 600,
+              fontSize: 16,
+              flexShrink: 0,
+            }}
+          >
+            <span>{title}</span>
+            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              {headerRight}
+              <div
+                onClick={onCancel}
+                style={{
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                <IoClose style={{ fontSize: "18px" }} />
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
         {/* Body */}
         <div

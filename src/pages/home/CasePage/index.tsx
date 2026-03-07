@@ -1,7 +1,6 @@
-import { Button, MarkdownPreview } from "@/components/common";
+import { Button, ContentModal } from "@/components/common";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { markdownContent } from "@/mocks";
 import "./index.css";
 
 export function CasePage() {
@@ -53,12 +52,20 @@ export function CasePage() {
         </div>
       </div>
 
-      <MarkdownPreview
+      {/* <MarkdownPreview
         visible={isPreviewOpen}
         title="我的第一动漫.md"
         onCancel={() => setIsPreviewOpen(false)}
         content={markdownContent}
-      />
+      /> */}
+
+      <ContentModal
+        visible={isPreviewOpen}
+        showHeader={false}
+        onCancel={() => setIsPreviewOpen(false)}
+      >
+        <div>内容</div>
+      </ContentModal>
     </div>
   );
 }
