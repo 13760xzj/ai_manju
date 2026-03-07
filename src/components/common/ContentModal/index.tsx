@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 interface ModalProps {
   visible: boolean;
   title?: string;
-  content?: React.ReactNode;
+  children?: React.ReactNode;
   footer?: React.ReactNode;
   headerRight?: React.ReactNode;
   onCancel?: () => void;
@@ -15,7 +15,7 @@ interface ModalProps {
 export const ContentModal: React.FC<ModalProps> = ({
   visible,
   title = "标题",
-  content,
+  children,
   footer,
   headerRight,
   onCancel,
@@ -116,7 +116,7 @@ export const ContentModal: React.FC<ModalProps> = ({
             overflowY: "auto",
           }}
         >
-          {content}
+          {children}
         </div>
 
         {/* Footer */}

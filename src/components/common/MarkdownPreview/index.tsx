@@ -123,7 +123,8 @@ export const MarkdownPreview: React.FC<MarkdownPreviewProps> = ({
           </div>
         </div>
       }
-      content={<MarkdownView initialValue={content} />}
-    />
+    >
+      <MarkdownView initialValue={content} />
+    </ContentModal>
   );
 };
