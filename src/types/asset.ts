@@ -7,6 +7,7 @@ export interface Asset {
   tags: string[];
   updateTime: string;
   preview: string;
+  workId?: string; // 所属作品 ID（可选）
 }
 
 export interface Work {
@@ -22,7 +23,8 @@ export type AssetCategory =
   | 'scene'
   | 'character'
   | 'prop'
-  | 'copy'
+  | 'file'
+  | 'pose'
   | 'effect'
   | 'expression'
   | 'action';

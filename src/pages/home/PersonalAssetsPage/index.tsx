@@ -1,13 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '@/store/hooks';
-import type { Asset, Work, AssetCategory } from '@/types';
+import type { Asset, Work, AssetCategory, AssetCategoryInfo } from '@/types';
 import { ASSET_CATEGORIES, STYLE_SUBCATEGORIES } from '@/utils';
-import { Toolbar, AssetCard, WorkCard, DetailPanel } from '@/components/features';
+import { AssetCard, WorkCard, DetailPanel } from '@/components/features';
 import {
   setSelectedCategory,
-  setViewMode,
-  setSearchQuery,
   setSelectedItem,
   setDetailPanelOpen,
   fetchAssets,
@@ -15,6 +13,28 @@ import {
 } from '@/store/slices/assetSlice';
 import type { RootState } from '@/store';
 import './index.css';
+
+// 类别名称映射
+const CATEGORY_MAP: Record<string, string> = {
+  'scene': '场景库',
+  'character': '角色库',
+  'prop': '道具库',
+  'file': '文件库',
+  'pose': '姿势库',
+  'effect': '特效库',
+  'expression': '表情库'
+};
+
+const CATEGORY_NAME_SHORT: Record<string, string> = {
+  'scene': '场景',
+  'character': '角色',
+  'prop': '道具',
+  'file': '文件',
+  'pose': '姿势',
+  'effect': '特效',
+  'expression': '表情',
+  'style': '风格'
+};
 
 export function PersonalAssetsPage() {
   const dispatch = useAppDispatch();
@@ -29,30 +49,57 @@ export function PersonalAssetsPage() {
   const [activeSection, setActiveSection] = useState<'material' | 'style' | 'works'>('material');
   const [expandedStyleFolder, setExpandedStyleFolder] = useState(false);
   const [selectedStyleFilter, setSelectedStyleFilter] = useState<string | null>(null);
-  const [selectedWorkFilter, setSelectedWorkFilter] = useState<string | null>(null);
   const [selectedMaterialCategory, setSelectedMaterialCategory] = useState<string | null>(null);
+  
+  // 三层结构状态
+  const [expandedWorks, setExpandedWorks] = useState<string[]>([]);
+  const [selectedWorkId, setSelectedWorkId] = useState<string | null>(null);
+  const [selectedWorkCategory, setSelectedWorkCategory] = useState<string | null>(null);
 
-  const handleMaterialClick = (categoryId: string) => {
-    setSelectedMaterialCategory(categoryId);
+  // 统一的清空函数
+  const clearAllSelections = () => {
+    setSelectedMaterialCategory(null);
     setSelectedStyleFilter(null);
-    setSelectedWorkFilter(null);
+    setSelectedWorkId(null);
+    setSelectedWorkCategory(null);
+  };
+
+  const handleMaterialClick = (categoryId: AssetCategory) => {
+    clearAllSelections();
+    setSelectedMaterialCategory(categoryId);
     setActiveSection('material');
     dispatch(setSelectedCategory(categoryId));
   };
 
   const handleStyleSubcategoryClick = (subcategoryId: string) => {
-    setSelectedMaterialCategory(null);
+    clearAllSelections();
     setSelectedStyleFilter(subcategoryId);
-    setSelectedWorkFilter(null);
     setActiveSection('style');
     dispatch(setSelectedCategory('all'));
   };
 
   const handleWorkClick = () => {
-    setSelectedMaterialCategory(null);
-    setSelectedStyleFilter(null);
-    setSelectedWorkFilter('all');
+    clearAllSelections();
     setActiveSection('works');
+    dispatch(setSelectedCategory('all'));
+  };
+
+  // 展开/折叠作品
+  const toggleWorkExpand = (workId: string) => {
+    setExpandedWorks(prev => 
+      prev.includes(workId) 
+        ? prev.filter(id => id !== workId)
+        : [...prev, workId]
+    );
+  };
+
+  // 选择作品下的素材类别
+  const handleWorkCategoryClick = (workId: string, category: AssetCategory) => {
+    clearAllSelections();
+    setSelectedWorkId(workId);
+    setSelectedWorkCategory(category);
+    setActiveSection('works');
+    dispatch(setSelectedCategory(category));
   };
 
   const isSceneCategory = selectedMaterialCategory === 'scene';
@@ -70,16 +117,14 @@ export function PersonalAssetsPage() {
       return selectedStyleFilter === 'my-style' ? '我的风格库' : selectedStyleFilter === 'featured-style' ? '精选风格库' : '风格库';
     }
     if (activeSection === 'material' && selectedMaterialCategory) {
-      const categoryMap: Record<string, string> = {
-        'scene': '场景库',
-        'character': '角色库',
-        'prop': '道具库',
-        'file': '文件库',
-        'pose': '姿势库',
-        'effect': '特效库',
-        'expression': '表情库'
-      };
-      return categoryMap[selectedMaterialCategory] || '素材库';
+      return CATEGORY_MAP[selectedMaterialCategory] || '素材库';
+    }
+    if (activeSection === 'works') {
+      if (selectedWorkId && selectedWorkCategory) {
+        const work = works.find(w => w.id === selectedWorkId);
+        return `${work?.name || '作品'} / ${CATEGORY_NAME_SHORT[selectedWorkCategory] || '素材'}`;
+      }
+      return '作品列表';
     }
     return activeSection === 'material' ? '素材库' : '我的作品';
   };
@@ -95,7 +140,13 @@ export function PersonalAssetsPage() {
     dispatch(setDetailPanelOpen(false));
   };
 
+  // 过滤素材
   const filteredAssets = assets.filter(asset => {
+    // 如果是作品下的类别选择
+    if (activeSection === 'works' && selectedWorkId && selectedWorkCategory) {
+      return asset.workId === selectedWorkId && asset.category === selectedWorkCategory;
+    }
+    // 普通素材库的过滤
     const matchesCategory = selectedCategory === 'all' || asset.category === selectedCategory;
     const matchesSearch = asset.name.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
@@ -131,7 +182,7 @@ export function PersonalAssetsPage() {
             </div>
             {expandedFolders.includes('material') && (
               <div className="tree-children">
-                {ASSET_CATEGORIES.filter(cat => cat.id !== 'style').map(cat => (
+                {ASSET_CATEGORIES.map(cat => (
                   <div
                     key={cat.id}
                     className={`tree-item ${selectedMaterialCategory === cat.id ? 'active' : ''}`}
@@ -180,13 +231,44 @@ export function PersonalAssetsPage() {
             </div>
             {expandedFolders.includes('works') && (
               <div className="tree-children">
+                {/* 全部作品 */}
                 <div
-                  className={`tree-item ${selectedWorkFilter === 'all' ? 'active' : ''}`}
+                  className={`tree-item ${activeSection === 'works' && !selectedWorkId && !selectedWorkCategory ? 'active' : ''}`}
                   onClick={handleWorkClick}
                 >
-                  <span className="item-icon">🎬</span>
-                  <span className="item-name">全部作品</span>
+                  <span className="folder-icon">📁</span>
+                  <span className="folder-name">全部作品</span>
                 </div>
+                
+                {/* 作品列表（可展开） */}
+                {works.map(work => (
+                  <div key={work.id}>
+                    <div 
+                      className="tree-item folder"
+                      onClick={() => toggleWorkExpand(work.id)}
+                    >
+                      <span className="folder-icon">{expandedWorks.includes(work.id) ? '📂' : '📁'}</span>
+                      <span className="folder-name">{work.name}</span>
+                    </div>
+                    {expandedWorks.includes(work.id) && (
+                      <div className="tree-children">
+                        {ASSET_CATEGORIES.filter(cat => cat.id !== 'all').map(cat => (
+                          <div
+                            key={cat.id}
+                            className={`tree-item ${selectedWorkId === work.id && selectedWorkCategory === cat.id ? 'active' : ''}`}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleWorkCategoryClick(work.id, cat.id);
+                            }}
+                          >
+                            <span className="item-icon">📄</span>
+                            <span className="item-name">{cat.name}</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ))}
               </div>
             )}
           </div>
@@ -217,19 +299,21 @@ export function PersonalAssetsPage() {
           <span className="breadcrumb-item active">{breadcrumbCategoryName}</span>
         </div>
 
-        <div className="assets-content">
-          {activeTab === 'company' ? (
+        <div className="assets-content" key={`${activeTab}-${activeSection}-${selectedWorkId}-${selectedWorkCategory}`}>
+          {activeTab === 'company' && (
             <div className="empty-state">
               <div className="empty-icon">🏢</div>
               <div className="empty-text">公司资产库暂未开放</div>
             </div>
-          ) : activeSection === 'style' && selectedStyleFilter ? (
-            <>
+          )}
+          
+          {activeTab === 'personal' && activeSection === 'style' && selectedStyleFilter && (
+            <div className="assets-grid-container">
               {assetsStatus.loading && <div className="loading-placeholder">加载中...</div>}
               {assetsStatus.error && <div className="error-placeholder">{assetsStatus.error}</div>}
               {!assetsStatus.loading && !assetsStatus.error && (
                 <div className={`material-grid view-${viewMode}`}>
-                  {isMyStyleCategory && (
+                  {activeSection === 'style' && selectedStyleFilter === 'my-style' && (
                     <div className="style-add-box">
                       <div className="style-add-content">
                         <div className="style-add-icon">+</div>
@@ -237,7 +321,7 @@ export function PersonalAssetsPage() {
                       </div>
                     </div>
                   )}
-                  {isFeaturedStyleCategory && (
+                  {activeSection === 'style' && selectedStyleFilter === 'featured-style' && (
                     <div className="style-featured-placeholder">
                       <div className="style-featured-content">
                         <div className="style-featured-icon">🌟</div>
@@ -249,75 +333,77 @@ export function PersonalAssetsPage() {
                   <div className="empty-state">
                     <div className="empty-icon"></div>
                     <div className="empty-text">
-                      {isMyStyleCategory ? '暂无风格，点击添加' : '暂无精选风格'}
+                      {selectedStyleFilter === 'my-style' ? '暂无风格，点击添加' : '暂无精选风格'}
                     </div>
                   </div>
                 </div>
               )}
-            </>
-          ) : activeSection === 'material' ? (
-            <>
+            </div>
+          )}
+          
+          {activeTab === 'personal' && activeSection === 'material' && (
+            <div className="assets-grid-container">
               {assetsStatus.loading && <div className="loading-placeholder">加载中...</div>}
               {assetsStatus.error && <div className="error-placeholder">{assetsStatus.error}</div>}
               {!assetsStatus.loading && !assetsStatus.error && (
-                  <div className={`material-grid view-${viewMode}`}>
-                    {isSceneCategory && (
-                      <div className="scene-add-box">
-                        <div className="scene-add-content">
-                          <div className="scene-add-icon">+</div>
-                          <div className="scene-add-text">添加场景图</div>
-                        </div>
+                <div className={`material-grid view-${viewMode}`}>
+                  {selectedMaterialCategory === 'scene' && (
+                    <div className="scene-add-box">
+                      <div className="scene-add-content">
+                        <div className="scene-add-icon">+</div>
+                        <div className="scene-add-text">添加场景图</div>
                       </div>
-                    )}
-                    {isCharacterCategory && (
-                      <div className="character-add-box">
-                        <div className="character-add-content">
-                          <div className="character-add-icon">+</div>
-                          <div className="character-add-text">添加角色图</div>
-                        </div>
+                    </div>
+                  )}
+                  {selectedMaterialCategory === 'character' && (
+                    <div className="character-add-box">
+                      <div className="character-add-content">
+                        <div className="character-add-icon">+</div>
+                        <div className="character-add-text">添加角色图</div>
                       </div>
-                    )}
-                    {isPropCategory && (
-                      <div className="prop-add-box">
-                        <div className="prop-add-content">
-                          <div className="prop-add-icon">+</div>
-                          <div className="prop-add-text">添加道具图</div>
-                        </div>
+                    </div>
+                  )}
+                  {selectedMaterialCategory === 'prop' && (
+                    <div className="prop-add-box">
+                      <div className="prop-add-content">
+                        <div className="prop-add-icon">+</div>
+                        <div className="prop-add-text">添加道具图</div>
                       </div>
-                    )}
-                    {isFileCategory && (
-                      <div className="file-add-box">
-                        <div className="file-add-content">
-                          <div className="file-add-icon">📁</div>
-                          <div className="file-add-text">上传文件夹</div>
-                        </div>
+                    </div>
+                  )}
+                  {selectedMaterialCategory === 'file' && (
+                    <div className="file-add-box">
+                      <div className="file-add-content">
+                        <div className="file-add-icon">📁</div>
+                        <div className="file-add-text">上传文件夹</div>
                       </div>
-                    )}
-                    {isPoseCategory && (
-                      <div className="pose-add-box">
-                        <div className="pose-add-content">
-                          <div className="pose-add-icon">+</div>
-                          <div className="pose-add-text">添加姿势图</div>
-                        </div>
+                    </div>
+                  )}
+                  {selectedMaterialCategory === 'pose' && (
+                    <div className="pose-add-box">
+                      <div className="pose-add-content">
+                        <div className="pose-add-icon">+</div>
+                        <div className="pose-add-text">添加姿势图</div>
                       </div>
-                    )}
-                    {isEffectCategory && (
-                      <div className="effect-add-box">
-                        <div className="effect-add-content">
-                          <div className="effect-add-icon">+</div>
-                          <div className="effect-add-text">添加特效图</div>
-                        </div>
+                    </div>
+                  )}
+                  {selectedMaterialCategory === 'effect' && (
+                    <div className="effect-add-box">
+                      <div className="effect-add-content">
+                        <div className="effect-add-icon">+</div>
+                        <div className="effect-add-text">添加特效图</div>
                       </div>
-                    )}
-                    {isExpressionCategory && (
-                      <div className="expression-add-box">
-                        <div className="expression-add-content">
-                          <div className="expression-add-icon">+</div>
-                          <div className="expression-add-text">添加表情图</div>
-                        </div>
+                    </div>
+                  )}
+                  {selectedMaterialCategory === 'expression' && (
+                    <div className="expression-add-box">
+                      <div className="expression-add-content">
+                        <div className="expression-add-icon">+</div>
+                        <div className="expression-add-text">添加表情图</div>
                       </div>
-                    )}
-                    {filteredAssets.map(asset => (
+                    </div>
+                  )}
+                  {filteredAssets.map(asset => (
                     <AssetCard
                       key={asset.id}
                       asset={asset}
@@ -327,24 +413,61 @@ export function PersonalAssetsPage() {
                   ))}
                 </div>
               )}
-            </>
-          ) : (
-            <>
+            </div>
+          )}
+          
+          {activeTab === 'personal' && activeSection === 'works' && (
+            <div className="assets-grid-container">
               {worksStatus.loading && <div className="loading-placeholder">加载中...</div>}
               {worksStatus.error && <div className="error-placeholder">{worksStatus.error}</div>}
               {!worksStatus.loading && !worksStatus.error && (
-                <div className={`works-grid view-${viewMode}`}>
-                  {filteredWorks.map(work => (
-                    <WorkCard
-                      key={work.id}
-                      work={work}
-                      viewMode={viewMode}
-                      onClick={handleItemClick}
-                    />
-                  ))}
+                <div className="works-section">
+                  {!selectedWorkId ? (
+                    <div className={`works-grid view-${viewMode}`}>
+                      {works.map(work => (
+                        <WorkCard
+                          key={work.id}
+                          work={work}
+                          viewMode={viewMode}
+                          onClick={handleItemClick}
+                        />
+                      ))}
+                    </div>
+                  ) : selectedWorkCategory ? (
+                    <div className="work-category-assets">
+                      <div className="category-header">
+                        <h2 className="section-title">
+                          {works.find(w => w.id === selectedWorkId)?.name} - {CATEGORY_NAME_SHORT[selectedWorkCategory]}
+                        </h2>
+                        <span className="asset-count">{filteredAssets.length} 个素材</span>
+                      </div>
+                      <div className={`material-grid view-${viewMode}`}>
+                        {filteredAssets.length === 0 ? (
+                          <div className="empty-state">
+                            <div className="empty-icon">📦</div>
+                            <div className="empty-text">该类别暂无素材</div>
+                          </div>
+                        ) : (
+                          filteredAssets.map(asset => (
+                            <AssetCard
+                              key={asset.id}
+                              asset={asset}
+                              viewMode={viewMode}
+                              onClick={handleItemClick}
+                            />
+                          ))
+                        )}
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="empty-state">
+                      <div className="empty-icon">📂</div>
+                      <div className="empty-text">请从左侧选择要查看的素材类别</div>
+                    </div>
+                  )}
                 </div>
               )}
-            </>
+            </div>
           )}
         </div>
       </main>
@@ -353,7 +476,7 @@ export function PersonalAssetsPage() {
         item={selectedItem}
         isOpen={isDetailPanelOpen}
         onClose={handleCloseDetail}
-        categories={[...ASSET_CATEGORIES]}
+        categories={ASSET_CATEGORIES as unknown as AssetCategoryInfo[]}
       />
     </div>
   );

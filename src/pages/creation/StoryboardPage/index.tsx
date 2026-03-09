@@ -69,7 +69,7 @@ function SortableListCard({
       {...attributes}
     >
       <div
-        className="drag-handle absolute left-2 top-1/2 -translate-y-1/2 cursor-grab active:cursor-grabbing z-20 p-2 rounded hover:bg-gray-200"
+        className="drag-handle absolute left-2 top-2 cursor-grab active:cursor-grabbing z-20 p-2 rounded hover:bg-gray-200"
         {...listeners}
         style={{ opacity: isDragging ? 1 : 0.5 }}
       >
@@ -244,7 +244,7 @@ function SortableCardView({
       {...attributes}
     >
       <div
-        className="drag-handle absolute -left-8 top-0 cursor-grab active:cursor-grabbing z-20 p-2 rounded h-full flex items-center hover:bg-gray-200"
+        className="drag-handle absolute left-2 top-2 cursor-grab active:cursor-grabbing z-20 p-2 rounded hover:bg-gray-200"
         {...listeners}
         style={{ opacity: isDragging ? 1 : 0.5 }}
       >

@@ -66,7 +66,7 @@ function SortableListCard({
       {...attributes}
     >
       <div
-        className="drag-handle absolute left-2 top-1/2 -translate-y-1/2 cursor-grab active:cursor-grabbing z-20 p-2 rounded hover:bg-gray-200"
+        className="drag-handle absolute left-2 top-2 cursor-grab active:cursor-grabbing z-20 p-2 rounded hover:bg-gray-200"
         {...listeners}
         style={{ opacity: isDragging ? 1 : 0.5 }}
       >
@@ -210,7 +210,7 @@ function SortableCardView({
       {...attributes}
     >
       <div
-        className="drag-handle absolute -left-8 top-0 cursor-grab active:cursor-grabbing z-20 p-2 rounded h-full flex items-center hover:bg-gray-200"
+        className="drag-handle absolute left-2 top-2 cursor-grab active:cursor-grabbing z-20 p-2 rounded hover:bg-gray-200"
         {...listeners}
         style={{ opacity: isDragging ? 1 : 0.5 }}
       >
@@ -281,14 +281,6 @@ function SortableCardView({
       </div>
       <div className="video-card-image-box">
         <span>点击编辑分镜视频</span>
-      </div>
-      <div className="video-card-footer">
-        <div className="video-card-info">{item.subtitle}</div>
-        <div className="video-card-actions">
-          <Button variant="primary" size="mini" onClick={onEdit}>
-            编辑
-          </Button>
-        </div>
       </div>
     </div>
   );
