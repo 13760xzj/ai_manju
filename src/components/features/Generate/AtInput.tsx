@@ -327,7 +327,13 @@ export default function AtInput({
         <div
           ref={popRef}
           className="shadow-lg border p-2! border-[#38447c] bg-[#1f1f1f] text-white rounded-xl overflow-hidden"
-          style={{ position: "fixed", left: pos.x, top: pos.y, minWidth: 140 }}
+          style={{
+            position: "fixed",
+            zIndex: 2002,
+            left: pos.x,
+            top: pos.y,
+            minWidth: 140,
+          }}
         >
           {options.length === 0 ? (
             <div className="py-2!">
