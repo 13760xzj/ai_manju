@@ -135,7 +135,7 @@
 
 .angle-card-actions {
   display: flex;
-  gap: 6px;
+  gap: 0px;
   padding: 8px 10px;
   background: #fafafa;
   border-top: 1px solid #e8e8e8;
@@ -155,10 +155,16 @@
   display: flex;
   align-items: center;
   gap: 3px;
+  white-space: nowrap;
 }
 
 .angle-action-btn:hover {
   border-color: #4a6cf7;
   color: #4a6cf7;
   background: #f9f9ff;
+}
+
+.angle-action-text-btn {
+  padding: 4px 12px;
+  font-size: 12px;
 }

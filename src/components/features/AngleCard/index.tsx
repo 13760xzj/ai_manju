@@ -44,7 +44,7 @@ export function AngleCard({
                   setShowDropdown(false);
                 }}
               >
-                📥 下载
+                下载
               </button>
               <button
                 className="angle-card-dropdown-item danger"
@@ -53,7 +53,7 @@ export function AngleCard({
                   setShowDropdown(false);
                 }}
               >
-                🗑️ 删除
+                删除
               </button>
             </div>
           )}
@@ -78,13 +78,18 @@ export function AngleCard({
             "https://picsum.photos/id/1018/800/600",
           ]}
         >
-          <button className="angle-action-btn">👁 </button>
+          <button className="angle-action-btn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
+            </svg>
+            预览
+          </button>
         </ImagePreview>
         <button className="angle-action-btn" onClick={onReplace}>
           ⇄ 替换
         </button>
         <button className="angle-action-btn" onClick={onDownload}>
-          ⬇ 下载
+          下载
         </button>
       </div>
 

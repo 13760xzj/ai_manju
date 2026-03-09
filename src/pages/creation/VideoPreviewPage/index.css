@@ -246,7 +246,7 @@
 }
 
 .track-labels {
-  width: 140px;
+  width: 60px;
   background-color: rgba(15, 23, 42, 0.03);
   border-right: 1px solid var(--border-color);
   display: flex;
@@ -258,8 +258,7 @@
   height: 60px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 0 15px;
+  padding: 0 5px;
   font-size: 13px;
   font-weight: 500;
   color: var(--text-strong);
@@ -354,7 +353,16 @@
   width: 2px;
   background-color: #ff4d4f;
   z-index: 200;
-  pointer-events: none;
+  cursor: grab;
+  transition: opacity 0.2s;
+}
+
+.timeline-playhead:hover {
+  opacity: 0.7;
+}
+
+.timeline-playhead:active {
+  cursor: grabbing;
 }
 
 .timeline-playhead::before {

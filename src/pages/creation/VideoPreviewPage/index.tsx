@@ -8,6 +8,7 @@ export function VideoPreviewPage() {
   const toast = useToast();
   const [videoStatus] = useState('准备就绪');
   const timeRulerRef = useRef<HTMLDivElement>(null);
+  const timelineRef = useRef<HTMLDivElement>(null);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -16,6 +17,7 @@ export function VideoPreviewPage() {
   const [volume, setVolume] = useState(1);
   const [isMuted, setIsMuted] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isDraggingPlayhead, setIsDraggingPlayhead] = useState(false);
   const playerContainerRef = useRef<HTMLDivElement>(null);
 
   const TIMELINE_SECONDS = 150;
@@ -164,6 +166,44 @@ export function VideoPreviewPage() {
   const handleEditSubtitle = (index: number) => toast.info(`编辑字幕 ${index}，修改文字和显示时间`);
   const handleReplaceMusic = () => toast.info('替换背景音乐文件');
 
+  const handlePlayheadMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDraggingPlayhead(true);
+  };
+
+  const handlePlayheadMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isDraggingPlayhead || !timelineRef.current) return;
+    
+    const timeline = timelineRef.current;
+    const rect = timeline.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const newTime = Math.max(0, Math.min(x / PIXELS_PER_SECOND, TIMELINE_SECONDS));
+    
+    setCurrentTime(newTime);
+    if (videoRef.current) {
+      videoRef.current.currentTime = newTime;
+    }
+  };
+
+  const handlePlayheadMouseUp = () => {
+    setIsDraggingPlayhead(false);
+  };
+
+  useEffect(() => {
+    const handleGlobalMouseUp = () => {
+      setIsDraggingPlayhead(false);
+    };
+
+    if (isDraggingPlayhead) {
+      document.addEventListener('mouseup', handleGlobalMouseUp);
+    }
+
+    return () => {
+      document.removeEventListener('mouseup', handleGlobalMouseUp);
+    };
+  }, [isDraggingPlayhead]);
+
   return (
     <div className="video-preview-page">
       <div className="page-toolbar ui-toolbar">
@@ -173,8 +213,8 @@ export function VideoPreviewPage() {
           </div>
         </div>
         <div className="toolbar-right">
-          <Button variant="secondary" size="small" onClick={handleZoomIn}>🔍 放大 +</Button>
-          <Button variant="secondary" size="small" onClick={handleZoomOut}>🔍 缩小 -</Button>
+          <Button variant="secondary" size="small" onClick={handleZoomIn}>放大 +</Button>
+          <Button variant="secondary" size="small" onClick={handleZoomOut}>缩小 -</Button>
           <Button variant="secondary" size="small" onClick={handleReGenerateVideo}>重新生成视频</Button>
           <Button variant="secondary" size="small" onClick={handleExportVideo}>导出视频</Button>
           <Button variant="primary" size="small" onClick={handleSaveProject}>保存项目</Button>
@@ -255,34 +295,36 @@ export function VideoPreviewPage() {
               <div className="track-labels">
                 <div className="track-label">
                   <div className="track-label-text">
-                    <span className="track-label-icon">🎬</span>
-                    <span>视频轨道</span>
+                    <span>视频</span>
                   </div>
                 </div>
                 <div className="track-label">
                   <div className="track-label-text">
-                    <span className="track-label-icon">🎙️</span>
-                    <span>配音轨道</span>
+                    <span>配音</span>
                   </div>
                 </div>
                 <div className="track-label">
                   <div className="track-label-text">
-                    <span className="track-label-icon">📝</span>
-                    <span>字幕轨道</span>
+                    <span>字幕</span>
                   </div>
                 </div>
                 <div className="track-label">
                   <div className="track-label-text">
-                    <span className="track-label-icon">🎵</span>
-                    <span>音乐轨道</span>
+                    <span>音乐</span>
                   </div>
                 </div>
               </div>
               
-              <div className="timeline-scroll" aria-label="时间轴滚动区域">
+              <div className="timeline-scroll" aria-label="时间轴滚动区域" ref={timelineRef}>
                 <div className="timeline-content" style={{ width: `${timelineWidth}px` }}>
                   <div className="time-ruler" id="time-ruler" ref={timeRulerRef} />
-                  <div className="timeline-playhead" style={{ left: `${playheadLeft}px` }} />
+                  <div 
+                    className="timeline-playhead" 
+                    style={{ left: `${playheadLeft}px` }}
+                    onMouseDown={handlePlayheadMouseDown}
+                    onMouseMove={handlePlayheadMouseMove}
+                    onMouseUp={handlePlayheadMouseUp}
+                  />
               
               <div className="tracks-area">
                 <div className="track track-video">
@@ -317,7 +359,6 @@ export function VideoPreviewPage() {
                       style={{ width: clip.width + 'px' }}
                       onClick={() => handleUploadDubbing(i + 1)}
                     >
-                      <span className="dubbing-upload-icon">{clip.hasAudio ? '✅' : '📤'}</span>
                       <span className="dubbing-clip-text">{clip.text}</span>
                     </div>
                   ))}
@@ -354,7 +395,6 @@ export function VideoPreviewPage() {
                       ))}
                     </div>
                     <span className="music-clip-text">
-                      <span className="music-clip-icon">🎵</span>
                       <span>背景音乐 - epic_theme.mp3</span>
                     </span>
                     <div className="clip-handle clip-handle-right"></div>

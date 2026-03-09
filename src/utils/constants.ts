@@ -3,10 +3,15 @@ export const ASSET_CATEGORIES = [
   { id: 'scene', name: '场景库' },
   { id: 'character', name: '角色库' },
   { id: 'prop', name: '道具库' },
-  { id: 'copy', name: '文案库' },
+  { id: 'file', name: '文件库' },
+  { id: 'pose', name: '姿势库' },
   { id: 'effect', name: '特效库' },
-  { id: 'expression', name: '表情库' },
-  { id: 'action', name: '动作库' }
+  { id: 'expression', name: '表情库' }
+] as const;
+
+export const STYLE_SUBCATEGORIES = [
+  { id: 'my-style', name: '我的风格库' },
+  { id: 'featured-style', name: '精选风格库' }
 ] as const;
 
 export const WORK_STATUS_MAP = {
