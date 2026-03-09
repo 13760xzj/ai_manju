@@ -18,11 +18,13 @@ export {
   HorizontalScroll,
 } from "./Storyboard";
 export { StoryboardTool } from "./StoryboardTool";
-export { StoryboardScript } from "./StoryboardScript";
+export { StoryboardScript } from "./storyboardScript";
+export { StoryboardVideo } from "./storyboardVideo";
 export {
   GeneratePicToPic,
   GenerateTxtToPic,
   GenerateThreeView,
   GenerateNineGrid,
   GenerateMultiToPic,
+  GeneratePicToVideo,
 } from "./Generate";

@@ -14,7 +14,7 @@ export interface StoryboardScriptProps {
   onCancel: () => void;
 }
 
-const StoryboardScript: React.FC<StoryboardScriptProps> = ({
+const StoryboardVideo: React.FC<StoryboardScriptProps> = ({
   visible,
   onCancel,
 }) => {
@@ -29,9 +29,9 @@ const StoryboardScript: React.FC<StoryboardScriptProps> = ({
       <StoryboardLayout
         onCancel={onCancel}
         leftPanelTabs={[
-          { label: "生成分镜图", content: <GenerateMultiToPic /> },
-          { label: "对话作图", content: <GenerateTxtToPic /> },
-          { label: "九宫格", content: <GenerateNineGrid /> },
+          { label: "图生视频", content: <GenerateMultiToPic /> },
+          { label: "多参生视频", content: <GenerateTxtToPic /> },
+          { label: "首位帧视频", content: <GenerateNineGrid /> },
         ]}
         topData={new Array(20).fill(0).map((_, i) => ({
           id: i,
@@ -45,4 +45,4 @@ const StoryboardScript: React.FC<StoryboardScriptProps> = ({
   );
 };
 
-export { StoryboardScript };
+export { StoryboardVideo };

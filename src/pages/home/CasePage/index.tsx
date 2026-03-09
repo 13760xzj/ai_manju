@@ -1,5 +1,5 @@
 import { Button } from "@/components/common";
-import { StoryboardScript } from "@/components/features";
+import { StoryboardVideo } from "@/components/features";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import "./index.css";
@@ -61,7 +61,7 @@ export function CasePage() {
         content={markdownContent}
       /> */}
 
-      <StoryboardScript
+      <StoryboardVideo
         visible={isPreviewOpen}
         onCancel={() => setIsPreviewOpen(false)}
       />
