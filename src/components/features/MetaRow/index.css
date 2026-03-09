@@ -1,0 +1,30 @@
+.meta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  background: #fafafa;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.meta-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.meta-count {
+  font-size: 13px;
+  font-weight: 600;
+  color: #4a6cf7;
+}
+
+.meta-label {
+  font-size: 13px;
+  color: #666;
+}
+
+.meta-actions {
+  display: flex;
+  gap: 8px;
+}

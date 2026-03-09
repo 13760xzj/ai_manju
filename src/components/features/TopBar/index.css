@@ -1,0 +1,111 @@
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 20px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  margin-bottom: 20px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.top-bar-left {
+  flex: 0 0 auto;
+  min-width: 180px;
+  display: flex;
+  align-items: center;
+}
+
+.top-bar-left:empty {
+  display: none;
+}
+
+.project-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #666;
+}
+
+.project-name {
+  font-weight: 600;
+  color: #333;
+}
+
+.step-separator {
+  color: #ccc;
+}
+
+.current-step {
+  color: #666;
+}
+
+.top-bar-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.segmented-tabs {
+  display: inline-flex;
+  gap: 6px;
+  background: #f5f5f5;
+  padding: 4px;
+  border-radius: 8px;
+}
+
+.segmented-tab {
+  padding: 8px 20px;
+  border: none;
+  background: transparent;
+  font-size: 14px;
+  font-weight: 500;
+  color: #666;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.segmented-tab:hover {
+  background: white;
+  color: #4a6cf7;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.segmented-tab.active {
+  background: white;
+  color: #4a6cf7;
+  font-weight: 600;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.top-bar-right {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.stats-text {
+  font-size: 13px;
+  color: #666;
+  font-weight: 500;
+}
+
+.stats-text {
+  font-size: 13px;
+  color: #666;
+  font-weight: 500;
+}
+
+.top-bar-actions {
+  display: flex;
+  gap: 8px;
+}

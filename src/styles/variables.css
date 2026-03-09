@@ -1,0 +1,62 @@
+:root {
+  /* 颜色变量 */
+  --primary-color: #4a6cf7;
+  --secondary-color: #7b5fff;
+  --danger-color: #ff4d4f;
+  --success-color: #52c41a;
+  --warning-color: #faad14;
+  --info-color: #1890ff;
+  
+  /* 背景色 */
+  --bg-color: #f5f7fa;
+  --bg-white: #ffffff;
+  --bg-light: #f9f9f9;
+  --bg-primary-light: #f0f4ff;
+  --bg-primary-lighter: #e6ecff;
+  
+  /* 文字颜色 */
+  --text-color: #333333;
+  --text-secondary: #666666;
+  --text-muted: #999999;
+  
+  /* 边框颜色 */
+  --border-color: #e0e0e0;
+  --border-light: #f0f0f0;
+  
+  /* 阴影 */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --shadow-primary: 0 4px 12px rgba(74, 108, 247, 0.3);
+  
+  /* 圆角 */
+  --border-radius-sm: 4px;
+  --border-radius-md: 6px;
+  --border-radius-lg: 8px;
+  --border-radius-xl: 12px;
+  --border-radius-round: 20px;
+  
+  /* 过渡 */
+  --transition: all 0.3s ease;
+  
+  /* 语义化令牌（逐步用于统一设计系统） */
+  --surface-1: var(--bg-white);
+  --surface-2: var(--bg-light);
+  --text-strong: var(--text-color);
+  --text-weak: var(--text-secondary);
+  --text-faint: var(--text-muted);
+  --focus-ring: 0 0 0 3px rgba(74, 108, 247, 0.25);
+  
+  /* 间距 */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-lg: 16px;
+  --spacing-xl: 20px;
+  --spacing-2xl: 24px;
+  --spacing-3xl: 30px;
+
+  /* 页面布局 */
+  --page-padding: 20px;
+  --page-padding-expanded: 30px;
+}

@@ -1,0 +1,36 @@
+.editor-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
+  border-bottom: 1px solid #d0d5dc;
+  flex-shrink: 0;
+}
+
+.toolbar-left,
+.toolbar-right {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.editor-toolbar button:disabled {
+  cursor: not-allowed;
+}
+
+.editor-toolbar .btn-secondary:disabled {
+  opacity: 1;
+  background: #f3f4f6;
+  border-color: #e5e7eb;
+  color: #9ca3af;
+  box-shadow: none;
+}
+
+.editor-toolbar button:disabled:hover {
+  border-color: #e5e7eb;
+  color: #9ca3af;
+  background: #f3f4f6;
+  transform: none;
+  box-shadow: none;
+}

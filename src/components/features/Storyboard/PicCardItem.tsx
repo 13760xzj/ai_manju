@@ -1,0 +1,135 @@
+import React, { useState } from "react";
+import { BiSolidEdit } from "react-icons/bi";
+import { IoMdMore } from "react-icons/io";
+import { Tooltip, Popover } from "antd";
+import "./components.css";
+import { MdOutlineKeyboardArrowRight } from "react-icons/md";
+import { FaRegImages } from "react-icons/fa";
+import { AiOutlineArrowsAlt } from "react-icons/ai";
+import { RiDownloadLine } from "react-icons/ri";
+import { ImagePreview } from "@/components/common";
+
+export interface PicCardItemProps {
+  item: object;
+  generateThreeBtn?: boolean; // 是否显示生成三视图按钮
+}
+export const PicCardItem: React.FC<PicCardItemProps> = ({
+  item,
+  generateThreeBtn = false,
+}) => {
+  const [open, setOpen] = useState(false);
+
+  const handleOpenChange = (newOpen: boolean) => {
+    setOpen(newOpen);
+  };
+
+  return (
+    <div className="h-50 flex flex-col gap-2">
+      <div
+        className="flex-1 overflow-hidden rounded-xl relative"
+        style={{
+          border: item.selected
+            ? `2px solid var(--primary-color)`
+            : "2px solid transparent",
+        }}
+      >
+        <img
+          src={`https://picsum.photos/1270/720?random=${item.index}`}
+          className="object-cover w-full h-full transition-all duration-500  hover:scale-125"
+        />
+        <div className="absolute right-2 top-2 flex items-center gap-1 justify-end">
+          <ImagePreview images={["https://picsum.photos/id/1015/800/600"]}>
+            <div className="w-6 h-6 bg-black/60 hover:opacity-80 cursor-pointer rounded-md flex items-center justify-center border border-white/60">
+              <AiOutlineArrowsAlt style={{ fontSize: "16px" }} />
+            </div>
+          </ImagePreview>
+
+          <div className="w-6 h-6 bg-black/60 hover:opacity-80 cursor-pointer rounded-md flex items-center justify-center border border-white/60">
+            <RiDownloadLine style={{ fontSize: "16px" }} />
+          </div>
+        </div>
+      </div>
+      <div className="flex gap-2">
+        <div className="h-6 px-2! bg-white/10 hover:opacity-80 cursor-pointer rounded-md flex items-center justify-center border border-white/20">
+          <span className="text-xs">添加为场景图</span>
+        </div>
+        <div className="flex-1"></div>
+        {generateThreeBtn && (
+          <div className="h-6 w-6 bg-white/10 hover:opacity-80 cursor-pointer rounded-md flex items-center justify-center border border-white/20">
+            <Tooltip title={"生成三视图"}>
+              <FaRegImages />
+            </Tooltip>
+          </div>
+        )}
+        <div className="h-6 w-6 bg-white/10 hover:opacity-80 cursor-pointer rounded-md flex items-center justify-center border border-white/20">
+          <Tooltip title={"重新编辑"}>
+            <BiSolidEdit />
+          </Tooltip>
+        </div>
+        <div className="h-6 w-6 bg-white/10 hover:opacity-80 cursor-pointer rounded-md flex items-center justify-center border border-white/20">
+          <Popover
+            content={
+              <div className="p-2!">
+                <div
+                  onClick={() => setOpen(false)}
+                  className="p-2! w-22 text-xs text-white/90 hover:bg-[#444547] cursor-pointer rounded-md"
+                >
+                  对话作图
+                </div>
+                <div className="p-2! w-22 text-xs relative text-white/90 hover:bg-[#444547] cursor-pointer rounded-md group">
+                  <div className="flex items-center justify-between">
+                    <span>变清晰</span>
+                    <MdOutlineKeyboardArrowRight />
+                  </div>
+                  <div className="absolute left-full top-0 p-1! bg-[#2f3032] rounded-md hidden group-hover:block shadow-3xl">
+                    <div
+                      onClick={() => setOpen(false)}
+                      className="p-2! text-xs text-white/90  cursor-pointer rounded-md flex flex-col gap-2"
+                    >
+                      {[1, 2].map((item) => (
+                        <div className="flex items-center gap-2 hover:bg-[#444547] p-2! w-60 rounded-md">
+                          <img
+                            src={`https://picsum.photos/120/70?random=${item}`}
+                            className="w-10 h-10 rounded-full"
+                          />
+                          <div>
+                            <div className="text-sm font-bold">
+                              <span>重绘高清{item}</span>
+                              <span className="text-xs text-white/50 my-0.5!">
+                                （消耗 10 积分）
+                              </span>
+                            </div>
+                            <div className="text-[10px] text-white/50 mt-1!">
+                              AI 补充细节与纹理，生成4K大片质感
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <div
+                  onClick={() => setOpen(false)}
+                  className="p-2! w-22 text-xs text-white/90 hover:bg-[#444547] cursor-pointer rounded-md"
+                >
+                  多机位
+                </div>
+              </div>
+            }
+            title=""
+            trigger="click"
+            placement="bottom"
+            overlayClassName="custom-popover"
+            arrow={false}
+            open={open}
+            onOpenChange={handleOpenChange}
+          >
+            <Tooltip title={"更多功能"}>
+              <IoMdMore />
+            </Tooltip>
+          </Popover>
+        </div>
+      </div>
+    </div>
+  );
+};

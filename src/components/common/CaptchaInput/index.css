@@ -1,0 +1,115 @@
+.captcha-input-wrapper {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.captcha-input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 2px solid #e0e0e0;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.captcha-input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(var(--primary-color-rgb), 0.1);
+}
+
+.captcha-input.error {
+  border-color: var(--error-color);
+  animation: shake 0.3s ease;
+}
+
+.captcha-input:disabled {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.captcha-image-wrapper {
+  position: relative;
+  cursor: pointer;
+  border-radius: 4px;
+  overflow: hidden;
+  transition: opacity 0.3s ease;
+  user-select: none;
+}
+
+.captcha-image-wrapper:hover {
+  opacity: 0.9;
+}
+
+.captcha-image-wrapper:active {
+  opacity: 0.7;
+}
+
+.captcha-image {
+  display: block;
+  width: 120px;
+  height: 40px;
+  border: 2px solid #e0e0e0;
+  border-radius: 4px;
+}
+
+.captcha-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 120px;
+  height: 40px;
+  border: 2px dashed #e0e0e0;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.captcha-placeholder:hover {
+  border-color: var(--primary-color);
+  background-color: rgba(var(--primary-color-rgb), 0.05);
+}
+
+.captcha-placeholder span {
+  font-size: 12px;
+  color: #999;
+  text-align: center;
+  padding: 4px;
+  line-height: 1.2;
+}
+
+.captcha-refresh-hint {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.captcha-image-wrapper:hover .captcha-refresh-hint {
+  opacity: 1;
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+}

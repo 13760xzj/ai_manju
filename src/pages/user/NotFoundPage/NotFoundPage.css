@@ -1,0 +1,43 @@
+.not-found-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 0;
+  background-color: var(--bg-color);
+}
+
+.not-found-content {
+  max-width: 500px;
+  text-align: center;
+}
+
+.not-found-icon {
+  font-size: 120px;
+  font-weight: 700;
+  color: var(--primary-color);
+  line-height: 1;
+  margin-bottom: 20px;
+  opacity: 0.8;
+}
+
+.not-found-title {
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--text-strong);
+  margin: 0 0 12px;
+}
+
+.not-found-message {
+  font-size: 16px;
+  color: var(--text-weak);
+  line-height: 1.6;
+  margin: 0 0 32px;
+}
+
+.not-found-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}

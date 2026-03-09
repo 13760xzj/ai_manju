@@ -1,0 +1,113 @@
+.sidebar {
+  width: 200px;
+  background-color: var(--surface-1);
+  border-right: 1px solid var(--border-color);
+  overflow-y: auto;
+  transition: var(--transition);
+  flex-shrink: 0;
+}
+
+.steps {
+  padding: 20px 0;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-left: 3px solid transparent;
+}
+
+.step:hover {
+  background-color: var(--bg-primary-light);
+}
+
+.step.active {
+  background-color: var(--bg-primary-lighter);
+  border-left-color: var(--primary-color);
+}
+
+.step-number {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+
+.step.active .step-number {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.step-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-strong);
+  white-space: nowrap;
+}
+
+.step.active .step-name {
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+.collapse-btn {
+  position: absolute;
+  left: 200px;
+  top: 10px;
+  background: linear-gradient(
+    135deg,
+    var(--primary-color) 0%,
+    var(--secondary-color) 100%
+  );
+  border: none;
+  border-radius: 0 8px 8px 0;
+  font-size: 14px;
+  cursor: pointer;
+  color: white;
+  transition: var(--transition);
+  z-index: 100;
+  box-shadow: var(--shadow-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 40px;
+  flex-shrink: 0;
+}
+
+.collapse-btn:hover {
+  transform: translateX(2px);
+  box-shadow: 0 8px 24px rgba(74, 108, 247, 0.35);
+}
+
+.collapse-btn.show {
+  left: 0;
+  border-radius: 8px 0 0 8px;
+  box-shadow: var(--shadow-primary);
+}
+
+.collapse-btn.show:hover {
+  transform: translateX(-2px);
+  box-shadow: 0 8px 24px rgba(74, 108, 247, 0.35);
+}
+
+@media (max-width: 900px) {
+  .sidebar {
+    width: 180px;
+  }
+
+  .collapse-btn {
+    left: 180px;
+    top: 12px;
+  }
+}
