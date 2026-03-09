@@ -1,0 +1,37 @@
+.container {
+  height: 100%;
+  display: grid;
+  gap: 10px;
+}
+
+/* 收起 */
+.fold {
+  grid-template-columns: 1fr 160px;
+  grid-template-rows: 1fr 160px;
+
+  grid-template-areas:
+    "a b"
+    "c c";
+}
+
+/* 展开 */
+.expand {
+  grid-template-columns: 1fr 160px;
+  grid-template-rows: 1fr 160px;
+
+  grid-template-areas:
+    "a b"
+    "c b";
+}
+
+.a {
+  grid-area: a;
+}
+
+.b {
+  grid-area: b;
+}
+
+.c {
+  grid-area: c;
+}

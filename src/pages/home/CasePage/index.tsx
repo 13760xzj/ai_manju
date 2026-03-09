@@ -1,4 +1,5 @@
-import { Button, ContentModal } from "@/components/common";
+import { Button } from "@/components/common";
+import { StoryboardScript } from "@/components/features";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import "./index.css";
@@ -6,6 +7,7 @@ import "./index.css";
 export function CasePage() {
   const navigate = useNavigate();
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
+
   return (
     <div className="case-page">
       <div className="hero-section">
@@ -59,13 +61,10 @@ export function CasePage() {
         content={markdownContent}
       /> */}
 
-      <ContentModal
+      <StoryboardScript
         visible={isPreviewOpen}
-        showHeader={false}
         onCancel={() => setIsPreviewOpen(false)}
-      >
-        <div>内容</div>
-      </ContentModal>
+      />
     </div>
   );
 }
