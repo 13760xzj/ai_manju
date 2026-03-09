@@ -1,0 +1,17 @@
+.mention {
+  background: #283e4c;
+  color: #fff;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin: 0 2px;
+  display: inline-block;
+}
+
+/* placeholder */
+.at-editor[data-empty="true"]::before {
+  content: attr(data-placeholder);
+  color: #999;
+  position: absolute;
+  pointer-events: none;
+  font-size: 13px;
+}

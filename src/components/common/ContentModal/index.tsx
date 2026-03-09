@@ -117,7 +117,7 @@ export const ContentModal: React.FC<ModalProps> = ({
         <div
           style={{
             flex: 1,
-            overflowY: "auto",
+            overflowY: "hidden",
           }}
         >
           {children}
