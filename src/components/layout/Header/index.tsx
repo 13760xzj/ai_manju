@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Button, Modal, Input, CaptchaInput } from '@/components/common';
+import { Button, Modal, Input, CaptchaInput, SliderCaptcha } from '@/components/common';
 import { useToast } from '@/hooks/useToast';
 import { authService } from '@/services/authService';
 import './index.css';
@@ -29,12 +29,13 @@ export function Header({
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [captchaCode, setCaptchaCode] = useState('');
-  const [registerCaptchaCode, setRegisterCaptchaCode] = useState('');
+  const [nickname, setNickname] = useState('');  // 昵称
   const [loginCaptchaImage, setLoginCaptchaImage] = useState('');  // 登录验证码图片
   const [loginCaptchaVerification, setLoginCaptchaVerification] = useState('');  // 登录验证码答案
   const [registerCaptchaImage, setRegisterCaptchaImage] = useState('');  // 注册验证码图片
   const [registerCaptchaVerification, setRegisterCaptchaVerification] = useState('');  // 注册验证码答案
+  const [loginCaptchaSuccess, setLoginCaptchaSuccess] = useState(false);  // 登录验证码是否通过
+  const [registerCaptchaSuccess, setRegisterCaptchaSuccess] = useState(false);  // 注册验证码是否通过
 
   useEffect(() => {
     const path = location.pathname;
@@ -102,18 +103,18 @@ export function Header({
       return;
     }
     
+    if (!nickname.trim() && isRegisterMode) {
+      setError('请输入昵称');
+      return;
+    }
+    
     if (!password.trim()) {
       setError('请输入密码');
       return;
     }
     
-    if (!captchaCode.trim()) {
-      setError('请输入验证码');
-      return;
-    }
-    
     if (!loginCaptchaVerification) {
-      setError('验证码已过期，请刷新验证码');
+      setError('请先完成滑块验证');
       return;
     }
     
@@ -126,15 +127,14 @@ export function Header({
       setShowLoginModal(false);
       setUsername('');
       setPassword('');
-      setCaptchaCode('');
       setError('');
       toast.success('登录成功！');
     } catch (err: any) {
       console.error('登录失败:', err);
       // 登录失败后刷新验证码
       loadLoginCaptcha();
-      setCaptchaCode('');
-      setError(err.message || '登录失败，请检查用户名、密码和验证码');
+      setLoginCaptchaSuccess(false);
+      setError(err.message || '登录失败，请检查用户名和密码');
     } finally {
       setIsLoading(false);
     }
@@ -164,13 +164,8 @@ export function Header({
       return;
     }
     
-    if (!registerCaptchaCode.trim()) {
-      setError('请输入验证码');
-      return;
-    }
-    
     if (!registerCaptchaVerification) {
-      setError('验证码已过期，请刷新验证码');
+      setError('请先完成滑块验证');
       return;
     }
     
@@ -178,18 +173,19 @@ export function Header({
     
     try {
       // 调用后端 API 注册（带验证码）
-      await authService.register(username, password, registerCaptchaVerification);
+      await authService.register(username, password, confirmPassword, nickname, registerCaptchaVerification);
       toast.success('注册成功！请登录');
       setIsRegisterMode(false);
       setPassword('');
       setConfirmPassword('');
-      setRegisterCaptchaCode('');
+      setNickname('');
+      setRegisterCaptchaSuccess(false);
       setError('');
     } catch (err: any) {
       console.error('注册失败:', err);
       // 注册失败后刷新验证码
       loadRegisterCaptcha();
-      setRegisterCaptchaCode('');
+      setRegisterCaptchaSuccess(false);
       setError(err.message || '注册失败，请稍后重试');
     } finally {
       setIsLoading(false);
@@ -244,8 +240,9 @@ export function Header({
     setUsername('');
     setPassword('');
     setConfirmPassword('');
-    setCaptchaCode('');
-    setRegisterCaptchaCode('');
+    setNickname('');
+    setLoginCaptchaSuccess(false);
+    setRegisterCaptchaSuccess(false);
   };
 
   return (
@@ -324,6 +321,19 @@ export function Header({
             required
           />
           
+          {isRegisterMode && (
+            <Input
+              label="昵称"
+              type="text"
+              value={nickname}
+              onChange={(e) => setNickname(e.target.value)}
+              placeholder="请输入昵称"
+              disabled={isLoading}
+              autoComplete="nickname"
+              required
+            />
+          )}
+          
           <div style={{ position: 'relative' }}>
             <Input
               label="密码"
@@ -390,14 +400,20 @@ export function Header({
             </div>
           )}
           
-          {/* 验证码输入框（登录和注册都需要） */}
+          {/* 滑块验证码（登录和注册都需要） */}
           <div className="captcha-input-group">
-            <div className="captcha-input-label">验证码</div>
-            <CaptchaInput
-              value={isRegisterMode ? registerCaptchaCode : captchaCode}
-              onChange={isRegisterMode ? setRegisterCaptchaCode : setCaptchaCode}
-              onRefresh={isRegisterMode ? loadRegisterCaptcha : loadLoginCaptcha}
+            <div className="captcha-input-label">滑动验证</div>
+            <SliderCaptcha
               captchaImage={isRegisterMode ? registerCaptchaImage : loginCaptchaImage}
+              captchaVerification={isRegisterMode ? registerCaptchaVerification : loginCaptchaVerification}
+              onSuccess={(verification) => {
+                if (isRegisterMode) {
+                  setRegisterCaptchaSuccess(true);
+                } else {
+                  setLoginCaptchaSuccess(true);
+                }
+              }}
+              onRefresh={isRegisterMode ? loadRegisterCaptcha : loadLoginCaptcha}
               disabled={isLoading}
             />
           </div>

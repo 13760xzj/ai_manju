@@ -37,15 +37,7 @@ export const authService = {
     originalImageBase64: string;  // 验证码图片（Base64 格式，显示给用户看）
   }> {
     const response = await apiClient.post('/zhihuan-server/admin-api/system/captcha/get', {
-      captchaId: '',
-      projectCode: '',
-      captchaType: '',
-      uuid: '',
-      voidKey: '',
-      checkNumber: '',
-      secretKey: '',
-      originalImageBase64: '',
-      captchaVerification: ''
+      captchaType: 'blockPuzzle'  // 拼图验证码
     });
     return response as any;
   },
@@ -79,12 +71,18 @@ export const authService = {
   async register(
     username: string, 
     password: string, 
+    confirmPassword: string,
+    nickname: string,
     captchaVerification: string  // 验证码答案（从 getCaptcha 获取）
   ): Promise<void> {
     await apiClient.post('/zhihuan-server/admin-api/system/auth/register', { 
+      tenantName: '幻织源码',
       username, 
+      nickname,
       password, 
-      captchaVerification
+      confirmPassword,
+      captchaVerification,
+      tenantId: 1
     });
   },
 

@@ -13,3 +13,4 @@ export { MarkdownPreview, MarkdownView } from "./MarkdownPreview";
 export { CustomSelect } from "./CustomSelect";
 export { ToggleLayout } from "./ToggleLayout";
 export { CaptchaInput } from "./CaptchaInput";
+export { SliderCaptcha } from "./SliderCaptcha";
