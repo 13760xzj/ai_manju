@@ -2,7 +2,7 @@ import React from "react";
 import { PropsSelect } from "./PropsSelect";
 import { IoMdAdd } from "react-icons/io";
 import { RiSendPlane2Fill } from "react-icons/ri";
-import AtInput from "./AtInput";
+import { AtInputArea } from "./AtInputArea";
 
 export const GenerateTxtToPic: React.FC = () => {
   const [content, setContent] = React.useState("");
@@ -19,7 +19,10 @@ export const GenerateTxtToPic: React.FC = () => {
           <IoMdAdd style={{ fontSize: "24px" }} />
         </div>
         <div className="flex-1 overflow-hidden">
-          <AtInput
+          <AtInputArea
+            showBtns={false}
+            showCounter={false}
+            defaultValue={content}
             openAt={false}
             onChange={(e) => {
               setContent(e);

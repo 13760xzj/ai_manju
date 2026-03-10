@@ -12,10 +12,12 @@ import { ImagePreview } from "@/components/common";
 export interface PicCardItemProps {
   item: object;
   generateThreeBtn?: boolean; // 是否显示生成三视图按钮
+  isVideo?: boolean;
 }
 export const PicCardItem: React.FC<PicCardItemProps> = ({
   item,
   generateThreeBtn = false,
+  isVideo = false,
 }) => {
   const [open, setOpen] = useState(false);
 
@@ -54,7 +56,7 @@ export const PicCardItem: React.FC<PicCardItemProps> = ({
           <span className="text-xs">添加为场景图</span>
         </div>
         <div className="flex-1"></div>
-        {generateThreeBtn && (
+        {generateThreeBtn && !isVideo && (
           <div className="h-6 w-6 bg-white/10 hover:opacity-80 cursor-pointer rounded-md flex items-center justify-center border border-white/20">
             <Tooltip title={"生成三视图"}>
               <FaRegImages />
@@ -66,69 +68,71 @@ export const PicCardItem: React.FC<PicCardItemProps> = ({
             <BiSolidEdit />
           </Tooltip>
         </div>
-        <div className="h-6 w-6 bg-white/10 hover:opacity-80 cursor-pointer rounded-md flex items-center justify-center border border-white/20">
-          <Popover
-            content={
-              <div className="p-2!">
-                <div
-                  onClick={() => setOpen(false)}
-                  className="p-2! w-22 text-xs text-white/90 hover:bg-[#444547] cursor-pointer rounded-md"
-                >
-                  对话作图
-                </div>
-                <div className="p-2! w-22 text-xs relative text-white/90 hover:bg-[#444547] cursor-pointer rounded-md group">
-                  <div className="flex items-center justify-between">
-                    <span>变清晰</span>
-                    <MdOutlineKeyboardArrowRight />
+        {!isVideo && (
+          <div className="h-6 w-6 bg-white/10 hover:opacity-80 cursor-pointer rounded-md flex items-center justify-center border border-white/20">
+            <Popover
+              content={
+                <div className="p-2!">
+                  <div
+                    onClick={() => setOpen(false)}
+                    className="p-2! w-22 text-xs text-white/90 hover:bg-[#444547] cursor-pointer rounded-md"
+                  >
+                    对话作图
                   </div>
-                  <div className="absolute left-full top-0 p-1! bg-[#2f3032] rounded-md hidden group-hover:block shadow-3xl">
-                    <div
-                      onClick={() => setOpen(false)}
-                      className="p-2! text-xs text-white/90  cursor-pointer rounded-md flex flex-col gap-2"
-                    >
-                      {[1, 2].map((item) => (
-                        <div className="flex items-center gap-2 hover:bg-[#444547] p-2! w-60 rounded-md">
-                          <img
-                            src={`https://picsum.photos/120/70?random=${item}`}
-                            className="w-10 h-10 rounded-full"
-                          />
-                          <div>
-                            <div className="text-sm font-bold">
-                              <span>重绘高清{item}</span>
-                              <span className="text-xs text-white/50 my-0.5!">
-                                （消耗 10 积分）
-                              </span>
-                            </div>
-                            <div className="text-[10px] text-white/50 mt-1!">
-                              AI 补充细节与纹理，生成4K大片质感
+                  <div className="p-2! w-22 text-xs relative text-white/90 hover:bg-[#444547] cursor-pointer rounded-md group">
+                    <div className="flex items-center justify-between">
+                      <span>变清晰</span>
+                      <MdOutlineKeyboardArrowRight />
+                    </div>
+                    <div className="absolute left-full top-0 p-1! bg-[#2f3032] rounded-md hidden group-hover:block shadow-3xl">
+                      <div
+                        onClick={() => setOpen(false)}
+                        className="p-2! text-xs text-white/90  cursor-pointer rounded-md flex flex-col gap-2"
+                      >
+                        {[1, 2].map((item) => (
+                          <div className="flex items-center gap-2 hover:bg-[#444547] p-2! w-60 rounded-md">
+                            <img
+                              src={`https://picsum.photos/120/70?random=${item}`}
+                              className="w-10 h-10 rounded-full"
+                            />
+                            <div>
+                              <div className="text-sm font-bold">
+                                <span>重绘高清{item}</span>
+                                <span className="text-xs text-white/50 my-0.5!">
+                                  （消耗 10 积分）
+                                </span>
+                              </div>
+                              <div className="text-[10px] text-white/50 mt-1!">
+                                AI 补充细节与纹理，生成4K大片质感
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      ))}
+                        ))}
+                      </div>
                     </div>
                   </div>
+                  <div
+                    onClick={() => setOpen(false)}
+                    className="p-2! w-22 text-xs text-white/90 hover:bg-[#444547] cursor-pointer rounded-md"
+                  >
+                    多机位
+                  </div>
                 </div>
-                <div
-                  onClick={() => setOpen(false)}
-                  className="p-2! w-22 text-xs text-white/90 hover:bg-[#444547] cursor-pointer rounded-md"
-                >
-                  多机位
-                </div>
-              </div>
-            }
-            title=""
-            trigger="click"
-            placement="bottom"
-            overlayClassName="custom-popover"
-            arrow={false}
-            open={open}
-            onOpenChange={handleOpenChange}
-          >
-            <Tooltip title={"更多功能"}>
-              <IoMdMore />
-            </Tooltip>
-          </Popover>
-        </div>
+              }
+              title=""
+              trigger="click"
+              placement="bottom"
+              overlayClassName="custom-popover"
+              arrow={false}
+              open={open}
+              onOpenChange={handleOpenChange}
+            >
+              <Tooltip title={"更多功能"}>
+                <IoMdMore />
+              </Tooltip>
+            </Popover>
+          </div>
+        )}
       </div>
     </div>
   );

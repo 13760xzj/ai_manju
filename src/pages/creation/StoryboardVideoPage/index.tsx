@@ -4,6 +4,7 @@ import { useToast } from "@/hooks/useToast";
 import { Button, ConfirmDialog } from "@/components/common";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { Divider, Tooltip } from "antd";
+import { MdDragIndicator } from "react-icons/md";
 import {
   DndContext,
   closestCenter,
@@ -65,28 +66,17 @@ function SortableListCard({
       className="storyboard-card relative"
       {...attributes}
     >
-      <div
-        className="drag-handle absolute left-2 top-2 cursor-grab active:cursor-grabbing z-20 p-2 rounded hover:bg-gray-200"
-        {...listeners}
-        style={{ opacity: isDragging ? 1 : 0.5 }}
-      >
-        <svg
-          width="16"
-          height="16"
-          viewBox="0 0 16 16"
-          fill="currentColor"
-          className="text-gray-500"
-        >
-          <circle cx="4" cy="4" r="2" />
-          <circle cx="4" cy="8" r="2" />
-          <circle cx="4" cy="12" r="2" />
-          <circle cx="12" cy="4" r="2" />
-          <circle cx="12" cy="8" r="2" />
-          <circle cx="12" cy="12" r="2" />
-        </svg>
-      </div>
-      <div className="storyboard-header pl-10!">
-        <div className="storyboard-title">{item.title}</div>
+      <div className="storyboard-header">
+        <div className="flex items-center gap-1 -translate-x-1">
+          <div
+            className="drag-handle cursor-move active:cursor-grabbing z-20 p-0.5! rounded hover:bg-gray-200"
+            {...listeners}
+            style={{ opacity: isDragging ? 1 : 0.5 }}
+          >
+            <MdDragIndicator />
+          </div>
+          <div className="storyboard-title">{item.title}</div>
+        </div>
         <div className="storyboard-actions">
           <Button variant="info" size="mini" onClick={onDubbing}>
             配音对口型
@@ -199,7 +189,9 @@ function SortableCardView({
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
 
   const toggleDropdown = () => {
-    setActiveDropdown(activeDropdown === `dropdown-${index}` ? null : `dropdown-${index}`);
+    setActiveDropdown(
+      activeDropdown === `dropdown-${index}` ? null : `dropdown-${index}`,
+    );
   };
 
   return (
@@ -209,26 +201,6 @@ function SortableCardView({
       className="video-card-compact relative"
       {...attributes}
     >
-      <div
-        className="drag-handle absolute left-2 top-2 cursor-grab active:cursor-grabbing z-20 p-2 rounded hover:bg-gray-200"
-        {...listeners}
-        style={{ opacity: isDragging ? 1 : 0.5 }}
-      >
-        <svg
-          width="16"
-          height="16"
-          viewBox="0 0 16 16"
-          fill="currentColor"
-          className="text-gray-500"
-        >
-          <circle cx="4" cy="4" r="2" />
-          <circle cx="4" cy="8" r="2" />
-          <circle cx="4" cy="12" r="2" />
-          <circle cx="12" cy="4" r="2" />
-          <circle cx="12" cy="8" r="2" />
-          <circle cx="12" cy="12" r="2" />
-        </svg>
-      </div>
       <div className="h-full w-5 absolute left-0 -translate-x-5! top-0 z-10 group">
         <div className="opacity-0 flex h-full flex-col items-center group-hover:opacity-100">
           <Tooltip title="插入空白卡片">
@@ -250,7 +222,16 @@ function SortableCardView({
         </div>
       </div>
       <div className="video-card-header">
-        <div className="video-card-title">{item.title}</div>
+        <div className="flex items-center gap-1 -translate-x-1">
+          <div
+            className="drag-handle cursor-move active:cursor-grabbing z-20 p-0.5! rounded hover:bg-gray-200"
+            {...listeners}
+            style={{ opacity: isDragging ? 1 : 0.5 }}
+          >
+            <MdDragIndicator />
+          </div>
+          <div className="video-card-title">{item.title}</div>
+        </div>
         <button
           className="video-card-menu-btn"
           onClick={(e) => {
@@ -269,7 +250,10 @@ function SortableCardView({
               <span>复制分镜</span>
             </button>
             <div className="video-card-dropdown-divider"></div>
-            <button className="video-card-dropdown-item danger" onClick={onDelete}>
+            <button
+              className="video-card-dropdown-item danger"
+              onClick={onDelete}
+            >
               <span>删除分镜</span>
             </button>
             <div className="video-card-dropdown-divider"></div>
@@ -312,7 +296,7 @@ export function StoryboardVideoPage() {
     }),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
-    })
+    }),
   );
 
   const handleNext = () => {
@@ -370,7 +354,10 @@ export function StoryboardVideoPage() {
   };
 
   return (
-    <div className="storyboard-video-page" onClick={() => setActiveDropdown(null)}>
+    <div
+      className="storyboard-video-page"
+      onClick={() => setActiveDropdown(null)}
+    >
       <div className="page-toolbar ui-toolbar mx-5! mt-5!">
         <div className="toolbar-left">
           <div className="toggle-group">

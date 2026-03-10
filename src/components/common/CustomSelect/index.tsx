@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useRef, useEffect, useLayoutEffect } from "react";
 import { createPortal } from "react-dom";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
@@ -7,13 +8,14 @@ import "./index.css";
 export interface SelectOption {
   label: string;
   value: string | number;
+  [key: string]: any;
 }
 
 interface Props {
   icon?: React.ReactNode;
   options: SelectOption[];
   style?: React.CSSProperties;
-  value?: string | number;
+  value?: string | number | null;
   placeholder?: string;
   renderItem?: (option: SelectOption, selected: boolean) => React.ReactNode;
   onChange?: (value: string | number, option: SelectOption) => void;
@@ -172,7 +174,7 @@ export const CustomSelect: React.FC<Props> = ({
                 </div>
                 {highlight && selected?.value === item.value && (
                   <FaRegCircleCheck
-                    style={{ fontSize: "16px", color: "var(--success-color)" }}
+                    style={{ fontSize: "14px", color: "var(--success-color)" }}
                   />
                 )}
               </div>

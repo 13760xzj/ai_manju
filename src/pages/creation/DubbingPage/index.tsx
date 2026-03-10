@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/useToast";
 import { Button, ConfirmDialog } from "@/components/common";
+import { MdDragIndicator } from "react-icons/md";
+
 import {
   DndContext,
   closestCenter,
@@ -65,28 +67,17 @@ function SortableListCard({
       className="dubbing-card"
       {...attributes}
     >
-      <div
-        className="drag-handle absolute left-2 top-2 cursor-grab active:cursor-grabbing z-20 p-2 rounded hover:bg-gray-200"
-        {...listeners}
-        style={{ opacity: isDragging ? 1 : 0.5 }}
-      >
-        <svg
-          width="16"
-          height="16"
-          viewBox="0 0 16 16"
-          fill="currentColor"
-          className="text-gray-500"
-        >
-          <circle cx="4" cy="4" r="2" />
-          <circle cx="4" cy="8" r="2" />
-          <circle cx="4" cy="12" r="2" />
-          <circle cx="12" cy="4" r="2" />
-          <circle cx="12" cy="8" r="2" />
-          <circle cx="12" cy="12" r="2" />
-        </svg>
-      </div>
-      <div className="dubbing-header pl-10!">
-        <div className="dubbing-title">{item.title}</div>
+      <div className="dubbing-header">
+        <div className="flex items-center gap-1 -translate-x-1">
+          <div
+            className="drag-handle cursor-move active:cursor-grabbing z-20 p-0.5! rounded hover:bg-gray-200"
+            {...listeners}
+            style={{ opacity: isDragging ? 1 : 0.5 }}
+          >
+            <MdDragIndicator />
+          </div>
+          <div className="dubbing-title">{item.title}</div>
+        </div>
         <div className="dubbing-actions">
           <Button variant="secondary" size="mini" onClick={onEditScript}>
             分镜脚本
@@ -174,7 +165,9 @@ function SortableCardView({
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
 
   const toggleDropdown = () => {
-    setActiveDropdown(activeDropdown === `dropdown-${index}` ? null : `dropdown-${index}`);
+    setActiveDropdown(
+      activeDropdown === `dropdown-${index}` ? null : `dropdown-${index}`,
+    );
   };
 
   return (
@@ -184,28 +177,17 @@ function SortableCardView({
       className="dubbing-card-compact"
       {...attributes}
     >
-      <div
-        className="drag-handle absolute left-2 top-2 cursor-grab active:cursor-grabbing z-20 p-2 rounded hover:bg-gray-200"
-        {...listeners}
-        style={{ opacity: isDragging ? 1 : 0.5 }}
-      >
-        <svg
-          width="16"
-          height="16"
-          viewBox="0 0 16 16"
-          fill="currentColor"
-          className="text-gray-500"
-        >
-          <circle cx="4" cy="4" r="2" />
-          <circle cx="4" cy="8" r="2" />
-          <circle cx="4" cy="12" r="2" />
-          <circle cx="12" cy="4" r="2" />
-          <circle cx="12" cy="8" r="2" />
-          <circle cx="12" cy="12" r="2" />
-        </svg>
-      </div>
       <div className="dubbing-card-header">
-        <div className="dubbing-card-title">{item.title}</div>
+        <div className="flex items-center gap-1 -translate-x-1">
+          <div
+            className="drag-handle cursor-move active:cursor-grabbing z-20 p-0.5! rounded hover:bg-gray-200"
+            {...listeners}
+            style={{ opacity: isDragging ? 1 : 0.5 }}
+          >
+            <MdDragIndicator />
+          </div>
+          <div className="dubbing-card-title">{item.title}</div>
+        </div>
         <button
           className="dubbing-card-menu-btn"
           onClick={(e) => {
@@ -224,7 +206,10 @@ function SortableCardView({
               <span>复制分镜</span>
             </button>
             <div className="dubbing-card-dropdown-divider"></div>
-            <button className="dubbing-card-dropdown-item danger" onClick={onDelete}>
+            <button
+              className="dubbing-card-dropdown-item danger"
+              onClick={onDelete}
+            >
               <span>删除分镜</span>
             </button>
           </div>
@@ -238,9 +223,7 @@ function SortableCardView({
       <div className="dubbing-card-voice-settings">
         <div className="dubbing-card-voice-item">
           <span>类型：</span>
-          <span className="dubbing-card-voice-value">
-            旁白/画外音
-          </span>
+          <span className="dubbing-card-voice-value">旁白/画外音</span>
         </div>
         <div className="dubbing-card-voice-item">
           <span>角色：</span>
@@ -285,7 +268,7 @@ export function DubbingPage() {
     }),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
-    })
+    }),
   );
 
   const handleNext = () => {
