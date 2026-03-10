@@ -9,10 +9,12 @@ import { ImagePreview } from "@/components/common";
 export interface PicListItemProps {
   item: object;
   generateThreeBtn?: boolean;
+  isVideo?: boolean;
 }
 export const PicListItem: React.FC<PicListItemProps> = ({
   item,
   generateThreeBtn = false,
+  isVideo = false,
 }) => {
   const [open, setOpen] = useState(false);
 
@@ -60,7 +62,7 @@ export const PicListItem: React.FC<PicListItemProps> = ({
           <span className="text-xs">添加为场景图</span>
         </div>
         <div className="flex-1"></div>
-        {generateThreeBtn && (
+        {generateThreeBtn && !isVideo && (
           <div className="h-7 px-2! bg-white/10 hover:opacity-80 cursor-pointer rounded-md flex items-center justify-center border border-white/20">
             <span className="text-xs">生成三视图</span>
           </div>
@@ -68,53 +70,59 @@ export const PicListItem: React.FC<PicListItemProps> = ({
         <div className="h-7 px-2! bg-white/10 hover:opacity-80 cursor-pointer rounded-md flex items-center justify-center border border-white/20">
           <span className="text-xs">重新编辑</span>
         </div>
-        <div className="h-7 px-2! bg-white/10 hover:opacity-80 cursor-pointer rounded-md flex items-center justify-center border border-white/20">
-          <span className="text-xs">对话作图</span>
-        </div>
-        <Popover
-          title=""
-          trigger="click"
-          overlayClassName="custom-popover"
-          placement="bottom"
-          arrow={false}
-          open={open}
-          onOpenChange={handleOpenChange}
-          content={
-            <div className="left-full top-0 p-2! bg-[#2f3032] rounded-md  shadow-3xl">
-              <div
-                onClick={() => setOpen(false)}
-                className="text-xs text-white/90  cursor-pointer rounded-md flex flex-col gap-2"
-              >
-                {[1, 2].map((item) => (
-                  <div className="flex items-center gap-2 hover:bg-[#444547] p-2! w-60 rounded-md">
-                    <img
-                      src={`https://picsum.photos/120/70?random=${item}`}
-                      className="w-10 h-10 rounded-full"
-                    />
-                    <div>
-                      <div className="text-sm font-bold">
-                        <span>重绘高清{item}</span>
-                        <span className="text-xs text-white/50 my-0.5!">
-                          （消耗 10 积分）
-                        </span>
-                      </div>
-                      <div className="text-[10px] text-white/50 mt-1!">
-                        AI 补充细节与纹理，生成4K大片质感
+        {!isVideo && (
+          <div className="h-7 px-2! bg-white/10 hover:opacity-80 cursor-pointer rounded-md flex items-center justify-center border border-white/20">
+            <span className="text-xs">对话作图</span>
+          </div>
+        )}
+        {!isVideo && (
+          <Popover
+            title=""
+            trigger="click"
+            overlayClassName="custom-popover"
+            placement="bottom"
+            arrow={false}
+            open={open}
+            onOpenChange={handleOpenChange}
+            content={
+              <div className="left-full top-0 p-2! bg-[#2f3032] rounded-md  shadow-3xl">
+                <div
+                  onClick={() => setOpen(false)}
+                  className="text-xs text-white/90  cursor-pointer rounded-md flex flex-col gap-2"
+                >
+                  {[1, 2].map((item) => (
+                    <div className="flex items-center gap-2 hover:bg-[#444547] p-2! w-60 rounded-md">
+                      <img
+                        src={`https://picsum.photos/120/70?random=${item}`}
+                        className="w-10 h-10 rounded-full"
+                      />
+                      <div>
+                        <div className="text-sm font-bold">
+                          <span>重绘高清{item}</span>
+                          <span className="text-xs text-white/50 my-0.5!">
+                            （消耗 10 积分）
+                          </span>
+                        </div>
+                        <div className="text-[10px] text-white/50 mt-1!">
+                          AI 补充细节与纹理，生成4K大片质感
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
+            }
+          >
+            <div className="h-7 px-2! bg-white/10 hover:opacity-80 cursor-pointer rounded-md flex items-center justify-center border border-white/20">
+              <span className="text-xs">变清晰</span>
             </div>
-          }
-        >
+          </Popover>
+        )}
+        {!isVideo && (
           <div className="h-7 px-2! bg-white/10 hover:opacity-80 cursor-pointer rounded-md flex items-center justify-center border border-white/20">
-            <span className="text-xs">变清晰</span>
+            <span className="text-xs">多机位</span>
           </div>
-        </Popover>
-        <div className="h-7 px-2! bg-white/10 hover:opacity-80 cursor-pointer rounded-md flex items-center justify-center border border-white/20">
-          <span className="text-xs">多机位</span>
-        </div>
+        )}
       </div>
       <div className="h-2"></div>
     </div>

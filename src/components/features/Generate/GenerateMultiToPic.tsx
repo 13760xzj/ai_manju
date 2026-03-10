@@ -3,9 +3,7 @@ import { IoDocumentTextSharp } from "react-icons/io5";
 import { RiRefreshLine } from "react-icons/ri";
 import { RiAiGenerate } from "react-icons/ri";
 import { PropsSelect } from "./PropsSelect";
-import { RiDeleteBin6Line } from "react-icons/ri";
-import { FiCopy } from "react-icons/fi";
-import AtInput from "./AtInput";
+import { AtInputArea } from "./AtInputArea";
 import { ToggleLayout } from "@/components/common";
 import PopoverSelect from "./PopoverSelect";
 import { HorizontalScroll } from "@/components/features";
@@ -36,7 +34,7 @@ export const GenerateMultiToPic: React.FC = () => {
         <ToggleLayout
           className="overflow-hidden rounded-xl border border-[#38447c]"
           areaA={
-            <div className="h-full overflow-y-auto flex flex-col gap-2 p-3!">
+            <div className="h-full overflow-y-auto flex flex-col gap-4 p-3!">
               <div className="flex items-center overflow-hidden">
                 <div className="text-sm text-white/80 mr-3!">
                   场<br />景
@@ -200,45 +198,35 @@ export const GenerateMultiToPic: React.FC = () => {
                   }}
                 />
               </div>
-              <div className="h-30 shrink-0 p-2! flex flex-col overflow-hidden rounded-xl border border-[#38447c]">
-                <div className="flex-1 overflow-hidden">
-                  <AtInput
-                    fontSize="12px"
-                    options={[
-                      {
-                        img: "https://picsum.photos/120/70?random=1",
-                        name: "李元宝-布衣少年-三视图",
-                      },
-                      {
-                        img: "https://picsum.photos/120/70?random=2",
-                        name: "食神宗山门-林小当苏醒与魔云宗逼迫-正面视角",
-                      },
-                      {
-                        img: "https://picsum.photos/120/70?random=3",
-                        name: "苏清瑶-落难少女-三视图",
-                      },
-                    ]}
-                    defaultValue="场景是角色@[李元宝-布衣少年-三视图]在卧室里面看电视。"
-                    onChange={(e) => {
-                      setContent(e);
-                    }}
-                    maxLength={100}
-                    placeholder="描述要生成的画面..."
-                    renderOptionItem={(item) => (
-                      <div className="text-ellipsis line-clamp-1">
-                        {item.name}
-                      </div>
-                    )}
-                  />
-                </div>
-                <div className="flex items-center justify-end gap-2 mt-1!">
-                  <div className="w-5 h-5 bg-white/10 hover:opacity-80 cursor-pointer rounded-md flex items-center justify-center border border-white/20">
-                    <FiCopy style={{ fontSize: "12px" }} />
-                  </div>
-                  <div className="w-5 h-5 bg-white/10 hover:opacity-80 cursor-pointer rounded-md flex items-center justify-center border border-white/20">
-                    <RiDeleteBin6Line style={{ fontSize: "12px" }} />
-                  </div>
-                </div>
+              <div className="h-30 shrink-0 p-2! overflow-hidden rounded-xl border border-[#38447c]">
+                <AtInputArea
+                  fontSize="12px"
+                  options={[
+                    {
+                      img: "https://picsum.photos/120/70?random=1",
+                      name: "李元宝-布衣少年-三视图",
+                    },
+                    {
+                      img: "https://picsum.photos/120/70?random=2",
+                      name: "食神宗山门-林小当苏醒与魔云宗逼迫-正面视角",
+                    },
+                    {
+                      img: "https://picsum.photos/120/70?random=3",
+                      name: "苏清瑶-落难少女-三视图",
+                    },
+                  ]}
+                  defaultValue="场景是角色@[李元宝-布衣少年-三视图]在卧室里面看电视。"
+                  onChange={(e) => {
+                    setContent(e);
+                  }}
+                  maxLength={100}
+                  placeholder="描述要生成的画面..."
+                  renderOptionItem={(item) => (
+                    <div className="text-ellipsis line-clamp-1">
+                      {item.name}
+                    </div>
+                  )}
+                />
               </div>
               <div>
                 <PopoverSelect
@@ -304,48 +292,31 @@ export const GenerateMultiToPic: React.FC = () => {
           }
           areaC={
             <div className="h-full flex flex-col gap-2 p-2!">
-              <div className="flex-1 overflow-hidden">
-                <AtInput
-                  options={[
-                    {
-                      img: "https://picsum.photos/120/70?random=1",
-                      name: "李元宝-布衣少年-三视图",
-                    },
-                    {
-                      img: "https://picsum.photos/120/70?random=2",
-                      name: "食神宗山门-林小当苏醒与魔云宗逼迫-正面视角",
-                    },
-                    {
-                      img: "https://picsum.photos/120/70?random=3",
-                      name: "苏清瑶-落难少女-三视图",
-                    },
-                  ]}
-                  defaultValue="场景是角色@[李元宝-布衣少年-三视图]在卧室里面看电视。"
-                  onChange={(e) => {
-                    setContent(e);
-                  }}
-                  maxLength={100}
-                  placeholder="描述要生成的画面..."
-                  renderOptionItem={(item) => (
-                    <div className="text-ellipsis line-clamp-1">
-                      {item.name}
-                    </div>
-                  )}
-                />
-              </div>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <div className="w-6 h-6 bg-white/10 hover:opacity-80 cursor-pointer rounded-md flex items-center justify-center border border-white/20">
-                    <FiCopy style={{ fontSize: "16px" }} />
-                  </div>
-                  <div className="w-6 h-6 bg-white/10 hover:opacity-80 cursor-pointer rounded-md flex items-center justify-center border border-white/20">
-                    <RiDeleteBin6Line style={{ fontSize: "16px" }} />
-                  </div>
-                </div>
-                <div className="text-white/70 text-xs">
-                  {content.length}/3000
-                </div>
-              </div>
+              <AtInputArea
+                options={[
+                  {
+                    img: "https://picsum.photos/120/70?random=1",
+                    name: "李元宝-布衣少年-三视图",
+                  },
+                  {
+                    img: "https://picsum.photos/120/70?random=2",
+                    name: "食神宗山门-林小当苏醒与魔云宗逼迫-正面视角",
+                  },
+                  {
+                    img: "https://picsum.photos/120/70?random=3",
+                    name: "苏清瑶-落难少女-三视图",
+                  },
+                ]}
+                defaultValue={content}
+                onChange={(e) => {
+                  setContent(e);
+                }}
+                maxLength={3000}
+                placeholder="描述要生成的画面..."
+                renderOptionItem={(item) => (
+                  <div className="text-ellipsis line-clamp-1">{item.name}</div>
+                )}
+              />
             </div>
           }
         />

@@ -27,4 +27,6 @@ export {
   GenerateNineGrid,
   GenerateMultiToPic,
   GeneratePicToVideo,
+  GenerateMultiToVideo,
+  FirstLastFrame,
 } from "./Generate";

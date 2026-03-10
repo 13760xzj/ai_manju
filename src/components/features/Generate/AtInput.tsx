@@ -75,11 +75,16 @@ export default function AtInput({
 
   // ===== 初始化 defaultValue =====
   useEffect(() => {
-    if (!defaultValue) return;
     const editor = editorRef.current;
     if (!editor) return;
 
     editor.innerHTML = "";
+
+    if (!defaultValue) {
+      setIsEmpty(true);
+      callOnChange();
+      return;
+    }
     const frag = document.createDocumentFragment();
 
     const regex = /@\[(.*?)\]/g;
@@ -326,7 +331,7 @@ export default function AtInput({
       {show && (
         <div
           ref={popRef}
-          className="shadow-lg border p-2! border-[#38447c] bg-[#1f1f1f] text-white rounded-xl overflow-hidden"
+          className="shadow-lg z-2002 border p-2! border-[#38447c] bg-[#1f1f1f] text-white rounded-xl overflow-hidden"
           style={{ position: "fixed", left: pos.x, top: pos.y, minWidth: 140 }}
         >
           {options.length === 0 ? (

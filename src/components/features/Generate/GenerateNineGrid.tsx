@@ -6,7 +6,7 @@ export const GenerateNineGrid: React.FC = () => {
     <div className="h-full overflow-hidden flex flex-col gap-4">
       <div className="h-40 flex flex-col hover:opacity-80 items-center justify-center cursor-pointer border border-dashed rounded-md bg-white/10 border-white/50">
         <IoMdAdd style={{ fontSize: "24px" }} />
-        <div className="text-xs mt-2!">导入参考图</div>
+        <div className="text-sm mt-2!">导入参考图</div>
         <div className="text-xs mt-2! text-white/50">
           支持本地上传和资源库导入
         </div>

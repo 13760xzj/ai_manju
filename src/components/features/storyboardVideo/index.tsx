@@ -2,11 +2,11 @@ import React from "react";
 import { ContentModal } from "@/components/common";
 import {
   StoryboardLayout,
-  GenerateMultiToPic,
-  GenerateTxtToPic,
+  GeneratePicToVideo,
+  GenerateMultiToVideo,
   PicListItem,
   PicCardItem,
-  GenerateNineGrid,
+  FirstLastFrame,
 } from "@/components/features";
 
 export interface StoryboardScriptProps {
@@ -29,16 +29,20 @@ const StoryboardVideo: React.FC<StoryboardScriptProps> = ({
       <StoryboardLayout
         onCancel={onCancel}
         leftPanelTabs={[
-          { label: "图生视频", content: <GenerateMultiToPic /> },
-          { label: "多参生视频", content: <GenerateTxtToPic /> },
-          { label: "首位帧视频", content: <GenerateNineGrid /> },
+          { label: "图生视频", content: <GeneratePicToVideo /> },
+          { label: "多参生视频", content: <GenerateMultiToVideo /> },
+          { label: "首位帧视频", content: <FirstLastFrame /> },
         ]}
         topData={new Array(20).fill(0).map((_, i) => ({
           id: i,
           url: `https://picsum.photos/120/70?random=${i}`,
         }))}
-        buildRightListItem={(item) => <PicListItem item={item} />}
-        buildRightCardItem={(item) => <PicCardItem item={item} />}
+        buildRightListItem={(item) => (
+          <PicListItem item={item} isVideo={true} />
+        )}
+        buildRightCardItem={(item) => (
+          <PicCardItem item={item} isVideo={true} />
+        )}
         rightData={Array.from({ length: 10 }, (_, i) => i + 1)}
       />
     </ContentModal>

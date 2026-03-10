@@ -15,3 +15,13 @@
   pointer-events: none;
   font-size: 13px;
 }
+
+/* 未选中 */
+.ant-switch {
+  background-color: #444 !important;
+}
+
+/* 选中 */
+.ant-switch-checked {
+  background-color: var(--primary-color) !important;
+}

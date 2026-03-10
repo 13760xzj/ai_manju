@@ -2,11 +2,9 @@ import React, { useState } from "react";
 import { IoDocumentTextSharp } from "react-icons/io5";
 import { RiRefreshLine } from "react-icons/ri";
 import { IoMdAdd } from "react-icons/io";
-import { FiCopy } from "react-icons/fi";
-import { RiDeleteBin6Line } from "react-icons/ri";
 import { RiAiGenerate } from "react-icons/ri";
 import { PropsSelect } from "./PropsSelect";
-import AtInput from "./AtInput";
+import { AtInputArea } from "./AtInputArea";
 
 export const GeneratePicToPic: React.FC = () => {
   const [content, setContent] = useState("");
@@ -35,7 +33,7 @@ export const GeneratePicToPic: React.FC = () => {
           ))}
         </div>
         <div className="flex-1">
-          <AtInput
+          <AtInputArea
             options={[
               {
                 img: "https://picsum.photos/120/70?random=1",
@@ -50,27 +48,16 @@ export const GeneratePicToPic: React.FC = () => {
                 name: "苏清瑶-落难少女-三视图",
               },
             ]}
-            defaultValue="场景是角色@[李元宝-布衣少年-三视图]在卧室里面看电视。"
+            defaultValue={content}
             onChange={(e) => {
               setContent(e);
             }}
-            maxLength={100}
+            maxLength={3000}
             placeholder="描述要生成的画面..."
             renderOptionItem={(item) => (
               <div className="text-ellipsis line-clamp-1">{item.name}</div>
             )}
           />
-        </div>
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-6 h-6 bg-white/10 hover:opacity-80 cursor-pointer rounded-md flex items-center justify-center border border-white/20">
-              <FiCopy style={{ fontSize: "16px" }} />
-            </div>
-            <div className="w-6 h-6 bg-white/10 hover:opacity-80 cursor-pointer rounded-md flex items-center justify-center border border-white/20">
-              <RiDeleteBin6Line style={{ fontSize: "16px" }} />
-            </div>
-          </div>
-          <div className="text-white/70 text-xs">{content.length}/3000</div>
         </div>
       </div>
       <div className="flex items-center gap-2">
