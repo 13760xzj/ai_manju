@@ -1,7 +1,7 @@
 export { AssetCard } from "./AssetCard";
 export { WorkCard } from "./WorkCard";
 export { DetailPanel } from "./DetailPanel";
-export { Toolbar } from "./Toolbar";
+export { AssetsToolbar } from "./AssetsToolbar";
 export { TopBar } from "./TopBar";
 export { SectionHeader } from "./SectionHeader";
 export { MetaRow } from "./MetaRow";
@@ -18,8 +18,8 @@ export {
   HorizontalScroll,
 } from "./Storyboard";
 export { StoryboardTool } from "./StoryboardTool";
-export { StoryboardScript } from "./storyboardScript";
-export { StoryboardVideo } from "./storyboardVideo";
+export { StoryboardScript } from "./storyboardScript/index.tsx";
+export { StoryboardVideo } from "./storyboardVideo/index.tsx";
 export { ResourceSelect } from "./ResourceSelect";
 export {
   GeneratePicToPic,

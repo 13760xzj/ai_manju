@@ -124,11 +124,11 @@
 
 .tab_item {
   cursor: pointer;
-  background-color: #181819;
+  background-color: rgba(255, 255, 255, 0.86);
   height: 48px;
-  color: #fff;
+  color: rgba(15, 23, 42, 0.78);
   z-index: 0;
-  border: 1px solid #38447c;
+  border: 1px solid rgba(22, 119, 255, 0.22);
   border-radius: 16px 16px 0 0;
   flex: 1;
   justify-content: center;
@@ -147,8 +147,8 @@
 }
 
 .tab_item_active {
-  background-color: #1c1e20;
-  color: #fff;
+  background-color: #ffffff;
+  color: #1677ff;
   z-index: 5;
   border-bottom: 1px solid transparent;
   height: 56px;
@@ -159,18 +159,18 @@
 
 .left {
   background: 0 0;
-  border-right: 1px solid #38447c;
-  border-bottom: 1px solid #38447c;
-  box-shadow: 4px 4px 0 0 #1c1e20;
+  border-right: 1px solid rgba(22, 119, 255, 0.22);
+  border-bottom: 1px solid rgba(22, 119, 255, 0.22);
+  box-shadow: 4px 4px 0 0 #ffffff;
   border-bottom-right-radius: 16px;
   left: -16px;
 }
 
 .right {
   background: 0 0;
-  border-left: 1px solid #38447c;
-  border-bottom: 1px solid #38447c;
-  box-shadow: -4px 4px 0 0 #1c1e20;
+  border-left: 1px solid rgba(22, 119, 255, 0.22);
+  border-bottom: 1px solid rgba(22, 119, 255, 0.22);
+  box-shadow: -4px 4px 0 0 #ffffff;
   border-bottom-left-radius: 16px;
   right: -16px;
 }

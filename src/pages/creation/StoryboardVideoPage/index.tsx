@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/useToast";
-import { Button, ConfirmDialog } from "@/components/common";
+import { Button, ConfirmDialog, IconButton } from "@/components/common";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { Divider, Tooltip } from "antd";
 import { MdDragIndicator } from "react-icons/md";
@@ -13,6 +13,7 @@ import {
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
+import type { DragEndEvent } from "@dnd-kit/core";
 import {
   arrayMove,
   SortableContext,
@@ -229,7 +230,8 @@ function SortableCardView({
           </div>
           <div className="video-card-title">{item.title}</div>
         </div>
-        <button
+        <IconButton
+          ariaLabel="打开分镜菜单"
           className="video-card-menu-btn"
           onClick={(e) => {
             e.stopPropagation();
@@ -237,26 +239,23 @@ function SortableCardView({
           }}
         >
           ⋮
-        </button>
+        </IconButton>
         {activeDropdown === `dropdown-${index}` && (
           <div className="video-card-dropdown show top-10! right-2!">
-            <button className="video-card-dropdown-item" onClick={onEdit}>
+            <Button className="video-card-dropdown-item" variant="secondary" size="small" onClick={onEdit}>
               <span>编辑分镜视频</span>
-            </button>
-            <button className="video-card-dropdown-item" onClick={onCopy}>
+            </Button>
+            <Button className="video-card-dropdown-item" variant="secondary" size="small" onClick={onCopy}>
               <span>复制分镜</span>
-            </button>
+            </Button>
             <div className="video-card-dropdown-divider"></div>
-            <button
-              className="video-card-dropdown-item danger"
-              onClick={onDelete}
-            >
+            <Button className="video-card-dropdown-item danger" variant="danger" size="small" onClick={onDelete}>
               <span>删除分镜</span>
-            </button>
+            </Button>
             <div className="video-card-dropdown-divider"></div>
-            <button className="video-card-dropdown-item" onClick={onDubbing}>
+            <Button className="video-card-dropdown-item" variant="secondary" size="small" onClick={onDubbing}>
               <span>配音对口型</span>
-            </button>
+            </Button>
           </div>
         )}
       </div>
@@ -272,7 +271,6 @@ export function StoryboardVideoPage() {
   const toast = useToast();
   const [viewMode, setViewMode] = useState<"list" | "card">("list");
   const [progressCount] = useState(0);
-  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [listItems, setListItems] = useState<VideoItem[]>([
     { id: 1, title: "分镜视频 1：分镜 1-1", subtitle: "分镜 1-1" },
@@ -310,25 +308,21 @@ export function StoryboardVideoPage() {
 
   const handleEdit = () => {
     toast.info("编辑分镜视频");
-    setActiveDropdown(null);
   };
 
   const handleCopy = () => {
     toast.info("复制分镜");
-    setActiveDropdown(null);
   };
 
   const handleDelete = () => {
     toast.info("删除分镜");
-    setActiveDropdown(null);
   };
 
   const handleDubbing = () => {
     toast.info("配音对口型");
-    setActiveDropdown(null);
   };
 
-  const handleListDragEnd = (event: any) => {
+  const handleListDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
     if (over && active.id !== over.id) {
       setListItems((items) => {
@@ -339,7 +333,7 @@ export function StoryboardVideoPage() {
     }
   };
 
-  const handleCardDragEnd = (event: any) => {
+  const handleCardDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
     if (over && active.id !== over.id) {
       setCardItems((items) => {
@@ -353,7 +347,6 @@ export function StoryboardVideoPage() {
   return (
     <div
       className="storyboard-video-page"
-      onClick={() => setActiveDropdown(null)}
     >
       <div className="page-toolbar ui-toolbar">
         <div className="toolbar-left">

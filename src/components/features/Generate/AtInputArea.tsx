@@ -3,13 +3,14 @@ import AtInput from "./AtInput";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { FiCopy } from "react-icons/fi";
 import { useCopy } from "@/hooks/useCopy";
+import type { AtOption } from "./AtInput";
 
 export interface AtInputAreaProps {
   defaultValue?: string; // 回显内容，格式 xxx@[xxx]xxx
   maxLength?: number;
   onChange?: (text: string) => void;
-  options?: object[];
-  renderOptionItem?: (item: string) => React.ReactNode;
+  options?: AtOption[];
+  renderOptionItem?: (item: AtOption) => React.ReactNode;
   placeholder?: string;
   emptyText?: string;
   openAt?: boolean;

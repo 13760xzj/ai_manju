@@ -12,7 +12,12 @@ export interface ToggleLayoutProps {
   className?: string;
 }
 
-export function ToggleLayout({ areaA, areaB, areaC, className }) {
+export function ToggleLayout({
+  areaA,
+  areaB,
+  areaC,
+  className = "",
+}: ToggleLayoutProps) {
   const [expand, setExpand] = useState(false);
 
   return (

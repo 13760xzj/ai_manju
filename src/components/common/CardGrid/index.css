@@ -1,0 +1,28 @@
+.card-grid-wrap {
+  width: 100%;
+}
+
+.card-grid {
+  display: grid;
+  gap: 12px;
+  padding: 0;
+}
+
+.card-grid-auto {
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+}
+
+.card-grid-two {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.card-grid-one {
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+@media (max-width: 768px) {
+  .card-grid-auto {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+

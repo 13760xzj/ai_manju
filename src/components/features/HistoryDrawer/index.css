@@ -52,16 +52,12 @@
 }
 
 .history-close-btn {
-  width: 32px;
-  height: 32px;
-  border: none;
-  background: transparent;
+  width: 32px !important;
+  height: 32px !important;
+  border: none !important;
+  background: transparent !important;
   font-size: 24px;
   color: #999;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   border-radius: 4px;
   transition: all 0.2s ease;
 }

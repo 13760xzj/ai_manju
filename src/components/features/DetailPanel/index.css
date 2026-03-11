@@ -71,15 +71,11 @@
 .detail-header .close-btn {
   width: 32px;
   height: 32px;
-  border: none;
-  background-color: transparent;
+  border: none !important;
+  background-color: transparent !important;
   font-size: 24px;
   color: #999;
-  cursor: pointer;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  border-radius: 50% !important;
   transition: all 0.3s ease;
 }
 

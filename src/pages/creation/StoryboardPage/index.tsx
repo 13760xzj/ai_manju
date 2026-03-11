@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/useToast";
-import { Button, ConfirmDialog } from "@/components/common";
+import { Button, ConfirmDialog, IconButton, PillActionButton } from "@/components/common";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { Divider, Tooltip } from "antd";
 import { MdDragIndicator } from "react-icons/md";
@@ -13,6 +13,7 @@ import {
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
+import type { DragEndEvent } from "@dnd-kit/core";
 import {
   arrayMove,
   SortableContext,
@@ -116,13 +117,11 @@ function SortableListCard({
             )}
           </div>
           <div className="angle-card-actions storyboard-image-actions">
-            <button
-              className="angle-action-btn"
+            <PillActionButton
               type="button"
               disabled={!item.imageUrl}
               onClick={() => item.imageUrl && window.open(item.imageUrl, "_blank")}
-            >
-              <span className="angle-action-icon" aria-hidden="true">
+              icon={
                 <svg
                   width="14"
                   height="14"
@@ -134,16 +133,15 @@ function SortableListCard({
                   <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" />
                   <circle cx="12" cy="12" r="3" />
                 </svg>
-              </span>
+              }
+            >
               预览
-            </button>
-            <button
-              className="angle-action-btn"
+            </PillActionButton>
+            <PillActionButton
               type="button"
               disabled={!item.imageUrl}
               onClick={() => onReplaceStoryboardImage(item.id)}
-            >
-              <span className="angle-action-icon" aria-hidden="true">
+              icon={
                 <svg
                   width="14"
                   height="14"
@@ -157,16 +155,15 @@ function SortableListCard({
                   <path d="M7 23l-4-4 4-4" />
                   <path d="M21 13v2a4 4 0 0 1-4 4H3" />
                 </svg>
-              </span>
+              }
+            >
               替换
-            </button>
-            <button
-              className="angle-action-btn"
+            </PillActionButton>
+            <PillActionButton
               type="button"
               disabled={!item.imageUrl}
               onClick={() => onDownloadStoryboardImage(item.id)}
-            >
-              <span className="angle-action-icon" aria-hidden="true">
+              icon={
                 <svg
                   width="14"
                   height="14"
@@ -179,18 +176,21 @@ function SortableListCard({
                   <path d="M7 10l5 5 5-5" />
                   <path d="M12 15V3" />
                 </svg>
-              </span>
+              }
+            >
               下载
-            </button>
+            </PillActionButton>
           </div>
         </div>
         <div className="storyboard-item">
           <div className="storyboard-label">参考图片：</div>
           <div className="ref-grid">
             {[1, 2, 3, 4].map((i) => (
-              <button
+              <Button
                 key={i}
                 type="button"
+                variant={i === 4 ? "dashed" : "secondary"}
+                size="large"
                 className={`ref-tile ${
                   i === 4 ? "is-add" : item.refImageUrls?.[i - 1] ? "has-image" : ""
                 }`}
@@ -207,7 +207,7 @@ function SortableListCard({
                 ) : (
                   <span className="ref-plus">+</span>
                 )}
-              </button>
+              </Button>
             ))}
           </div>
         </div>
@@ -339,7 +339,8 @@ function SortableCardView({
           <div className="card-title">{item.title}</div>
         </div>
         <div className="card-menu-wrapper">
-          <button
+          <IconButton
+            ariaLabel="打开分镜菜单"
             className="card-menu-btn"
             onClick={(e) => {
               e.stopPropagation();
@@ -347,18 +348,18 @@ function SortableCardView({
             }}
           >
             ...
-          </button>
+          </IconButton>
           {activeCardMenu === index && (
             <div className="card-menu-dropdown">
-              <div className="menu-item" onClick={onEditImage}>
+              <Button className="menu-item" variant="secondary" size="small" onClick={onEditImage}>
                 <span>编辑分镜图</span>
-              </div>
-              <div className="menu-item" onClick={onCopy}>
+              </Button>
+              <Button className="menu-item" variant="secondary" size="small" onClick={onCopy}>
                 <span>复制分镜</span>
-              </div>
-              <div className="menu-item delete" onClick={onDelete}>
+              </Button>
+              <Button className="menu-item delete" variant="danger" size="small" onClick={onDelete}>
                 <span>删除分镜</span>
-              </div>
+              </Button>
             </div>
           )}
         </div>
@@ -438,7 +439,7 @@ export function StoryboardPage() {
   const replaceStoryboardImage = () => toast.info("替换分镜图");
   const downloadStoryboardImage = () => toast.info("下载分镜图");
 
-  const handleListDragEnd = (event: any) => {
+  const handleListDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
     if (over && active.id !== over.id) {
       setListItems((items) => {
@@ -449,7 +450,7 @@ export function StoryboardPage() {
     }
   };
 
-  const handleCardDragEnd = (event: any) => {
+  const handleCardDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
     if (over && active.id !== over.id) {
       setCardItems((items) => {

@@ -14,7 +14,6 @@ export function VideoPreviewPage() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(0);
   const [isDraggingPlayhead, setIsDraggingPlayhead] = useState(false);
 
   const TIMELINE_SECONDS = 150;
@@ -90,8 +89,6 @@ export function VideoPreviewPage() {
     };
 
     const handleLoadedMetadata = () => {
-      console.log("duration", video.duration);
-      setDuration(video.duration);
     };
 
     const handleEnded = () => {
@@ -109,12 +106,6 @@ export function VideoPreviewPage() {
     };
   }, []);
 
-  const formatTime = (time: number) => {
-    const minutes = Math.floor(time / 60);
-    const seconds = Math.floor(time % 60);
-    return `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
-  };
-
   const togglePlay = () => {
     const video = videoRef.current;
     if (!video) return;
@@ -127,9 +118,6 @@ export function VideoPreviewPage() {
     setIsPlaying(!isPlaying);
   };
 
-  const handleReGenerateVideo = () => {
-    setShowConfirmDialog(true);
-  };
   const confirmRegenerateVideo = () => {
     toast.info("正在重新生成视频...");
   };
@@ -225,13 +213,18 @@ export function VideoPreviewPage() {
                   您的浏览器不支持视频播放
                 </video>
 
-                <div className="video-overlay" onClick={togglePlay}>
+                <button
+                  type="button"
+                  className="video-overlay"
+                  onClick={togglePlay}
+                  aria-label={isPlaying ? "暂停播放" : "开始播放"}
+                >
                   {!isPlaying && (
                     <div className="play-button-overlay">
                       <span>▶</span>
                     </div>
                   )}
-                </div>
+                </button>
               </div>
             </div>
           </div>

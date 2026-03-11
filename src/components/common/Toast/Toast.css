@@ -92,9 +92,9 @@
 }
 
 .toast-info {
-  border-left: 4px solid #1890ff;
+  border-left: 4px solid var(--primary-color);
 }
 
 .toast-info .toast-icon {
-  color: #1890ff;
+  color: var(--primary-color);
 }

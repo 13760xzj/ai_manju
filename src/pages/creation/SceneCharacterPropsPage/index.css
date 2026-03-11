@@ -6,27 +6,6 @@
   flex-direction: column;
   min-height: 0;
   background: var(--bg-color);
-  --scp-btn-scale: 1.18;
-}
-
-/* 本页：按钮更大，但不改变所在框尺寸（使用 transform 放大，不参与布局） */
-.scene-character-props-page .top-bar-actions .btn,
-.scene-character-props-page .tab-toolbar .btn,
-.scene-character-props-page .section-header-right .btn,
-.scene-character-props-page .character-actions .btn,
-.scene-character-props-page .props-actions .btn,
-.scene-character-props-page .section-header-right .add-btn {
-  transform: scale(var(--scp-btn-scale));
-  transform-origin: center;
-}
-
-/* 兼容 primary hover 的上浮效果，避免覆盖放大 */
-.scene-character-props-page .top-bar-actions .btn-primary:hover:not(:disabled) {
-  transform: scale(var(--scp-btn-scale)) translateY(-1px);
-}
-
-.scene-character-props-page .section-header-right .btn-primary:hover:not(:disabled) {
-  transform: scale(var(--scp-btn-scale)) translateY(-1px);
 }
 
 .scene-character-props-page .section-header-right {
@@ -68,7 +47,7 @@
 /* 顶部 TopBar 在本页更“正常”的密度（不影响全站） */
 .scene-character-props-page .top-bar {
   /* 微微降低高度：减小上下内边距，按钮尺寸保持不变 */
-  padding: 4px 10px;
+  padding: 6px 12px;
   border-radius: 12px;
   border: 1px solid var(--border-light);
   box-shadow: 0 1px 1px rgba(15, 23, 42, 0.04);
@@ -88,6 +67,12 @@
 
 .scene-character-props-page .top-bar-actions {
   gap: 14px;
+}
+
+.scene-character-props-page .scp-topbar-actions .btn {
+  min-height: 32px;
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
 }
 
 .scene-character-props-page .stats-text {
@@ -196,22 +181,6 @@
   padding-bottom: 0;
 }
 
-.angles-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 12px;
-  padding: 0;
-}
-
-.angles-grid-2 {
-  grid-template-columns: repeat(2, 1fr);
-}
-
-.angles-grid-1 {
-  grid-template-columns: repeat(1, 1fr);
-  max-width: 520px;
-}
-
 .character-page-header,
 .scene-page-header,
 .props-page-header {
@@ -255,46 +224,7 @@
   gap: 10px;
 }
 
-.add-section-wrapper {
-  padding: 20px;
-  display: flex;
-  justify-content: flex-end;
-}
-
-.add-section-btn {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 10px 20px;
-  border: 2px dashed rgba(15, 23, 42, 0.18);
-  background: var(--surface-1);
-  border-radius: var(--border-radius-lg);
-  font-size: 14px;
-  color: var(--text-weak);
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.add-section-btn:hover {
-  border-color: var(--primary-color);
-  color: var(--primary-color);
-  background: var(--bg-primary-light);
-}
-
-.add-section-btn span:first-child {
-  font-size: 18px;
-  font-weight: bold;
-}
-
 @media (max-width: 768px) {
-  .angles-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .angles-grid-1 {
-    max-width: 100%;
-  }
-
   .scene-character-props-page .top-bar-left {
     min-width: 0;
   }

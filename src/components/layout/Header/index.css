@@ -1,6 +1,10 @@
 .header {
   height: 60px;
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  /* 顶部导航：苏梅 + 青翠 的柔和渐变叠加在米白纸感背景上 */
+  background:
+    radial-gradient(120% 140% at 0% 0%, rgba(var(--primary-color-rgb), 0.24) 0%, rgba(var(--primary-color-rgb), 0) 55%),
+    radial-gradient(120% 140% at 100% 0%, rgba(var(--secondary-rgb), 0.20) 0%, rgba(var(--secondary-rgb), 0) 55%),
+    linear-gradient(135deg, rgba(248, 245, 242, 0.96) 0%, rgba(245, 239, 233, 0.98) 100%);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -40,8 +44,8 @@
   padding: 8px 16px;
   border: none;
   border-radius: 20px;
-  background-color: rgba(255, 255, 255, 0.2);
-  color: white;
+  background-color: rgba(0, 0, 0, 0.06);
+  color: #ffffff;
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
@@ -49,12 +53,12 @@
 }
 
 .nav-btn:hover {
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: rgba(0, 0, 0, 0.10);
 }
 
 .nav-btn.active {
-  background-color: white;
-  color: var(--primary-color);
+  background-color: rgba(0, 0, 0, 0.18);
+  color: #ffffff;
   font-weight: 600;
 }
 
@@ -72,6 +76,57 @@
   color: white !important;
   font-size: 14px !important;
   padding: 6px 10px !important;
+}
+
+/* 仅案例广场/我的作品/个人资产库：顶部导航白色 */
+.header.header--white {
+  /* 与案例广场画布一致：左上更亮的粉色渐变，右上绿色渐变，底色米白 */
+  background:
+    radial-gradient(120% 180% at 0% 0%, rgba(var(--accent-rgb, var(--primary-rgb)), 0.32) 0%, rgba(var(--accent-rgb, var(--primary-rgb)), 0) 60%),
+    radial-gradient(120% 180% at 100% 0%, rgba(var(--secondary-rgb), 0.14) 0%, rgba(var(--secondary-rgb), 0) 60%),
+    var(--bg-color);
+  box-shadow: none;
+  border-bottom: none;
+}
+
+.header.header--white .nav-buttons {
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.header.header--white .logo h1 {
+  color: var(--text-strong);
+}
+
+.header.header--white .nav-btn {
+  padding: 10px 18px;
+  font-size: 15px;
+  border-radius: 999px;
+  background-color: rgba(15, 23, 42, 0.05);
+  color: var(--text-strong);
+  border: 1px solid rgba(15, 23, 42, 0.06);
+}
+
+.header.header--white .nav-btn:hover {
+  background-color: rgba(var(--primary-rgb), 0.10);
+  border-color: rgba(var(--primary-rgb), 0.16);
+}
+
+.header.header--white .nav-btn.active {
+  background:
+    radial-gradient(140% 200% at 30% 10%, rgba(var(--accent-rgb, var(--primary-rgb)), 0.22) 0%, rgba(var(--accent-rgb, var(--primary-rgb)), 0) 55%),
+    linear-gradient(135deg, rgba(var(--primary-rgb), 0.16) 0%, rgba(var(--secondary-rgb), 0.14) 100%);
+  color: var(--primary-color);
+  border-color: rgba(var(--primary-rgb), 0.22);
+}
+
+.header.header--white .user-btn {
+  color: var(--text-strong) !important;
 }
 
 .login-form {

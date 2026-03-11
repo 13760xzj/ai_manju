@@ -7,7 +7,7 @@ import { RiDownloadLine } from "react-icons/ri";
 import { ImagePreview } from "@/components/common";
 
 export interface PicListItemProps {
-  item: object;
+  item: { index: number; selected?: boolean };
   generateThreeBtn?: boolean;
   isVideo?: boolean;
 }

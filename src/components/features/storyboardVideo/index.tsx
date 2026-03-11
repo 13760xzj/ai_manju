@@ -9,15 +9,13 @@ import {
   FirstLastFrame,
 } from "@/components/features";
 
-export interface StoryboardScriptProps {
+export interface StoryboardVideoProps {
   visible: boolean;
   onCancel: () => void;
 }
 
-const StoryboardVideo: React.FC<StoryboardScriptProps> = ({
-  visible,
-  onCancel,
-}) => {
+const StoryboardVideo: React.FC<StoryboardVideoProps> = ({ visible, onCancel }) => {
+  type RightItem = { index: number; selected?: boolean; url?: string };
   return (
     <ContentModal
       visible={visible}
@@ -37,16 +35,13 @@ const StoryboardVideo: React.FC<StoryboardScriptProps> = ({
           id: i,
           url: `https://picsum.photos/120/70?random=${i}`,
         }))}
-        buildRightListItem={(item) => (
-          <PicListItem item={item} isVideo={true} />
-        )}
-        buildRightCardItem={(item) => (
-          <PicCardItem item={item} isVideo={true} />
-        )}
-        rightData={Array.from({ length: 10 }, (_, i) => i + 1)}
+        buildRightListItem={(item) => <PicListItem item={item} isVideo={true} />}
+        buildRightCardItem={(item) => <PicCardItem item={item} isVideo={true} />}
+        rightData={Array.from({ length: 10 }, (_, i) => ({ index: i, selected: i === 0 })) as RightItem[]}
       />
     </ContentModal>
   );
 };
 
 export { StoryboardVideo };
+

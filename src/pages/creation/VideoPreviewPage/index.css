@@ -8,7 +8,7 @@
   /* 允许页面垂直滚动，防止放大后底部时间轴滚动条被裁剪掉 */
   overflow-x: hidden;
   overflow-y: auto;
-  background: #ffffff;
+  background: var(--bg-color);
 }
 
 .video-preview-actions {
@@ -177,6 +177,8 @@
   justify-content: center;
   cursor: pointer;
   background: rgba(255, 255, 255, 0.08);
+  border: none;
+  padding: 0;
 }
 
 .play-button-overlay {

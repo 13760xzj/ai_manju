@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ToggleButton from "./ToggleButton";
 import { FiUpload } from "react-icons/fi";
 import { GrDocumentUpload } from "react-icons/gr";
@@ -10,20 +10,14 @@ export interface ResourceBoardProps<T = object> {
   onSelect: (index: number) => void;
   loading?: boolean;
   data: T[];
-  buildListItem: ({
-    item: T,
-    index: number,
-    selected: number,
-  }) => React.ReactNode;
-  buildCardItem: ({
-    item: T,
-    index: number,
-    selected: number,
-  }) => React.ReactNode;
+  buildListItem: (args: { item: T; index: number; selected: boolean }) => React.ReactNode;
+  buildCardItem: (args: { item: T; index: number; selected: boolean }) => React.ReactNode;
   dataChange?: (data: T[]) => void;
+  onLocalUpload?: () => Promise<T[] | T | null> | T[] | T | null;
+  onImportFromLibrary?: () => Promise<T[] | T | null> | T[] | T | null;
 }
 
-const ResourceBoard: React.FC = ({
+export default function ResourceBoard<T>({
   layoutType = "list",
   index = null,
   onSelect,
@@ -32,15 +26,30 @@ const ResourceBoard: React.FC = ({
   buildCardItem,
   dataChange,
   data = [],
-}) => {
-  const [type, setType] = useState(layoutType);
+  onLocalUpload,
+  onImportFromLibrary,
+}: ResourceBoardProps<T>) {
+  const [type, setType] = useState<ResourceBoardProps<T>["layoutType"]>(
+    layoutType,
+  );
   const [selectedIndex, setSelectedIndex] = useState<number | null>(index);
-
-  const [list, setList] = useState(data);
+  const [list, setList] = useState<T[]>(data);
 
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
   const rightRefs = useRef<(HTMLDivElement | null)[]>([]);
   const leftContainerRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    setType(layoutType);
+  }, [layoutType]);
+
+  useEffect(() => {
+    setSelectedIndex(index);
+  }, [index]);
+
+  useEffect(() => {
+    setList(data);
+  }, [data]);
 
   /**
    * 点击左侧
@@ -68,17 +77,27 @@ const ResourceBoard: React.FC = ({
     });
   }
 
-  function updateData() {
-    // 处理上传图片逻辑
-    const newData = [...list, list.length + 1];
-    setList(newData);
-    dataChange?.(newData);
+  async function applyDataResult(result: T[] | T | null | undefined) {
+    if (result == null) return;
+    const next = Array.isArray(result) ? result : [...list, result];
+    setList(next);
+    dataChange?.(next);
     setTimeout(() => {
       leftContainerRef.current?.scrollTo({
         top: leftContainerRef.current.scrollHeight,
         behavior: "smooth",
       });
     }, 100);
+  }
+
+  async function handleLocalUpload() {
+    const result = await onLocalUpload?.();
+    await applyDataResult(result);
+  }
+
+  async function handleImportFromLibrary() {
+    const result = await onImportFromLibrary?.();
+    await applyDataResult(result);
   }
 
   if (loading) {
@@ -98,14 +117,17 @@ const ResourceBoard: React.FC = ({
 
           <div className="flex gap-2">
             <div
-              onClick={updateData}
+              onClick={handleLocalUpload}
               className="border border-white/30 rounded-md px-4! py-1! text-sm cursor-pointer flex items-center gap-1"
             >
               <FiUpload />
               本地图片上传
             </div>
 
-            <div className="border border-white/30 rounded-md px-4! py-1! text-sm cursor-pointer flex items-center gap-1">
+            <div
+              onClick={handleImportFromLibrary}
+              className="border border-white/30 rounded-md px-4! py-1! text-sm cursor-pointer flex items-center gap-1"
+            >
               <GrDocumentUpload />
               资源库导入图片
             </div>
@@ -119,8 +141,10 @@ const ResourceBoard: React.FC = ({
           >
             {list.map((item, index) => (
               <div
-                key={item}
-                ref={(el) => (itemRefs.current[index] = el)}
+                key={index}
+                ref={(el) => {
+                  itemRefs.current[index] = el;
+                }}
                 onClick={() => handleLeftClick(index)}
                 className="cursor-pointer box-border transition-all duration-500 mb-4! rounded-xl"
               >
@@ -128,7 +152,7 @@ const ResourceBoard: React.FC = ({
                   buildListItem({
                     item,
                     index,
-                    selected: selectedIndex === index ? 1 : 0,
+                    selected: selectedIndex === index,
                   })}
               </div>
             ))}
@@ -141,8 +165,10 @@ const ResourceBoard: React.FC = ({
           >
             {list.map((item, index) => (
               <div
-                key={item}
-                ref={(el) => (itemRefs.current[index] = el)}
+                key={index}
+                ref={(el) => {
+                  itemRefs.current[index] = el;
+                }}
                 onClick={() => handleLeftClick(index)}
                 className="cursor-pointer box-border transition-all duration-500 rounded-xl"
               >
@@ -150,7 +176,7 @@ const ResourceBoard: React.FC = ({
                   buildCardItem({
                     item,
                     index,
-                    selected: selectedIndex === index ? 1 : 0,
+                    selected: selectedIndex === index,
                   })}
               </div>
             ))}
@@ -161,10 +187,12 @@ const ResourceBoard: React.FC = ({
       {/* 右侧 */}
       {type === "list" && (
         <div className="w-25 h-full overflow-y-auto flex flex-col gap-2 p-1! box-border">
-          {list.map((item, index) => (
+          {list.map((_item, index) => (
             <div
-              key={item}
-              ref={(el) => (rightRefs.current[index] = el)}
+              key={index}
+              ref={(el) => {
+                rightRefs.current[index] = el;
+              }}
               onClick={() => handleRightClick(index)}
               className="h-20 shrink-0 bg-[#292b2d] rounded-md select-none flex items-center justify-center cursor-pointer transition-all duration-500"
               style={{
@@ -174,13 +202,11 @@ const ResourceBoard: React.FC = ({
                     : "2px solid transparent",
               }}
             >
-              {item}
+              {String(index + 1)}
             </div>
           ))}
         </div>
       )}
     </div>
   );
-};
-
-export default ResourceBoard;
+}

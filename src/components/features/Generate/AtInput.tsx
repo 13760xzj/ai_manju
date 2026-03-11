@@ -2,12 +2,17 @@ import React, { useRef, useState, useEffect } from "react";
 import { FaRegCircleCheck } from "react-icons/fa6";
 import "./index.css";
 
+export interface AtOption {
+  name: string;
+  img: string;
+}
+
 interface Props {
   defaultValue?: string; // 回显内容，格式 xxx@[xxx]xxx
   maxLength?: number;
   onChange?: (text: string) => void;
-  options?: object[];
-  renderOptionItem?: (item: string) => React.ReactNode;
+  options?: AtOption[];
+  renderOptionItem?: (item: AtOption) => React.ReactNode;
   placeholder?: string;
   emptyText?: string;
   openAt?: boolean;
@@ -343,7 +348,7 @@ export default function AtInput({
               <div
                 key={i}
                 className={`px-2! max-w-55 py-1! my-1! cursor-pointer rounded-sm hover:bg-[#333333] gap-2 flex items-center justify-between ${
-                  selected === u ? "bg-[#333333]" : ""
+                  selected === u.name ? "bg-[#333333]" : ""
                 }`}
                 onMouseDown={(e) => {
                   e.preventDefault();
@@ -365,7 +370,7 @@ export default function AtInput({
                     style={{
                       fontSize: "16px",
                       color: "var(--success-color)",
-                      shrink: "0",
+                      flexShrink: 0,
                     }}
                   />
                 )}

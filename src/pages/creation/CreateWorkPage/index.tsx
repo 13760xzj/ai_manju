@@ -4,7 +4,7 @@ import { useToast } from '@/hooks/useToast';
 import { useAppDispatch } from '@/store/hooks';
 import { clearCreationData } from '@/store/slices/creationSlice';
 import { createProject } from '@/store/slices/projectSlice';
-import { Button } from '@/components/common';
+import { Button, IconButton } from '@/components/common';
 import './index.css';
 
 const MAX_NAME_LEN = 25;
@@ -45,12 +45,17 @@ export function CreateWorkPage() {
 
   return (
     <div className="create-work-page">
-      <div className="create-work-mask" onClick={handleClose} />
+      <button
+        type="button"
+        className="create-work-mask"
+        onClick={handleClose}
+        aria-label="关闭新建作品弹窗"
+      />
 
       <div className="create-work-modal" role="dialog" aria-modal="true" aria-label="新建作品">
-        <button className="create-work-close" onClick={handleClose} aria-label="关闭">
+        <IconButton ariaLabel="关闭" className="create-work-close" onClick={handleClose}>
           ×
-        </button>
+        </IconButton>
 
         <div className="create-work-header">
           <div className="create-work-title">新建作品</div>
@@ -94,7 +99,7 @@ export function CreateWorkPage() {
           <Button variant="ghost" onClick={handleCancel} className="create-work-btn">
             取消
           </Button>
-          <Button variant="success" onClick={handleConfirm} className="create-work-btn primary">
+          <Button variant="primary" onClick={handleConfirm} className="create-work-btn primary">
             确定新建
           </Button>
         </div>

@@ -1,14 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { authService } from '@/services/authService';
+import type { AuthUser } from '@/services/authService';
 import { loadFromStorage, saveToStorage } from '@/utils/storage';
 import type { AsyncState } from '@/types';
 
-interface User {
-  id: string;
-  username: string;
-  email?: string;
-}
+type User = AuthUser;
 
 interface AuthState {
   isLoggedIn: boolean;
@@ -47,12 +44,25 @@ const initialState: AuthState = {
   registerStatus: initialAsyncState()
 };
 
-export const loginUser = createAsyncThunk(
+export const loginUser = createAsyncThunk<
+  User,
+  { username: string; password: string; captchaVerification: string },
+  { rejectValue: string }
+>(
   'auth/login',
-  async ({ username, password }: { username: string; password: string }, { rejectWithValue }) => {
+  async (
+    {
+      username,
+      password,
+      captchaVerification
+    },
+    { rejectWithValue }
+  ) => {
     try {
-      const response = await authService.login(username, password);
-      return response.user;
+      const response = await authService.login(username, password, captchaVerification);
+      const user = response.user;
+      if (!user) return rejectWithValue('登录失败：未返回用户信息');
+      return user;
     } catch (error) {
       return rejectWithValue(error instanceof Error ? error.message : '登录失败');
     }
@@ -61,9 +71,30 @@ export const loginUser = createAsyncThunk(
 
 export const registerUser = createAsyncThunk(
   'auth/register',
-  async ({ username, password, email }: { username: string; password: string; email: string }, { rejectWithValue }) => {
+  async (
+    {
+      username,
+      password,
+      confirmPassword,
+      nickname,
+      captchaVerification
+    }: {
+      username: string;
+      password: string;
+      confirmPassword: string;
+      nickname: string;
+      captchaVerification: string;
+    },
+    { rejectWithValue }
+  ) => {
     try {
-      await authService.register(username, password, email);
+      await authService.register(
+        username,
+        password,
+        confirmPassword,
+        nickname,
+        captchaVerification
+      );
     } catch (error) {
       return rejectWithValue(error instanceof Error ? error.message : '注册失败');
     }

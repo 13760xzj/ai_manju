@@ -1,59 +1,97 @@
-import { useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { ReactNode } from "react";
-import { ImagePreview } from "@/components/common";
+import { IconButton, ImagePreview, PillActionButton } from "@/components/common";
 import "./index.css";
 
 export interface AngleCardProps {
   title: string;
   imageUrl?: string;
-  onPreview?: () => void;
   onReplace?: () => void;
   onDownload?: () => void;
   onDelete?: () => void;
+  previewImages?: string[];
   children?: ReactNode;
 }
 
 export function AngleCard({
   title,
   imageUrl,
-  // onPreview,
   onReplace,
   onDownload,
   onDelete,
+  previewImages,
   children,
 }: AngleCardProps) {
   const [showDropdown, setShowDropdown] = useState(false);
+  const rootRef = useRef<HTMLDivElement | null>(null);
+
+  const images = useMemo(() => {
+    if (previewImages && previewImages.length > 0) return previewImages;
+    return imageUrl ? [imageUrl] : [];
+  }, [imageUrl, previewImages]);
+
+  useEffect(() => {
+    if (!showDropdown) return;
+    const onDocMouseDown = (e: MouseEvent) => {
+      const el = rootRef.current;
+      if (!el) return;
+      if (e.target instanceof Node && el.contains(e.target)) return;
+      setShowDropdown(false);
+    };
+    document.addEventListener("mousedown", onDocMouseDown);
+    return () => document.removeEventListener("mousedown", onDocMouseDown);
+  }, [showDropdown]);
 
   return (
-    <div className="angle-card">
+    <div className="angle-card" ref={rootRef}>
       <div className="angle-card-header">
         <div className="angle-card-title">{title}</div>
         <div className="angle-card-menu">
-          <button
+          <IconButton
+            ariaLabel="打开更多操作"
             className="angle-card-menu-btn"
             onClick={() => setShowDropdown(!showDropdown)}
           >
             ⋮
-          </button>
+          </IconButton>
           {showDropdown && (
             <div className="angle-card-dropdown">
               <button
-                className="angle-card-dropdown-item"
+                type="button"
+                className="angle-card-menu-item"
                 onClick={() => {
                   onDownload?.();
                   setShowDropdown(false);
                 }}
               >
-                下载
+                <span className="angle-card-menu-icon" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <path d="M7 10l5 5 5-5" />
+                    <path d="M12 15V3" />
+                  </svg>
+                </span>
+                <span className="angle-card-menu-text">下载</span>
               </button>
+
               <button
-                className="angle-card-dropdown-item danger"
+                type="button"
+                className="angle-card-menu-item is-danger"
                 onClick={() => {
                   onDelete?.();
                   setShowDropdown(false);
                 }}
               >
-                删除
+                <span className="angle-card-menu-icon" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M3 6h18" />
+                    <path d="M8 6V4h8v2" />
+                    <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
+                    <path d="M10 11v6" />
+                    <path d="M14 11v6" />
+                  </svg>
+                </span>
+                <span className="angle-card-menu-text">删除</span>
               </button>
             </div>
           )}
@@ -71,44 +109,57 @@ export function AngleCard({
       </div>
 
       <div className="angle-card-actions">
-        <ImagePreview
-          images={[
-            "https://picsum.photos/id/1015/800/600",
-            "https://picsum.photos/id/1016/800/600",
-            "https://picsum.photos/id/1018/800/600",
-          ]}
-        >
-          <button className="angle-action-btn">
-            <span className="angle-action-icon" aria-hidden="true">
+        {images.length > 0 ? (
+          <ImagePreview images={images}>
+            <PillActionButton
+              icon={
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" />
+                  <circle cx="12" cy="12" r="3" />
+                </svg>
+              }
+            >
+              预览
+            </PillActionButton>
+          </ImagePreview>
+        ) : (
+          <PillActionButton
+            disabled
+            icon={
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" />
                 <circle cx="12" cy="12" r="3" />
               </svg>
-            </span>
+            }
+          >
             预览
-          </button>
-        </ImagePreview>
-        <button className="angle-action-btn" onClick={onReplace}>
-          <span className="angle-action-icon" aria-hidden="true">
+          </PillActionButton>
+        )}
+        <PillActionButton
+          onClick={onReplace}
+          icon={
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M17 1l4 4-4 4" />
               <path d="M3 11V9a4 4 0 0 1 4-4h14" />
               <path d="M7 23l-4-4 4-4" />
               <path d="M21 13v2a4 4 0 0 1-4 4H3" />
             </svg>
-          </span>
+          }
+        >
           替换
-        </button>
-        <button className="angle-action-btn" onClick={onDownload}>
-          <span className="angle-action-icon" aria-hidden="true">
+        </PillActionButton>
+        <PillActionButton
+          onClick={onDownload}
+          icon={
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
               <path d="M7 10l5 5 5-5" />
               <path d="M12 15V3" />
             </svg>
-          </span>
+          }
+        >
           下载
-        </button>
+        </PillActionButton>
       </div>
 
       {children}

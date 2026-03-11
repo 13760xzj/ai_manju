@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { RiRefreshLine } from "react-icons/ri";
 import { Spin } from "antd";
 import "./index.css";
@@ -27,7 +27,7 @@ export function SliderCaptcha({
   const startX = useRef(0);
 
   // 验证滑块位置
-  const validateSlider = async (position: number) => {
+  const validateSlider = useCallback(async () => {
     if (!captchaVerification) return false;
 
     setLoading(true);
@@ -38,7 +38,7 @@ export function SliderCaptcha({
       onSuccess?.(captchaVerification);
       setSuccess(true);
       return true;
-    } catch (err) {
+    } catch {
       setError(true);
       setTimeout(() => {
         setSliderLeft(0);
@@ -48,7 +48,7 @@ export function SliderCaptcha({
     } finally {
       setLoading(false);
     }
-  };
+  }, [captchaVerification, onSuccess]);
 
   const handleMouseDown = (e: React.MouseEvent) => {
     if (disabled || success || loading) return;
@@ -77,7 +77,7 @@ export function SliderCaptcha({
       if (!isDragging) return;
       setIsDragging(false);
 
-      const validated = await validateSlider(sliderLeft);
+      const validated = await validateSlider();
       if (!validated && !error) {
         setSliderLeft(0);
       }
@@ -97,7 +97,7 @@ export function SliderCaptcha({
       if (!isDragging) return;
       setIsDragging(false);
 
-      const validated = await validateSlider(sliderLeft);
+      const validated = await validateSlider();
       if (!validated && !error) {
         setSliderLeft(0);
       }
@@ -118,7 +118,7 @@ export function SliderCaptcha({
       document.removeEventListener("touchmove", handleTouchMove);
       document.removeEventListener("touchend", handleTouchEnd);
     };
-  }, [isDragging, sliderLeft, captchaVerification, onSuccess, error]);
+  }, [isDragging, sliderLeft, validateSlider, error]);
 
   // 重置状态
   useEffect(() => {

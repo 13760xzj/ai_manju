@@ -61,29 +61,10 @@
 }
 
 .segmented-tab {
-  padding: 3px 10px;
-  border: none;
-  background: transparent;
-  font-size: 11px;
-  font-weight: 500;
-  color: #666;
-  cursor: pointer;
-  border-radius: 2px;
-  transition: all 0.3s ease;
+  border-radius: 2px !important;
   white-space: nowrap;
-}
-
-.segmented-tab:hover {
-  background: white;
-  color: #4a6cf7;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.segmented-tab.active {
-  background: white;
-  color: #4a6cf7;
-  font-weight: 600;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: none !important;
+  transform: none !important;
 }
 
 .top-bar-right {

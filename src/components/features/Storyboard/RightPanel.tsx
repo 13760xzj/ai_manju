@@ -4,7 +4,7 @@ export interface RightPanelProps {
   children?: React.ReactNode;
 }
 
-const RightPanel: React.FC = ({ children }) => {
+const RightPanel: React.FC<RightPanelProps> = ({ children }) => {
   return <div className="right-panel h-full">{children}</div>;
 };
 

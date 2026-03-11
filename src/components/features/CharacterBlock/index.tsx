@@ -14,10 +14,8 @@ export interface CharacterBlockProps {
 }
 
 export function CharacterBlock({
-  characterId,
   characterName,
   description,
-  characterCount,
   onEditCharacter,
   onCopyCharacter,
   onDeleteCharacter,
@@ -29,10 +27,6 @@ export function CharacterBlock({
       <div className="character-header">
         <div className="character-info">
           <span className="character-title">{characterName}</span>
-          <span className="character-meta">
-            {`ID: ${characterId}`}
-            {typeof characterCount === 'number' ? ` · 形态数：${characterCount}` : ''}
-          </span>
           {description && <div className="character-desc">{description}</div>}
         </div>
         <div className="character-actions">
@@ -54,10 +48,9 @@ export function CharacterBlock({
         {children}
         {onAddForm && (
           <div className="add-form-footer">
-            <button className="add-form-btn" onClick={onAddForm}>
-              <span className="add-form-icon">+</span>
-              <span>新增形态</span>
-            </button>
+            <Button variant="dashed" size="small" onClick={onAddForm}>
+              + 新增形态
+            </Button>
           </div>
         )}
       </div>

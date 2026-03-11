@@ -5,7 +5,7 @@ export interface ToggleButtonProps {
   onToggle: (val: "card" | "list") => void;
 }
 
-const ToggleButton: React.FC = ({ value, onToggle }) => {
+const ToggleButton: React.FC<ToggleButtonProps> = ({ value, onToggle }) => {
   return (
     <div className="bg-white/10 flex items-center  p-1! rounded-lg text-sm cursor-pointer">
       <div

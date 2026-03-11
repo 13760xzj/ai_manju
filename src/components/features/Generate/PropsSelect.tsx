@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { CustomSelect } from "@/components/common";
 
 export interface PropsSelectProps {
@@ -47,7 +47,7 @@ export const PropsSelect: React.FC<PropsSelectProps> = ({ position }) => {
               desc: "5秒内生成，高清图片",
             },
           ]}
-          onChange={(v) => console.log(v)}
+          onChange={() => {}}
           renderItem={(option) => (
             <div className="flex items-center gap-2">
               <img src={option.icon} className="w-10 h-10 rounded-full" />
@@ -80,7 +80,7 @@ export const PropsSelect: React.FC<PropsSelectProps> = ({ position }) => {
             { label: "5:4", value: "5:4" },
             { label: "21:9", value: "21:9" },
           ]}
-          onChange={(v) => console.log(v)}
+          onChange={() => {}}
         />
       </div>
       <div className="flex-1">
@@ -91,7 +91,7 @@ export const PropsSelect: React.FC<PropsSelectProps> = ({ position }) => {
           options={new Array(4)
             .fill(0)
             .map((_, i) => ({ label: `${i + 1}张`, value: i + 1 }))}
-          onChange={(v) => console.log(v)}
+          onChange={() => {}}
         />
       </div>
       <div className="w-29">
@@ -107,7 +107,7 @@ export const PropsSelect: React.FC<PropsSelectProps> = ({ position }) => {
               value: 3,
             },
           ]}
-          onChange={(v) => console.log(v)}
+          onChange={() => {}}
         />
       </div>
     </div>

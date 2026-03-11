@@ -1,6 +1,7 @@
 import React from "react";
 import { HorizontalScroll } from "./HorizontalScroll";
 import { IoChevronBack } from "react-icons/io5";
+import { Button } from "@/components/common";
 
 export interface TopBarProps<T = object> {
   data: T[];
@@ -18,13 +19,15 @@ function TopBar<T>({
   return (
     <div className="flex items-center w-full h-25">
       {/* 返回按钮 */}
-      <button
+      <Button
+        variant="ghost"
+        size="small"
         className="bg-[rgba(255,255,255,0.1)] cursor-pointer border border-[rgba(255,255,255,0.1)] rounded-2xl py-1! px-3! flex items-center justify-center mx-4!"
         onClick={onCancel}
       >
         <IoChevronBack style={{ width: 14, height: 14, color: "#fff" }} />
         <span className="ml-1 text-white">返回</span>
-      </button>
+      </Button>
 
       <div className="flex-1 overflow-hidden">
         <HorizontalScroll

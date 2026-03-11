@@ -1,4 +1,4 @@
-import { Button } from '@/components/common';
+import { Button, IconButton } from '@/components/common';
 import './index.css';
 
 export interface HistoryVersion {
@@ -30,9 +30,13 @@ export function HistoryDrawer({
       <div className={`history-drawer ${visible ? 'visible' : ''}`}>
         <div className="history-drawer-header">
           <h3>历史版本</h3>
-          <button className="history-close-btn" onClick={onClose}>
+          <IconButton
+            ariaLabel="关闭历史版本"
+            className="history-close-btn"
+            onClick={onClose}
+          >
             ×
-          </button>
+          </IconButton>
         </div>
         
         <div className="history-drawer-content">

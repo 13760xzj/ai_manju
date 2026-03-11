@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/useToast";
-import { Button, ConfirmDialog } from "@/components/common";
+import { Button, ConfirmDialog, IconButton } from "@/components/common";
 import { MdDragIndicator } from "react-icons/md";
 
 import {
@@ -12,6 +12,7 @@ import {
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
+import type { DragEndEvent } from "@dnd-kit/core";
 import {
   arrayMove,
   SortableContext,
@@ -170,6 +171,21 @@ function SortableCardView({
     );
   };
 
+  useEffect(() => {
+    if (activeDropdown !== `dropdown-${index}`) return;
+    const onDocMouseDown = (e: MouseEvent) => {
+      const target = e.target;
+      if (!(target instanceof Element)) {
+        setActiveDropdown(null);
+        return;
+      }
+      if (target.closest(".dubbing-card-menu-btn") || target.closest(".dubbing-card-dropdown")) return;
+      setActiveDropdown(null);
+    };
+    document.addEventListener("mousedown", onDocMouseDown);
+    return () => document.removeEventListener("mousedown", onDocMouseDown);
+  }, [activeDropdown, index]);
+
   return (
     <div
       ref={setNodeRef}
@@ -188,7 +204,8 @@ function SortableCardView({
           </div>
           <div className="dubbing-card-title">{item.title}</div>
         </div>
-        <button
+        <IconButton
+          ariaLabel="打开分镜菜单"
           className="dubbing-card-menu-btn"
           onClick={(e) => {
             e.stopPropagation();
@@ -196,22 +213,43 @@ function SortableCardView({
           }}
         >
           ⋮
-        </button>
+        </IconButton>
         {activeDropdown === `dropdown-${index}` && (
           <div className="dubbing-card-dropdown show top-10! right-2!">
-            <button className="dubbing-card-dropdown-item" onClick={onEdit}>
+            <Button
+              className="dubbing-card-dropdown-item"
+              variant="secondary"
+              size="small"
+              onClick={() => {
+                setActiveDropdown(null);
+                onEdit();
+              }}
+            >
               <span>编辑分镜配音</span>
-            </button>
-            <button className="dubbing-card-dropdown-item" onClick={onCopy}>
+            </Button>
+            <Button
+              className="dubbing-card-dropdown-item"
+              variant="secondary"
+              size="small"
+              onClick={() => {
+                setActiveDropdown(null);
+                onCopy();
+              }}
+            >
               <span>复制分镜</span>
-            </button>
+            </Button>
             <div className="dubbing-card-dropdown-divider"></div>
-            <button
+            <Button
               className="dubbing-card-dropdown-item danger"
-              onClick={onDelete}
+              variant="danger"
+              size="small"
+              onClick={() => {
+                setActiveDropdown(null);
+                onDelete();
+              }}
             >
               <span>删除分镜</span>
-            </button>
+            </Button>
           </div>
         )}
       </div>
@@ -247,7 +285,6 @@ export function DubbingPage() {
   const toast = useToast();
   const [viewMode, setViewMode] = useState<"list" | "card">("list");
   const [progressCount] = useState(0);
-  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [listItems, setListItems] = useState<DubbingItem[]>([
     { id: 1, title: "分镜配音 1：分镜 1-1", subtitle: "分镜 1-1" },
@@ -285,30 +322,25 @@ export function DubbingPage() {
 
   const handleEditScript = () => {
     toast.info("分镜脚本");
-    setActiveDropdown(null);
   };
 
   const handleEditVideo = () => {
     toast.info("分镜视频");
-    setActiveDropdown(null);
   };
 
   const handleEditDubbing = () => {
     toast.info("编辑分镜配音");
-    setActiveDropdown(null);
   };
 
   const handleCopy = () => {
     toast.info("复制分镜");
-    setActiveDropdown(null);
   };
 
   const handleDelete = () => {
     toast.info("删除分镜");
-    setActiveDropdown(null);
   };
 
-  const handleListDragEnd = (event: any) => {
+  const handleListDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
     if (over && active.id !== over.id) {
       setListItems((items) => {
@@ -319,7 +351,7 @@ export function DubbingPage() {
     }
   };
 
-  const handleCardDragEnd = (event: any) => {
+  const handleCardDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
     if (over && active.id !== over.id) {
       setCardItems((items) => {
@@ -331,7 +363,7 @@ export function DubbingPage() {
   };
 
   return (
-    <div className="dubbing-page" onClick={() => setActiveDropdown(null)}>
+    <div className="dubbing-page">
       <div className="page-toolbar ui-toolbar">
         <div className="toolbar-left">
           <div className="toggle-group">

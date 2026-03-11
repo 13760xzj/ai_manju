@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Button, Modal, Input, CaptchaInput, SliderCaptcha } from '@/components/common';
+import { Button, Modal, Input, SliderCaptcha } from '@/components/common';
 import { useToast } from '@/hooks/useToast';
 import { authService } from '@/services/authService';
 import './index.css';
@@ -34,8 +34,8 @@ export function Header({
   const [loginCaptchaVerification, setLoginCaptchaVerification] = useState('');  // 登录验证码答案
   const [registerCaptchaImage, setRegisterCaptchaImage] = useState('');  // 注册验证码图片
   const [registerCaptchaVerification, setRegisterCaptchaVerification] = useState('');  // 注册验证码答案
-  const [loginCaptchaSuccess, setLoginCaptchaSuccess] = useState(false);  // 登录验证码是否通过
-  const [registerCaptchaSuccess, setRegisterCaptchaSuccess] = useState(false);  // 注册验证码是否通过
+  const [loginCaptchaSuccess, setLoginCaptchaSuccess] = useState(false); // 登录验证码是否通过
+  const [registerCaptchaSuccess, setRegisterCaptchaSuccess] = useState(false); // 注册验证码是否通过
 
   useEffect(() => {
     const path = location.pathname;
@@ -49,6 +49,24 @@ export function Header({
       setActiveTab('personal');
     }
   }, [location.pathname]);
+
+  const isWhiteHeader =
+    location.pathname === "/case" ||
+    location.pathname === "/works" ||
+    location.pathname === "/personal-assets";
+
+  const whiteHeaderThemeVars = isWhiteHeader
+    ? ({
+        // 与全局品牌色保持一致：粉色 + 青色，用于导航栏渐变
+        '--primary-color': '#DD7694',
+        '--primary-rgb': '221, 118, 148',
+        '--primary-color-rgb': '221, 118, 148',
+        '--secondary-color': '#53B76F',
+        '--secondary-rgb': '83, 183, 111',
+        '--accent-color': '#FFE4F0',
+        '--accent-rgb': '255, 228, 240'
+      } as React.CSSProperties)
+    : undefined;
 
   // 打开登录弹窗时获取验证码
   useEffect(() => {
@@ -113,7 +131,7 @@ export function Header({
       return;
     }
     
-    if (!loginCaptchaVerification) {
+    if (!loginCaptchaVerification || !loginCaptchaSuccess) {
       setError('请先完成滑块验证');
       return;
     }
@@ -129,12 +147,13 @@ export function Header({
       setPassword('');
       setError('');
       toast.success('登录成功！');
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('登录失败:', err);
       // 登录失败后刷新验证码
       loadLoginCaptcha();
       setLoginCaptchaSuccess(false);
-      setError(err.message || '登录失败，请检查用户名和密码');
+      const msg = err instanceof Error ? err.message : '登录失败，请检查用户名和密码';
+      setError(msg);
     } finally {
       setIsLoading(false);
     }
@@ -164,7 +183,7 @@ export function Header({
       return;
     }
     
-    if (!registerCaptchaVerification) {
+    if (!registerCaptchaVerification || !registerCaptchaSuccess) {
       setError('请先完成滑块验证');
       return;
     }
@@ -181,12 +200,13 @@ export function Header({
       setNickname('');
       setRegisterCaptchaSuccess(false);
       setError('');
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('注册失败:', err);
       // 注册失败后刷新验证码
       loadRegisterCaptcha();
       setRegisterCaptchaSuccess(false);
-      setError(err.message || '注册失败，请稍后重试');
+      const msg = err instanceof Error ? err.message : '注册失败，请稍后重试';
+      setError(msg);
     } finally {
       setIsLoading(false);
     }
@@ -247,7 +267,10 @@ export function Header({
 
   return (
     <>
-      <header className="header">
+      <header
+        className={`header ${isWhiteHeader ? "header--white" : ""}`}
+        style={whiteHeaderThemeVars}
+      >
         <div className="logo">
           <h1>AI 漫剧生成平台</h1>
         </div>
@@ -409,8 +432,10 @@ export function Header({
               onSuccess={(verification) => {
                 if (isRegisterMode) {
                   setRegisterCaptchaSuccess(true);
+                  setRegisterCaptchaVerification(verification);
                 } else {
                   setLoginCaptchaSuccess(true);
+                  setLoginCaptchaVerification(verification);
                 }
               }}
               onRefresh={isRegisterMode ? loadRegisterCaptcha : loadLoginCaptcha}

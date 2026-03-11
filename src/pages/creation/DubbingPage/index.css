@@ -14,12 +14,14 @@
 }
 
 .dubbing-page .toolbar-right .btn,
+.dubbing-page .toggle-group .btn,
 .dubbing-page .dubbing-actions .btn {
   transform: scale(var(--dubbing-btn-scale));
   transform-origin: center;
 }
 
 .dubbing-page .toolbar-right .btn-primary:hover:not(:disabled),
+.dubbing-page .toggle-group .btn-primary:hover:not(:disabled),
 .dubbing-page .dubbing-actions .btn-primary:hover:not(:disabled) {
   transform: scale(var(--dubbing-btn-scale)) translateY(-1px);
 }
@@ -28,7 +30,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 15px;
+  margin-bottom: 6px;
   flex-shrink: 0;
 }
 
@@ -272,17 +274,15 @@
 .dubbing-card-menu-btn {
   width: 24px;
   height: 24px;
-  border: none;
-  background: transparent;
-  cursor: pointer;
   border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   font-size: 16px;
   color: var(--text-weak);
   transition: all 0.2s ease;
-  padding: 0;
+  padding: 0 !important;
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  transform: none !important;
 }
 
 .dubbing-card-menu-btn:hover {
@@ -422,12 +422,16 @@
   padding: 12px 16px;
   font-size: 13px;
   color: var(--text-strong);
-  cursor: pointer;
   transition: all 0.2s ease;
-  border: none;
-  background: transparent;
+  border: none !important;
+  background: transparent !important;
   width: 100%;
   text-align: left;
+  justify-content: flex-start;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  transform: none !important;
+  border-color: transparent !important;
 }
 
 .dubbing-card-dropdown-item:hover {

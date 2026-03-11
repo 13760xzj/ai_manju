@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { Button } from '@/components/common';
 import './index.css';
 
 export interface SectionHeaderProps {
@@ -25,10 +26,9 @@ export function SectionHeader({
       <div className="section-header-right">
         {actions}
         {onAdd && (
-          <button className="add-btn" onClick={onAdd}>
-            <span>+</span>
-            <span>{addButtonText}</span>
-          </button>
+          <Button variant="dashed" size="small" onClick={onAdd}>
+            + {addButtonText}
+          </Button>
         )}
       </div>
     </div>

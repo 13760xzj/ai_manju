@@ -21,13 +21,14 @@
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  background: var(--primary-color);
   color: white;
 }
 
 .btn-primary:hover:not(:disabled) {
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(74, 108, 247, 0.3);
+  filter: brightness(1.03);
+  box-shadow: 0 10px 24px rgba(var(--primary-rgb), 0.26);
 }
 
 .btn-secondary {
@@ -37,9 +38,9 @@
 }
 
 .btn-secondary:hover:not(:disabled) {
-  border-color: #4a6cf7;
-  color: #4a6cf7;
-  background-color: #f0f4ff;
+  border-color: rgba(var(--primary-rgb), 0.55);
+  color: var(--primary-color);
+  background-color: var(--bg-primary-light);
 }
 
 .btn-danger {
@@ -59,8 +60,8 @@
 }
 
 .btn-ghost:hover:not(:disabled) {
-  background-color: #f0f4ff;
-  color: #4a6cf7;
+  background-color: var(--bg-primary-light);
+  color: var(--primary-color);
 }
 
 .btn-mini {
@@ -104,7 +105,7 @@
 .btn-info:hover:not(:disabled) {
   filter: brightness(1.03);
   transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(24, 144, 255, 0.28);
+  box-shadow: 0 2px 8px rgba(var(--primary-rgb), 0.26);
 }
 
 .btn-warning {
@@ -126,9 +127,35 @@
 }
 
 .btn-dashed:hover:not(:disabled) {
-  border-color: #4a6cf7;
-  color: #4a6cf7;
-  background: #f0f4ff;
+  border-color: rgba(var(--primary-rgb), 0.55);
+  color: var(--primary-color);
+  background: var(--bg-primary-light);
+}
+
+/* 主 CTA（例如“我要创作”）：苏梅实底 + 白字 */
+.btn-primary-cta {
+  background-color: var(--primary-color);
+  color: #ffffff;
+  border-color: transparent;
+}
+
+.btn-primary-cta:hover:not(:disabled) {
+  background-color: var(--primary-color-dark);
+  box-shadow: 0 10px 26px rgba(var(--primary-rgb), 0.30);
+  transform: translateY(-1px);
+}
+
+/* 功能型按钮（如 AI 生成 / 智能剪辑）：青翠轻描边块 */
+.btn-feature {
+  background-color: rgba(var(--secondary-rgb), 0.10);
+  color: rgb(var(--secondary-rgb));
+  border-color: rgba(var(--secondary-rgb), 0.20);
+}
+
+.btn-feature:hover:not(:disabled) {
+  background-color: rgba(var(--secondary-rgb), 0.18);
+  box-shadow: 0 8px 20px rgba(var(--secondary-rgb), 0.25);
+  transform: translateY(-1px);
 }
 
 .btn-spinner {

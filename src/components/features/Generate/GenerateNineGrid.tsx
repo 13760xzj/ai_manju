@@ -12,7 +12,7 @@ export const GenerateNineGrid: React.FC = () => {
         </div>
       </div>
       <div className="flex-1" />
-      <div className="h-14 rounded-xl w-full cursor-pointer hover:opacity-90 bg-[linear-gradient(to_right_bottom,#6deafb,#66aef7)] text-black flex items-center justify-center">
+      <div className="h-14 rounded-xl w-full cursor-pointer hover:opacity-90 bg-[var(--primary-color)] text-white flex items-center justify-center">
         <RiAiGenerate style={{ fontSize: 20 }} />
         <div className="mx-2!">生成九宫格</div>
         <span>消耗</span>

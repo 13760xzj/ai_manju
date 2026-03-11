@@ -4,6 +4,7 @@ import { useAppDispatch } from '@/store/hooks';
 import type { Asset, Work, AssetCategory, AssetCategoryInfo } from '@/types';
 import { ASSET_CATEGORIES, STYLE_SUBCATEGORIES } from '@/utils';
 import { AssetCard, WorkCard, DetailPanel } from '@/components/features';
+import { Button } from '@/components/common';
 import {
   setSelectedCategory,
   setSelectedItem,
@@ -102,16 +103,6 @@ export function PersonalAssetsPage() {
     dispatch(setSelectedCategory(category));
   };
 
-  const isSceneCategory = selectedMaterialCategory === 'scene';
-  const isCharacterCategory = selectedMaterialCategory === 'character';
-  const isPropCategory = selectedMaterialCategory === 'prop';
-  const isFileCategory = selectedMaterialCategory === 'file';
-  const isPoseCategory = selectedMaterialCategory === 'pose';
-  const isEffectCategory = selectedMaterialCategory === 'effect';
-  const isExpressionCategory = selectedMaterialCategory === 'expression';
-  const isMyStyleCategory = activeSection === 'style' && selectedStyleFilter === 'my-style';
-  const isFeaturedStyleCategory = activeSection === 'style' && selectedStyleFilter === 'featured-style';
-
   const getBreadcrumbCategoryName = () => {
     if (activeSection === 'style') {
       return selectedStyleFilter === 'my-style' ? '我的风格库' : selectedStyleFilter === 'featured-style' ? '精选风格库' : '风格库';
@@ -152,10 +143,6 @@ export function PersonalAssetsPage() {
     return matchesCategory && matchesSearch;
   });
 
-  const filteredWorks = works.filter(work =>
-    work.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
   const [activeTab, setActiveTab] = useState<'personal' | 'company'>('personal');
   const [expandedFolders, setExpandedFolders] = useState<string[]>(['material', 'works']);
 
@@ -173,29 +160,38 @@ export function PersonalAssetsPage() {
         <div className="sidebar-header">资源管理器</div>
         <nav className="assets-nav">
           <div className="folder-tree">
-            <div 
+            <button
+              type="button"
               className="tree-item folder"
               onClick={() => toggleFolder('material')}
             >
               <span className="folder-icon">{expandedFolders.includes('material') ? '📂' : '📁'}</span>
               <span className="folder-name">素材库</span>
-            </div>
+            </button>
             {expandedFolders.includes('material') && (
               <div className="tree-children">
                 {ASSET_CATEGORIES.map(cat => (
-                  <div
+                  <button
+                    type="button"
                     key={cat.id}
                     className={`tree-item ${selectedMaterialCategory === cat.id ? 'active' : ''}`}
                     onClick={() => handleMaterialClick(cat.id)}
                   >
-                    <span className="item-icon">📄</span>
+                    <span className="item-icon" aria-hidden="true">
+                      <svg viewBox="0 0 20 20">
+                        <rect x="4" y="3" width="10" height="14" rx="2" ry="2" fill="none" stroke="currentColor" strokeWidth="1.4" />
+                        <line x1="7" y1="8" x2="13" y2="8" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+                        <line x1="7" y1="11" x2="11.5" y2="11" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+                      </svg>
+                    </span>
                     <span className="item-name">{cat.name}</span>
-                  </div>
+                  </button>
                 ))}
               </div>
             )}
             
-            <div 
+            <button
+              type="button"
               className="tree-item folder"
               onClick={() => {
                 setExpandedStyleFolder(!expandedStyleFolder);
@@ -203,11 +199,12 @@ export function PersonalAssetsPage() {
             >
               <span className="folder-icon">{expandedStyleFolder ? '📂' : '📁'}</span>
               <span className="folder-name">风格库</span>
-            </div>
+            </button>
             {expandedStyleFolder && (
               <div className="tree-children">
                 {STYLE_SUBCATEGORIES.map(subcat => (
-                  <div
+                  <button
+                    type="button"
                     key={subcat.id}
                     className={`tree-item ${selectedStyleFilter === subcat.id ? 'active' : ''}`}
                     onClick={(e) => {
@@ -215,45 +212,55 @@ export function PersonalAssetsPage() {
                       handleStyleSubcategoryClick(subcat.id);
                     }}
                   >
-                    <span className="item-icon">📄</span>
+                    <span className="item-icon" aria-hidden="true">
+                      <svg viewBox="0 0 20 20">
+                        <rect x="4" y="3" width="10" height="14" rx="2" ry="2" fill="none" stroke="currentColor" strokeWidth="1.4" />
+                        <line x1="7" y1="8" x2="13" y2="8" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+                        <line x1="7" y1="11" x2="11.5" y2="11" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+                      </svg>
+                    </span>
                     <span className="item-name">{subcat.name}</span>
-                  </div>
+                  </button>
                 ))}
               </div>
             )}
             
-            <div 
+            <button
+              type="button"
               className="tree-item folder"
               onClick={() => toggleFolder('works')}
             >
               <span className="folder-icon">{expandedFolders.includes('works') ? '📂' : '📁'}</span>
               <span className="folder-name">我的作品</span>
-            </div>
+            </button>
             {expandedFolders.includes('works') && (
               <div className="tree-children">
                 {/* 全部作品 */}
-                <div
+                <button
+                  type="button"
                   className={`tree-item ${activeSection === 'works' && !selectedWorkId && !selectedWorkCategory ? 'active' : ''}`}
                   onClick={handleWorkClick}
                 >
                   <span className="folder-icon">📁</span>
                   <span className="folder-name">全部作品</span>
-                </div>
+                </button>
                 
                 {/* 作品列表（可展开） */}
                 {works.map(work => (
                   <div key={work.id}>
-                    <div 
+                    <button
+                      type="button"
                       className="tree-item folder"
                       onClick={() => toggleWorkExpand(work.id)}
                     >
                       <span className="folder-icon">{expandedWorks.includes(work.id) ? '📂' : '📁'}</span>
                       <span className="folder-name">{work.name}</span>
-                    </div>
+                    </button>
                     {expandedWorks.includes(work.id) && (
                       <div className="tree-children">
                         {ASSET_CATEGORIES.filter(cat => cat.id !== 'all').map(cat => (
-                          <div
+                          <button
+                            type="button"
                             key={cat.id}
                             className={`tree-item ${selectedWorkId === work.id && selectedWorkCategory === cat.id ? 'active' : ''}`}
                             onClick={(e) => {
@@ -261,9 +268,15 @@ export function PersonalAssetsPage() {
                               handleWorkCategoryClick(work.id, cat.id);
                             }}
                           >
-                            <span className="item-icon">📄</span>
+                            <span className="item-icon" aria-hidden="true">
+                              <svg viewBox="0 0 20 20">
+                                <rect x="4" y="3" width="10" height="14" rx="2" ry="2" fill="none" stroke="currentColor" strokeWidth="1.4" />
+                                <line x1="7" y1="8" x2="13" y2="8" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+                                <line x1="7" y1="11" x2="11.5" y2="11" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+                              </svg>
+                            </span>
                             <span className="item-name">{cat.name}</span>
-                          </div>
+                          </button>
                         ))}
                       </div>
                     )}
@@ -277,18 +290,22 @@ export function PersonalAssetsPage() {
 
       <main className="assets-main">
         <div className="assets-tabs">
-          <button
-            className={`tab-btn ${activeTab === 'personal' ? 'active' : ''}`}
+          <Button
+            variant={activeTab === 'personal' ? 'primary' : 'secondary'}
+            size="large"
+            className="tab-btn"
             onClick={() => setActiveTab('personal')}
           >
             个人资产库
-          </button>
-          <button
-            className={`tab-btn ${activeTab === 'company' ? 'active' : ''}`}
+          </Button>
+          <Button
+            variant={activeTab === 'company' ? 'primary' : 'secondary'}
+            size="large"
+            className="tab-btn"
             onClick={() => setActiveTab('company')}
           >
             公司资产库
-          </button>
+          </Button>
         </div>
 
         <div className="assets-breadcrumb">

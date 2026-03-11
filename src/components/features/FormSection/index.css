@@ -37,23 +37,9 @@
 }
 
 .form-section-audition-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 3px 10px;
-  font-size: 11px;
-  border: 1px solid #e0e0e0;
-  border-radius: 12px;
-  background: white;
-  color: #666;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.form-section-audition-btn:hover {
-  border-color: #4a6cf7;
-  color: #4a6cf7;
-  background: #f9f9ff;
+  padding: 2px 8px !important;
+  border-radius: 12px !important;
+  font-size: 11px !important;
 }
 
 .form-section-status {
@@ -76,44 +62,6 @@
 .form-section-actions {
   display: flex;
   gap: 6px;
-}
-
-.action-btn {
-  padding: 4px 10px;
-  font-size: 11px;
-  border: 1px solid #e0e0e0;
-  border-radius: 12px;
-  background: white;
-  color: #666;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-weight: 500;
-}
-
-.action-btn:hover {
-  border-color: #4a6cf7;
-  color: #4a6cf7;
-}
-
-.action-btn.primary {
-  background: #4a6cf7;
-  color: white;
-  border-color: #4a6cf7;
-}
-
-.action-btn.primary:hover {
-  background: #3b5bdb;
-  border-color: #3b5bdb;
-}
-
-.action-btn.danger {
-  color: #ff4d4f;
-  border-color: #ffccc7;
-}
-
-.action-btn.danger:hover {
-  background: #fff2f0;
-  border-color: #ff4d4f;
 }
 
 .form-images {

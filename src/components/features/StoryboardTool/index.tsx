@@ -14,7 +14,9 @@ export interface StoryboardToolProps {
   onCancel: () => void;
 }
 
-const StoryboardTool: React.FC = ({ visible, onCancel }) => {
+type RightItem = { index: number; selected?: boolean; url?: string };
+
+const StoryboardTool: React.FC<StoryboardToolProps> = ({ visible, onCancel }) => {
   return (
     <ContentModal
       visible={visible}
@@ -36,7 +38,7 @@ const StoryboardTool: React.FC = ({ visible, onCancel }) => {
         }))}
         buildRightListItem={(item) => <PicListItem item={item} />}
         buildRightCardItem={(item) => <PicCardItem item={item} />}
-        rightData={Array.from({ length: 10 }, (_, i) => i + 1)}
+        rightData={Array.from({ length: 10 }, (_, i) => ({ index: i, selected: i === 0 })) as RightItem[]}
       />
     </ContentModal>
   );

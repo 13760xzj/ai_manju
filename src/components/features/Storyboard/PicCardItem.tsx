@@ -10,7 +10,7 @@ import { RiDownloadLine } from "react-icons/ri";
 import { ImagePreview } from "@/components/common";
 
 export interface PicCardItemProps {
-  item: object;
+  item: { index: number; selected?: boolean };
   generateThreeBtn?: boolean; // 是否显示生成三视图按钮
   isVideo?: boolean;
 }

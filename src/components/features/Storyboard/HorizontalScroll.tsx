@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect, useCallback } from "react";
 import { IoChevronBack } from "react-icons/io5";
 import { IoIosArrowForward } from "react-icons/io";
+import { IconButton } from "@/components/common";
 
 export interface HorizontalScrollProps<T = object> {
   data: T[];
@@ -77,7 +78,8 @@ function HorizontalScroll<T>({
             background: `linear-gradient(to left,transparent 0%,${markColor || "#1c1e20"} 70%,${markColor || "#1c1e20"} 100%)`,
           }}
         >
-          <button
+          <IconButton
+            ariaLabel="向左滚动"
             onClick={() => scroll("prev")}
             disabled={!canPrev}
             className={`w-8 h-8 rounded-full flex items-center justify-center mx-2! cursor-pointer
@@ -88,7 +90,7 @@ function HorizontalScroll<T>({
                       }`}
           >
             <IoChevronBack style={{ width: 20, height: 20, color: "#fff" }} />
-          </button>
+          </IconButton>
         </div>
       )}
 
@@ -118,7 +120,8 @@ function HorizontalScroll<T>({
       {/* 右按钮 */}
       {buttonPosition === "right" && (
         <div className="flex gap-2 px-3!">
-          <button
+          <IconButton
+            ariaLabel="向左滚动"
             onClick={() => scroll("prev")}
             disabled={!canPrev}
             className={`w-8 h-8 rounded-full flex items-center justify-center cursor-pointer
@@ -129,8 +132,9 @@ function HorizontalScroll<T>({
                       }`}
           >
             <IoChevronBack style={{ width: 20, height: 20, color: "#fff" }} />
-          </button>
-          <button
+          </IconButton>
+          <IconButton
+            ariaLabel="向右滚动"
             onClick={() => scroll("next")}
             disabled={!canNext}
             className={`w-8 h-8 rounded-full flex items-center justify-center cursor-pointer
@@ -143,7 +147,7 @@ function HorizontalScroll<T>({
             <IoIosArrowForward
               style={{ width: 20, height: 20, color: "#fff" }}
             />
-          </button>
+          </IconButton>
         </div>
       )}
 
@@ -155,7 +159,8 @@ function HorizontalScroll<T>({
             background: `linear-gradient(to right,transparent 0%,${markColor || "#1c1e20"} 70%,${markColor || "#1c1e20"} 100%)`,
           }}
         >
-          <button
+          <IconButton
+            ariaLabel="向右滚动"
             onClick={() => scroll("next")}
             disabled={!canNext}
             className={`w-8 h-8 rounded-full flex items-center justify-center mx-2! cursor-pointer
@@ -168,7 +173,7 @@ function HorizontalScroll<T>({
             <IoIosArrowForward
               style={{ width: 20, height: 20, color: "#fff" }}
             />
-          </button>
+          </IconButton>
         </div>
       )}
     </div>

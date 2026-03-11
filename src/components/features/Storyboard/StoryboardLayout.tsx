@@ -7,17 +7,20 @@ import ResourceBoard from "./ResourceBoard";
 
 import "./layout.css";
 
-export interface StoryboardLayoutProps<T = object> {
+export interface StoryboardLayoutProps<
+  TTop extends { url: string } = { url: string },
+  TRight = unknown,
+> {
   onCancel?: () => void;
   leftPanelTabs: TabItem[];
-  topData: T[];
-  onTopItemClick?: (item: T) => void;
-  buildRightListItem: (item: T) => React.ReactNode;
-  buildRightCardItem: (item: T) => React.ReactNode;
-  rightData: object[];
+  topData: TTop[];
+  onTopItemClick?: (item: TTop, index: number) => void;
+  buildRightListItem: (item: TRight) => React.ReactNode;
+  buildRightCardItem: (item: TRight) => React.ReactNode;
+  rightData: TRight[];
 }
 
-export const StoryboardLayout: React.FC<StoryboardLayoutProps> = ({
+export function StoryboardLayout<TTop extends { url: string }, TRight>({
   onCancel,
   leftPanelTabs = [],
   topData = [],
@@ -25,11 +28,12 @@ export const StoryboardLayout: React.FC<StoryboardLayoutProps> = ({
   buildRightListItem,
   buildRightCardItem,
   rightData = [],
-}) => {
+}: StoryboardLayoutProps<TTop, TRight>) {
   const [curIndex, setCurIndex] = useState<number>(-1);
   function handleThumbClick(index: number) {
     setCurIndex(index);
-    onTopItemClick(index);
+    const item = topData[index];
+    if (item) onTopItemClick?.(item, index);
   }
 
   return (
@@ -58,6 +62,7 @@ export const StoryboardLayout: React.FC<StoryboardLayoutProps> = ({
                   <img
                     src={item.url}
                     className="object-cover h-full w-full transition-transform duration-200 ease-in-out transform hover:scale-120"
+                    loading="lazy"
                   />
                 </div>
                 <div
@@ -80,24 +85,19 @@ export const StoryboardLayout: React.FC<StoryboardLayoutProps> = ({
         </div>
 
         <div className="layout-right">
-          <RightPanel
-            children={
-              <ResourceBoard
-                data={rightData}
-                index={0}
-                onSelect={(index) => {
-                  console.log("onSelect", index);
-                }}
-                dataChange={(data) => {
-                  console.log("dataChange", data);
-                }}
-                buildListItem={buildRightListItem}
-                buildCardItem={buildRightCardItem}
-              />
-            }
-          />
+          <RightPanel>
+            <ResourceBoard
+              data={rightData}
+              index={0}
+              layoutType="list"
+              onSelect={() => {}}
+              dataChange={() => {}}
+              buildListItem={({ item }) => buildRightListItem(item)}
+              buildCardItem={({ item }) => buildRightCardItem(item)}
+            />
+          </RightPanel>
         </div>
       </div>
     </div>
   );
-};
+}

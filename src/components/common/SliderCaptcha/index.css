@@ -86,7 +86,7 @@
   left: 0;
   top: 0;
   height: 100%;
-  background: linear-gradient(90deg, #1890ff 0%, #096dd9 100%);
+  background: linear-gradient(90deg, var(--secondary-color) 0%, var(--primary-color) 100%);
   border-radius: 8px 0 0 8px;
   transition: width 0.1s;
 }
@@ -119,13 +119,13 @@
 }
 
 .slider-btn:hover {
-  border-color: #1890ff;
-  box-shadow: 0 3px 8px rgba(24, 144, 255, 0.25);
+  border-color: var(--primary-color);
+  box-shadow: 0 3px 8px rgba(var(--primary-color-rgb), 0.25);
 }
 
 .slider-btn.dragging {
-  border-color: #1890ff;
-  box-shadow: 0 4px 12px rgba(24, 144, 255, 0.35);
+  border-color: var(--primary-color);
+  box-shadow: 0 4px 12px rgba(var(--primary-color-rgb), 0.35);
   transform: scale(1.05);
 }
 
@@ -180,7 +180,7 @@
 }
 
 .icon-arrow {
-  color: #1890ff;
+  color: var(--primary-color);
   animation: arrowPulse 1.5s ease-in-out infinite;
 }
 
@@ -243,7 +243,7 @@
 
 .refresh-btn:hover:not(:disabled) {
   background: rgba(0, 0, 0, 0.05);
-  color: #1890ff;
+  color: var(--primary-color);
   transform: translateY(-50%) rotate(90deg);
 }
 

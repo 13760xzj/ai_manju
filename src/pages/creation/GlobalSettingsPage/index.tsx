@@ -39,13 +39,15 @@ export function GlobalSettingsPage() {
             <label>默认画面比例</label>
             <div className="options-group">
               {['16:9', '9:16', '4:3', '3:4', '1:1'].map((ratio) => (
-                <button 
+                <Button
                   key={ratio}
-                  className={`option-btn ${aspectRatio === ratio ? 'active' : ''}`}
+                  variant={aspectRatio === ratio ? 'primary' : 'secondary'}
+                  size="large"
+                  className="option-btn"
                   onClick={() => setAspectRatio(ratio)}
                 >
                   {ratio}
-                </button>
+                </Button>
               ))}
             </div>
           </div>
@@ -53,36 +55,44 @@ export function GlobalSettingsPage() {
           <div className="setting-group">
             <label>选择剧本类型</label>
             <div className="options-group">
-              <button 
-                className={`option-btn ${scriptType === '剧情演绎' ? 'active' : ''}`}
+              <Button
+                variant={scriptType === '剧情演绎' ? 'primary' : 'secondary'}
+                size="large"
+                className="option-btn"
                 onClick={() => setScriptType('剧情演绎')}
               >
                 剧情演绎
-              </button>
-              <button 
-                className={`option-btn ${scriptType === '真人解说漫' ? 'active' : ''}`}
+              </Button>
+              <Button
+                variant={scriptType === '真人解说漫' ? 'primary' : 'secondary'}
+                size="large"
+                className="option-btn"
                 onClick={() => setScriptType('真人解说漫')}
               >
                 真人解说漫
-              </button>
+              </Button>
             </div>
           </div>
 
           <div className="setting-group">
             <label>创作模式</label>
             <div className="options-group">
-              <button 
-                className={`option-btn ${creationMode === '图生视频模式' ? 'active' : ''}`}
+              <Button
+                variant={creationMode === '图生视频模式' ? 'primary' : 'secondary'}
+                size="large"
+                className="option-btn"
                 onClick={() => setCreationMode('图生视频模式')}
               >
                 图生视频模式
-              </button>
-              <button 
-                className={`option-btn ${creationMode === '多参生视频模式' ? 'active' : ''}`}
+              </Button>
+              <Button
+                variant={creationMode === '多参生视频模式' ? 'primary' : 'secondary'}
+                size="large"
+                className="option-btn"
                 onClick={() => setCreationMode('多参生视频模式')}
               >
                 多参生视频模式
-              </button>
+              </Button>
             </div>
           </div>
           
@@ -90,13 +100,15 @@ export function GlobalSettingsPage() {
             <label>选择分镜图生成模式</label>
             <div className="options-group">
               {['自动生成单张分镜图', '自动生成九宫格机位分镜图'].map((mode) => (
-                <button 
+                <Button
                   key={mode}
-                  className={`option-btn ${storyboardMode === mode ? 'active' : ''}`}
+                  variant={storyboardMode === mode ? 'primary' : 'secondary'}
+                  size="large"
+                  className="option-btn"
                   onClick={() => setStoryboardMode(mode)}
                 >
                   {mode}
-                </button>
+                </Button>
               ))}
             </div>
           </div>
@@ -118,10 +130,10 @@ export function GlobalSettingsPage() {
 
               <h4 className="style-subtitle">我的风格库</h4>
               <div className="style-grid">
-                <button type="button" className="style-card style-add-card">
+                <Button type="button" variant="dashed" size="large" className="style-card style-add-card">
                   <div className="style-add-icon">+</div>
                   <div className="style-add-text">添加风格</div>
-                </button>
+                </Button>
 
                 <div className="style-card">
                   <img

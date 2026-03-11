@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import type { Asset, Work, AssetCategoryInfo } from '@/types';
-import { Button } from '@/components/common';
+import { Button, IconButton } from '@/components/common';
 import { getStatusLabel } from '@/utils';
 import './index.css';
 
@@ -37,7 +37,9 @@ export function DetailPanel({ item, isOpen, onClose, categories }: DetailPanelPr
         <h3>详情</h3>
             <div className="detail-header-subtitle" title={item.name}>{item.name}</div>
           </div>
-          <button className="close-btn" onClick={onClose} aria-label="关闭">×</button>
+          <IconButton ariaLabel="关闭" className="close-btn" onClick={onClose}>
+            ×
+          </IconButton>
       </div>
 
       <div className="detail-content">

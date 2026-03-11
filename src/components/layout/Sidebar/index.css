@@ -5,6 +5,8 @@
   overflow-y: auto;
   transition: var(--transition);
   flex-shrink: 0;
+  position: relative;
+  z-index: 2;
 }
 
 .steps {
@@ -64,10 +66,11 @@
   position: absolute;
   left: 200px;
   top: 10px;
+  /* 左侧折叠按钮：纯苏梅色，避免一半粉一半绿 */
   background: linear-gradient(
     135deg,
-    var(--primary-color) 0%,
-    var(--secondary-color) 100%
+    rgba(var(--primary-color-rgb), 0.95) 0%,
+    rgba(var(--primary-color-rgb), 1) 100%
   );
   border: none;
   border-radius: 0 8px 8px 0;
@@ -75,7 +78,7 @@
   cursor: pointer;
   color: white;
   transition: var(--transition);
-  z-index: 100;
+  z-index: 999;
   box-shadow: var(--shadow-primary);
   display: flex;
   align-items: center;
@@ -87,7 +90,7 @@
 
 .collapse-btn:hover {
   transform: translateX(2px);
-  box-shadow: 0 8px 24px rgba(74, 108, 247, 0.35);
+  box-shadow: 0 8px 24px rgba(var(--primary-color-rgb), 0.35);
 }
 
 .collapse-btn.show {
@@ -98,7 +101,7 @@
 
 .collapse-btn.show:hover {
   transform: translateX(-2px);
-  box-shadow: 0 8px 24px rgba(74, 108, 247, 0.35);
+  box-shadow: 0 8px 24px rgba(var(--primary-color-rgb), 0.35);
 }
 
 @media (max-width: 900px) {

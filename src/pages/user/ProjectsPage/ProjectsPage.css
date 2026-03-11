@@ -139,8 +139,8 @@
 }
 
 .status-in-progress {
-  background-color: #e6f7ff;
-  color: #1890ff;
+  background-color: rgba(var(--primary-rgb), 0.12);
+  color: var(--primary-color);
 }
 
 .status-completed {

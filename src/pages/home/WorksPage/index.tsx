@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/useToast';
+import { Button, IconButton } from '@/components/common';
 import './index.css';
 
 export function WorksPage() {
@@ -20,6 +21,21 @@ export function WorksPage() {
   const closeDropdown = () => {
     setActiveDropdown(null);
   };
+
+  useEffect(() => {
+    if (activeDropdown === null) return;
+    const onDocMouseDown = (e: MouseEvent) => {
+      const target = e.target;
+      if (!(target instanceof Element)) {
+        closeDropdown();
+        return;
+      }
+      if (target.closest('.work-menu') || target.closest('.work-dropdown')) return;
+      closeDropdown();
+    };
+    document.addEventListener('mousedown', onDocMouseDown);
+    return () => document.removeEventListener('mousedown', onDocMouseDown);
+  }, [activeDropdown]);
 
   const handleRename = (id: number) => {
     setEditingId(id);
@@ -46,46 +62,48 @@ export function WorksPage() {
   };
 
   return (
-    <div className="works-page" onClick={closeDropdown}>
-      <div className="works-header">
-        <h2>我的作品</h2>
-      </div>
+    <div className="works-page">
       <div className="works-grid">
-        <div
+        <button
           className="create-card"
           onClick={() => navigate('/create-work', { state: { backgroundPath: '/case' } })}
-          style={{ cursor: 'pointer' }}
+          type="button"
         >
           <div className="create-thumbnail">
             <div className="create-btn-large">+</div>
           </div>
           <div className="create-text">创建新视频</div>
-        </div>
+        </button>
         {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
           <div key={item} className="work-card">
             <div className="work-thumbnail">
               <div className="work-preview"></div>
               <div className="work-menu">
-                <button 
+                <IconButton
+                  ariaLabel="打开作品菜单"
                   className="work-menu-btn"
                   onClick={(e) => { e.stopPropagation(); toggleDropdown(item); }}
                 >
                   ⋮
-                </button>
+                </IconButton>
                 {activeDropdown === item && (
                   <div className="work-dropdown">
-                    <button 
+                    <Button
+                      variant="secondary"
+                      size="small"
                       className="work-dropdown-item"
                       onClick={(e) => { e.stopPropagation(); handleRename(item); }}
                     >
                       ✏️ 重命名
-                    </button>
-                    <button 
+                    </Button>
+                    <Button
+                      variant="danger"
+                      size="small"
                       className="work-dropdown-item danger"
                       onClick={(e) => { e.stopPropagation(); handleDelete(item); }}
                     >
                       🗑️ 删除
-                    </button>
+                    </Button>
                   </div>
                 )}
               </div>

@@ -1,21 +1,18 @@
 import { apiClient } from './api';
 
 /**
- * 验证码接口返回的数据
- */
-interface CaptchaResponse {
-  captchaVerification: string;  // 验证码答案（加密的）
-  originalImageBase64: string;  // 验证码图片（Base64）
-  result?: boolean;             // 是否成功
-  [key: string]: any;           // 允许其他字段
-}
-
-/**
  * 登录接口返回的数据
  */
+export interface AuthUser {
+  id: string;
+  username: string;
+  email?: string;
+}
+
 interface LoginResponse {
   token?: string;               // 登录令牌（可能返回）
-  [key: string]: any;           // 允许其他字段（如 user、code、msg 等）
+  user?: AuthUser;
+  [key: string]: unknown;       // 允许其他字段（如 user、code、msg 等）
 }
 
 /**
@@ -24,7 +21,7 @@ interface LoginResponse {
 interface AuthMeResponse {
   id?: string;
   username?: string;
-  [key: string]: any;           // 允许其他字段
+  [key: string]: unknown;       // 允许其他字段
 }
 
 export const authService = {
@@ -39,7 +36,10 @@ export const authService = {
     const response = await apiClient.post('/zhihuan-server/admin-api/system/captcha/get', {
       captchaType: 'blockPuzzle'  // 拼图验证码
     });
-    return response as any;
+    return response as unknown as {
+      captchaVerification: string;
+      originalImageBase64: string;
+    };
   },
 
   /**

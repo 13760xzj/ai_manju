@@ -72,7 +72,7 @@ const AutoTabs: React.FC<Props> = ({
   return (
     <div className="flex justify-center" ref={containerRef}>
       <div
-        className="relative h-9 box-border bg-[#282a2c] rounded-full flex items-center overflow-hidden border border-[#38447c]"
+        className="relative h-9 box-border bg-white/80 rounded-full flex items-center overflow-hidden border border-[rgba(22,119,255,0.22)] backdrop-blur-sm"
         style={{ padding: `${containerPadding}px` }}
       >
         {items.slice(0, visibleCount).map((item, index) => (
@@ -82,9 +82,9 @@ const AutoTabs: React.FC<Props> = ({
               width: itemWidth,
               marginRight: index < visibleCount - 1 ? itemGap : 0,
               flexShrink: 0,
-              color: sliderIndex === index ? "#6be5fb" : "",
+              color: sliderIndex === index ? "#1677ff" : "",
             }}
-            className="text-xs px-2! text-white text-center cursor-pointer relative z-1"
+            className="text-xs px-2! text-slate-700 text-center cursor-pointer relative z-1"
             onClick={() => setActive(item.value)}
           >
             {middleEllipsis(item.label)}
@@ -104,7 +104,7 @@ const AutoTabs: React.FC<Props> = ({
                 {hiddenItems.map((item) => (
                   <div
                     key={item.value}
-                    className="px-3! py-2! text-xs rounded-md cursor-pointer text-white hover:bg-[#555]"
+                    className="px-3! py-2! text-xs rounded-md cursor-pointer text-slate-700 hover:bg-[rgba(22,119,255,0.10)]"
                     onClick={() => {
                       setActive(item.value);
                       setOpen(false);
@@ -123,14 +123,14 @@ const AutoTabs: React.FC<Props> = ({
                 flexShrink: 0,
                 marginLeft: itemGap,
               }}
-              className="flex items-center justify-center px-2! text-xs text-white cursor-pointer relative z-1"
+              className="flex items-center justify-center px-2! text-xs text-slate-700 cursor-pointer relative z-1"
             >
               <span
                 className="flex-w shrink-0"
                 style={{
                   color:
                     sliderIndex === items.length - hiddenItems.length
-                      ? "#6be5fb"
+                      ? "#1677ff"
                       : "",
                 }}
               >
@@ -152,7 +152,7 @@ const AutoTabs: React.FC<Props> = ({
             top: containerPadding + "px",
             bottom: containerPadding + "px",
           }}
-          className="absolute rounded-full bg-[linear-gradient(to_right,#7660f677,#5968f077)] transition-all duration-300"
+          className="absolute rounded-full bg-[linear-gradient(to_right,rgba(22,119,255,0.16),rgba(22,119,255,0.28))] transition-all duration-300"
         />
       </div>
     </div>

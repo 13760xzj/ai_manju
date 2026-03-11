@@ -9,7 +9,7 @@ export interface TabItem {
 export interface LeftPanelProps {
   tabs: TabItem[];
 }
-const LeftPanel: React.FC = ({ tabs }) => {
+const LeftPanel: React.FC<LeftPanelProps> = ({ tabs }) => {
   return (
     <div className="left-panel h-full">
       <CardTabs tabs={tabs} />

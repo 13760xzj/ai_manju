@@ -45,13 +45,15 @@ export function TopBar({
       <div className="top-bar-center">
         <div className="segmented-tabs">
           {tabs.map((tab) => (
-            <button
+            <Button
               key={tab.value}
-              className={`segmented-tab ${activeTab === tab.value ? 'active' : ''}`}
+              variant={activeTab === tab.value ? 'primary' : 'secondary'}
+              size="small"
+              className="segmented-tab"
               onClick={() => onTabChange?.(tab.value)}
             >
               {tab.label}
-            </button>
+            </Button>
           ))}
         </div>
       </div>

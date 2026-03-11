@@ -14,10 +14,8 @@ export interface StoryboardScriptProps {
   onCancel: () => void;
 }
 
-const StoryboardScript: React.FC<StoryboardScriptProps> = ({
-  visible,
-  onCancel,
-}) => {
+const StoryboardScript: React.FC<StoryboardScriptProps> = ({ visible, onCancel }) => {
+  type RightItem = { index: number; selected?: boolean; url?: string };
   return (
     <ContentModal
       visible={visible}
@@ -39,10 +37,11 @@ const StoryboardScript: React.FC<StoryboardScriptProps> = ({
         }))}
         buildRightListItem={(item) => <PicListItem item={item} />}
         buildRightCardItem={(item) => <PicCardItem item={item} />}
-        rightData={Array.from({ length: 10 }, (_, i) => i + 1)}
+        rightData={Array.from({ length: 10 }, (_, i) => ({ index: i, selected: i === 0 })) as RightItem[]}
       />
     </ContentModal>
   );
 };
 
 export { StoryboardScript };
+

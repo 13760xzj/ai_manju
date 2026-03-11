@@ -1,18 +1,36 @@
 .case-page {
   width: 100%;
   padding: 20px;
+  /* 仅本页：清新青绿 + 天蓝主题（不影响其它页面） */
+  --primary-color: #16a394;
+  --primary-rgb: 22, 163, 148;
+  --primary-color-rgb: 22, 163, 148;
+  --secondary-color: #60a5fa;
+  --secondary-rgb: 96, 165, 250;
+  --accent-color: #34d399;
+  --accent-rgb: 52, 211, 153;
+  --bg-primary-light: rgba(var(--primary-rgb), 0.06);
+  --bg-primary-lighter: rgba(var(--primary-rgb), 0.12);
+  --focus-ring: 0 0 0 3px rgba(var(--primary-rgb), 0.20);
+  --shadow-primary: 0 16px 38px rgba(var(--primary-rgb), 0.18);
+
+  /* 页面本身不做“大外框”，与导航/主内容底色融合；层次交给模块卡片 */
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  border-radius: 0;
 }
 
 .hero-section {
   margin-bottom: 40px;
   padding: 40px;
-  background: linear-gradient(
-    135deg,
-    var(--bg-primary-light) 0%,
-    var(--bg-primary-lighter) 100%
-  );
+  background:
+    radial-gradient(980px 360px at 12% 8%, rgba(var(--accent-rgb), 0.16) 0%, rgba(var(--accent-rgb), 0) 60%),
+    radial-gradient(980px 360px at 88% 12%, rgba(var(--secondary-rgb), 0.14) 0%, rgba(var(--secondary-rgb), 0) 62%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.84) 0%, rgba(248, 252, 252, 0.92) 100%);
   border-radius: var(--border-radius-xl);
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 18px 44px rgba(15, 23, 42, 0.06);
+  border: 1px solid rgba(15, 23, 42, 0.05);
   display: flex;
   flex-direction: column;
   gap: 30px;
@@ -33,6 +51,17 @@
   margin-bottom: 0;
   font-size: 18px !important;
   padding: 14px 36px !important;
+  /* 主 CTA：柔和低饱和粉色按钮，和背景风格统一 */
+  background: linear-gradient(135deg, #fbe4ee 0%, #f5c3db 100%) !important;
+  border-color: rgba(227, 139, 176, 0.7) !important;
+  color: #a53363 !important;
+  box-shadow: 0 14px 30px rgba(227, 139, 176, 0.35) !important;
+}
+
+.create-btn:hover {
+  filter: brightness(1.03);
+  transform: translateY(-2px);
+  box-shadow: 0 18px 40px rgba(227, 139, 176, 0.45) !important;
 }
 
 .hero-banner {
@@ -48,9 +77,9 @@
 .banner-card {
   width: 200px;
   height: 140px;
-  background: white;
+  background: var(--bg-white);
   border-radius: 12px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 26px rgba(15, 23, 42, 0.10);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -60,26 +89,47 @@
 
 .banner-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 16px 34px rgba(15, 23, 42, 0.14);
 }
 
 .card-1 {
   left: 10%;
   transform: rotate(-6deg);
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background:
+    radial-gradient(
+      520px 220px at 24% 18%,
+      rgba(255, 255, 255, 0.28) 0%,
+      rgba(255, 255, 255, 0) 60%
+    ),
+    /* AI 生成：柔和青蓝，略偏冷 */
+    linear-gradient(135deg, #d6f0ff 0%, #8ad1f2 100%);
 }
 
 .card-2 {
   left: 50%;
   transform: translateX(-50%) rotate(0deg);
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  background:
+    radial-gradient(
+      560px 240px at 28% 18%,
+      rgba(255, 255, 255, 0.30) 0%,
+      rgba(255, 255, 255, 0) 62%
+    ),
+    /* 智能剪辑：介于蓝和绿之间的清爽青绿 */
+    linear-gradient(135deg, #d8f7f1 0%, #8be0c6 100%);
   z-index: 1;
 }
 
 .card-3 {
   right: 10%;
   transform: rotate(6deg);
-  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  background:
+    radial-gradient(
+      520px 220px at 24% 18%,
+      rgba(255, 255, 255, 0.26) 0%,
+      rgba(255, 255, 255, 0) 60%
+    ),
+    /* 一键成片：稍偏暖的完成绿，明度与其它卡片接近 */
+    linear-gradient(135deg, #e0f7e9 0%, #8bd79b 100%);
 }
 
 .card-content {
@@ -114,17 +164,17 @@
 }
 
 .card-rail::-webkit-scrollbar-track {
-  background: #f0f0f0;
+  background: transparent;
   border-radius: 4px;
 }
 
 .card-rail::-webkit-scrollbar-thumb {
-  background: #ccc;
+  background: rgba(var(--primary-rgb), 0.22);
   border-radius: 4px;
 }
 
 .card-rail::-webkit-scrollbar-thumb:hover {
-  background: var(--text-muted);
+  background: rgba(var(--primary-rgb), 0.34);
 }
 
 .rail-card {
@@ -138,7 +188,7 @@
 
 .rail-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.12);
 }
 
 .rail-thumbnail {
@@ -172,7 +222,7 @@
 .play-btn:hover {
   transform: scale(1.1);
   background-color: white;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 22px rgba(15, 23, 42, 0.14);
 }
 
 .rail-title {

@@ -10,6 +10,8 @@
   background: rgba(15, 23, 42, 0.12);
   backdrop-filter: blur(3px);
   -webkit-backdrop-filter: blur(3px);
+  border: 0;
+  padding: 0;
 }
 
 .create-work-modal {
@@ -33,12 +35,11 @@
   width: 36px;
   height: 36px;
   border-radius: 10px;
-  border: 1px solid rgba(15, 23, 42, 0.12);
-  background: rgba(15, 23, 42, 0.04);
+  border: 1px solid rgba(15, 23, 42, 0.12) !important;
+  background: rgba(15, 23, 42, 0.04) !important;
   color: rgba(15, 23, 42, 0.8);
   font-size: 22px;
   line-height: 1;
-  cursor: pointer;
   transition: var(--transition);
 }
 
@@ -100,8 +101,8 @@
 }
 
 .create-work-input:focus {
-  border-color: rgba(74, 108, 247, 0.9);
-  box-shadow: 0 0 0 3px rgba(74, 108, 247, 0.25);
+  border-color: rgba(var(--primary-rgb), 0.85);
+  box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.22);
 }
 
 .create-work-counter {
@@ -118,9 +119,9 @@
   border-radius: 14px;
   padding: 16px 16px 14px;
   background:
-    radial-gradient(1200px 120px at 30% 100%, rgba(74, 108, 247, 0.18) 0%, rgba(255,255,255,0) 60%),
-    radial-gradient(900px 140px at 80% 0%, rgba(123, 95, 255, 0.12) 0%, rgba(255,255,255,0) 60%),
-    rgba(15, 23, 42, 0.03);
+    radial-gradient(1200px 160px at 22% 110%, rgba(var(--primary-rgb), 0.20) 0%, rgba(255, 255, 255, 0) 62%),
+    radial-gradient(900px 180px at 86% -10%, rgba(var(--primary-rgb), 0.10) 0%, rgba(255, 255, 255, 0) 62%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.72) 0%, rgba(var(--primary-rgb), 0.06) 100%);
   border: 1px solid rgba(15, 23, 42, 0.08);
 }
 
@@ -157,7 +158,8 @@
   font-size: 12px;
   font-weight: 700;
   color: white;
-  background: rgba(74, 108, 247, 0.9);
+  background: var(--primary-color);
+  box-shadow: 0 8px 18px rgba(var(--primary-rgb), 0.26);
 }
 
 .create-work-step-text {

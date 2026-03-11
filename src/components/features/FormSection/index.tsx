@@ -1,4 +1,5 @@
 import './index.css';
+import { Button } from '@/components/common';
 
 export interface FormSectionProps {
   formName: string;
@@ -44,16 +45,27 @@ export function FormSection({
             <>
               <span className="form-section-divider">|</span>
               <span className="form-section-voiceover">配音：{voiceover}</span>
-              <button className="form-section-audition-btn" onClick={onAudition}>
+              <Button
+                variant="secondary"
+                size="mini"
+                onClick={onAudition}
+                className="form-section-audition-btn"
+              >
                 ▶ 试听
-              </button>
+              </Button>
             </>
           )}
         </div>
         <div className="form-section-actions">
-          <button className="action-btn primary" onClick={onEditFormImage}>编辑形态图</button>
-          <button className="action-btn" onClick={onCopyForm}>复制形态</button>
-          <button className="action-btn danger" onClick={onDeleteForm}>删除形态</button>
+          <Button variant="primary" size="small" onClick={onEditFormImage}>
+            编辑形态图
+          </Button>
+          <Button variant="secondary" size="small" onClick={onCopyForm}>
+            复制形态
+          </Button>
+          <Button variant="danger" size="small" onClick={onDeleteForm}>
+            删除形态
+          </Button>
         </div>
       </div>
       
