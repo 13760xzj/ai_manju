@@ -27,23 +27,23 @@ import "./index.css";
 interface StoryboardItem {
   id: number;
   title: string;
+  imageUrl?: string;
+  refImageUrls?: string[];
 }
 
 function SortableListCard({
   item,
   onEditImage,
   onCopy,
-  onPreview,
-  onReplace,
-  onDownload,
+  onReplaceStoryboardImage,
+  onDownloadStoryboardImage,
   onDelete,
 }: {
   item: StoryboardItem;
   onEditImage: () => void;
   onCopy: () => void;
-  onPreview: () => void;
-  onReplace: () => void;
-  onDownload: () => void;
+  onReplaceStoryboardImage: (id: number) => void;
+  onDownloadStoryboardImage: (id: number) => void;
   onDelete: () => void;
 }) {
   const {
@@ -101,9 +101,87 @@ function SortableListCard({
       <div className="storyboard-grid">
         <div className="storyboard-item">
           <div className="storyboard-label">分镜图片：</div>
-          <div className="storyboard-image-box">
-            <div className="storyboard-image-title">编辑分镜图片</div>
-            <div className="storyboard-image-subtitle">点击生成或编辑分镜图片</div>
+          <div className={`storyboard-image-box ${item.imageUrl ? "has-image" : ""}`}>
+            {item.imageUrl ? (
+              <img
+                src={item.imageUrl}
+                alt={`分镜 ${item.id}`}
+                className="storyboard-image"
+              />
+            ) : (
+              <>
+                <div className="storyboard-image-title">点击生成分镜图片</div>
+                <div className="storyboard-image-subtitle">（Demo Mock）</div>
+              </>
+            )}
+          </div>
+          <div className="angle-card-actions storyboard-image-actions">
+            <button
+              className="angle-action-btn"
+              type="button"
+              disabled={!item.imageUrl}
+              onClick={() => item.imageUrl && window.open(item.imageUrl, "_blank")}
+            >
+              <span className="angle-action-icon" aria-hidden="true">
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" />
+                  <circle cx="12" cy="12" r="3" />
+                </svg>
+              </span>
+              预览
+            </button>
+            <button
+              className="angle-action-btn"
+              type="button"
+              disabled={!item.imageUrl}
+              onClick={() => onReplaceStoryboardImage(item.id)}
+            >
+              <span className="angle-action-icon" aria-hidden="true">
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <path d="M17 1l4 4-4 4" />
+                  <path d="M3 11V9a4 4 0 0 1 4-4h14" />
+                  <path d="M7 23l-4-4 4-4" />
+                  <path d="M21 13v2a4 4 0 0 1-4 4H3" />
+                </svg>
+              </span>
+              替换
+            </button>
+            <button
+              className="angle-action-btn"
+              type="button"
+              disabled={!item.imageUrl}
+              onClick={() => onDownloadStoryboardImage(item.id)}
+            >
+              <span className="angle-action-icon" aria-hidden="true">
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <path d="M7 10l5 5 5-5" />
+                  <path d="M12 15V3" />
+                </svg>
+              </span>
+              下载
+            </button>
           </div>
         </div>
         <div className="storyboard-item">
@@ -113,10 +191,22 @@ function SortableListCard({
               <button
                 key={i}
                 type="button"
-                className="ref-tile"
+                className={`ref-tile ${
+                  i === 4 ? "is-add" : item.refImageUrls?.[i - 1] ? "has-image" : ""
+                }`}
                 aria-label={i === 4 ? "添加参考图" : `参考图 ${i}`}
               >
-                <span className={`ref-plus ${i === 4 ? "is-add" : ""}`}>+</span>
+                {i === 4 ? (
+                  <span className="ref-plus is-add">+</span>
+                ) : item.refImageUrls?.[i - 1] ? (
+                  <img
+                    src={item.refImageUrls[i - 1]}
+                    alt={`参考图 ${i}`}
+                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                  />
+                ) : (
+                  <span className="ref-plus">+</span>
+                )}
               </button>
             ))}
           </div>
@@ -180,18 +270,12 @@ function SortableCardView({
   index,
   onEditImage,
   onCopy,
-  onPreview,
-  onReplace,
-  onDownload,
   onDelete,
 }: {
   item: StoryboardItem;
   index: number;
   onEditImage: () => void;
   onCopy: () => void;
-  onPreview: () => void;
-  onReplace: () => void;
-  onDownload: () => void;
   onDelete: () => void;
 }) {
   const {
@@ -272,15 +356,6 @@ function SortableCardView({
               <div className="menu-item" onClick={onCopy}>
                 <span>复制分镜</span>
               </div>
-              <div className="menu-item" onClick={onPreview}>
-                <span>预览</span>
-              </div>
-              <div className="menu-item" onClick={onReplace}>
-                <span>替换</span>
-              </div>
-              <div className="menu-item" onClick={onDownload}>
-                <span>下载</span>
-              </div>
               <div className="menu-item delete" onClick={onDelete}>
                 <span>删除分镜</span>
               </div>
@@ -289,7 +364,15 @@ function SortableCardView({
         </div>
       </div>
       <div className="card-image-container">
-        <span>暂无图片</span>
+        {item.imageUrl ? (
+          <img
+            src={item.imageUrl}
+            alt={item.title}
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          />
+        ) : (
+          <span>暂无图片</span>
+        )}
       </div>
     </div>
   );
@@ -301,21 +384,15 @@ export function StoryboardPage() {
   const [viewMode, setViewMode] = useState<"list" | "card">("list");
   const [progressCount] = useState(0);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
-  const [activeCardMenu, setActiveCardMenu] = useState<number | null>(null);
   const [listItems, setListItems] = useState<StoryboardItem[]>([
-    { id: 1, title: "分镜脚本 1：分镜 1-1" },
-    { id: 2, title: "分镜脚本 2：分镜 1-2" },
-    { id: 3, title: "分镜脚本 3：分镜 1-3" },
+    { id: 1, title: "分镜脚本 1：分镜 1-1", imageUrl: undefined, refImageUrls: [] },
+    { id: 2, title: "分镜脚本 2：分镜 1-2", imageUrl: undefined, refImageUrls: [] },
+    { id: 3, title: "分镜脚本 3：分镜 1-3", imageUrl: undefined, refImageUrls: [] },
   ]);
   const [cardItems, setCardItems] = useState<StoryboardItem[]>([
     { id: 1, title: "分镜 1-1" },
     { id: 2, title: "分镜 1-2" },
     { id: 3, title: "分镜 1-3" },
-    { id: 4, title: "分镜 1-4" },
-    { id: 5, title: "分镜 1-5" },
-    { id: 6, title: "分镜 1-6" },
-    { id: 7, title: "分镜 1-7" },
-    { id: 8, title: "分镜 1-8" },
   ]);
 
   const sensors = useSensors(
@@ -338,6 +415,7 @@ export function StoryboardPage() {
   };
 
   const confirmRegenerate = () => {
+    setShowConfirmDialog(false);
     toast.info("正在重新生成分镜...");
   };
 
@@ -347,33 +425,18 @@ export function StoryboardPage() {
 
   const handleEditImage = () => {
     toast.info("编辑分镜图片");
-    setActiveCardMenu(null);
   };
 
   const handleCopyCard = () => {
     toast.info("复制分镜");
-    setActiveCardMenu(null);
-  };
-
-  const handlePreview = () => {
-    toast.info("预览");
-    setActiveCardMenu(null);
-  };
-
-  const handleReplace = () => {
-    toast.info("替换");
-    setActiveCardMenu(null);
-  };
-
-  const handleDownload = () => {
-    toast.info("下载");
-    setActiveCardMenu(null);
   };
 
   const handleDeleteCard = () => {
     toast.info("删除分镜");
-    setActiveCardMenu(null);
   };
+
+  const replaceStoryboardImage = () => toast.info("替换分镜图");
+  const downloadStoryboardImage = () => toast.info("下载分镜图");
 
   const handleListDragEnd = (event: any) => {
     const { active, over } = event;
@@ -464,9 +527,8 @@ export function StoryboardPage() {
                   item={item}
                   onEditImage={handleEditImage}
                   onCopy={handleCopyCard}
-                  onPreview={handlePreview}
-                  onReplace={handleReplace}
-                  onDownload={handleDownload}
+                  onReplaceStoryboardImage={() => replaceStoryboardImage()}
+                  onDownloadStoryboardImage={() => downloadStoryboardImage()}
                   onDelete={handleDeleteCard}
                 />
               ))}
@@ -494,9 +556,6 @@ export function StoryboardPage() {
                     index={index}
                     onEditImage={handleEditImage}
                     onCopy={handleCopyCard}
-                    onPreview={handlePreview}
-                    onReplace={handleReplace}
-                    onDownload={handleDownload}
                     onDelete={handleDeleteCard}
                   />
                 ))}

@@ -6,6 +6,7 @@ export interface DocumentTopBarProps {
   title?: string;
   subtitle?: string;
   unsaved?: boolean;
+  onSave?: () => void;
   onNext?: () => void;
   onTitleChange?: (title: string) => void;
 }
@@ -14,6 +15,7 @@ export function DocumentTopBar({
   title = '未命名剧本',
   subtitle,
   unsaved = false,
+  onSave,
   onNext,
   onTitleChange
 }: DocumentTopBarProps) {
@@ -69,9 +71,23 @@ export function DocumentTopBar({
       </div>
       
       <div className="document-top-bar-right">
-        <Button variant="primary" size="small" onClick={onNext}>
-          下一步
-        </Button>
+        <div className="document-top-bar-actions">
+          {onSave && (
+            <Button
+              variant="secondary"
+              size="small"
+              onClick={onSave}
+              disabled={!unsaved}
+            >
+              保存
+            </Button>
+          )}
+          {onNext && (
+            <Button variant="primary" size="small" onClick={onNext}>
+              下一步
+            </Button>
+          )}
+        </div>
       </div>
     </div>
   );

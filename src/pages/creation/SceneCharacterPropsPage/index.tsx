@@ -19,6 +19,8 @@ export function SceneCharacterPropsPage() {
     toast.success(`下载${type}: ${name}`);
   };
 
+  const handleRegenerate = () => toast.info(getRegenerateButtonText());
+
   const handleNext = () => {
     if (activeTab === 'scene') {
       setActiveTab('character');
@@ -46,7 +48,7 @@ export function SceneCharacterPropsPage() {
           ]}
           activeTab={activeTab}
           onTabChange={(tab) => setActiveTab(tab as 'scene' | 'character' | 'props')}
-          onRegenerate={() => toast.info(getRegenerateButtonText())}
+          onRegenerate={handleRegenerate}
           onNext={handleNext}
           regenerateButtonText={getRegenerateButtonText()}
           stats={undefined}

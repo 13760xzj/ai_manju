@@ -116,6 +116,7 @@ export function StoryPlotPage() {
         title={storyTitle}
         unsaved={hasUnsavedChanges}
         onTitleChange={handleTitleChange}
+        onSave={handleSave}
         onNext={handleNext}
       />
       <div className="editor-content">

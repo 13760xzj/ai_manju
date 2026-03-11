@@ -198,7 +198,7 @@ function SortableCardView({
           ⋮
         </button>
         {activeDropdown === `dropdown-${index}` && (
-          <div className="dubbing-card-dropdown show">
+          <div className="dubbing-card-dropdown show top-10! right-2!">
             <button className="dubbing-card-dropdown-item" onClick={onEdit}>
               <span>编辑分镜配音</span>
             </button>

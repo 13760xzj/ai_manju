@@ -95,3 +95,10 @@
   display: flex;
   justify-content: flex-end;
 }
+
+.document-top-bar-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+}

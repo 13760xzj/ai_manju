@@ -112,10 +112,7 @@ function SortableListCard({
         </div>
         <div className="storyboard-item">
           <div className="storyboard-label">图生视频：</div>
-          <div
-            className="storyboard-image-box"
-            style={{ width: "200px", height: "180px" }}
-          >
+          <div className="storyboard-image-box" style={{ width: "200px", height: "180px" }}>
             <span>暂无图片</span>
           </div>
         </div>
