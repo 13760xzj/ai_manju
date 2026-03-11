@@ -129,7 +129,7 @@ const AutoTabs: React.FC<Props> = ({
                 className="flex-w shrink-0"
                 style={{
                   color:
-                    sliderIndex === items.length - visibleCount
+                    sliderIndex === items.length - hiddenItems.length
                       ? "#6be5fb"
                       : "",
                 }}
