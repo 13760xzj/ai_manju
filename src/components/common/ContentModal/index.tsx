@@ -1,5 +1,6 @@
 import { IoClose } from "react-icons/io5";
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 
 interface ModalProps {
   visible: boolean;
@@ -56,7 +57,7 @@ export const ContentModal: React.FC<ModalProps> = ({
 
   if (!show) return null;
 
-  return (
+  return createPortal(
     <div
       style={{
         position: "fixed",
@@ -146,6 +147,7 @@ export const ContentModal: React.FC<ModalProps> = ({
           </div>
         )}
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 };
