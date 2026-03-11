@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AtInput from "./AtInput";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { FiCopy } from "react-icons/fi";
@@ -48,6 +48,10 @@ export const AtInputArea: React.FC<AtInputAreaProps> = ({
     if (!content) return;
     copyText(content);
   };
+
+  useEffect(() => {
+    setContent(defaultValue);
+  }, [defaultValue]);
 
   return (
     <div className="w-full h-full flex flex-col">

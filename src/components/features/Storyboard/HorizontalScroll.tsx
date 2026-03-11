@@ -10,6 +10,7 @@ export interface HorizontalScrollProps<T = object> {
 
   /** 按钮布局: split 左右各一个, right 都在右边 */
   buttonPosition?: "split" | "right";
+  markColor?: string;
 }
 
 function HorizontalScroll<T>({
@@ -18,6 +19,7 @@ function HorizontalScroll<T>({
   gap = 8,
   renderItem,
   buttonPosition = "right",
+  markColor,
 }: HorizontalScrollProps<T>) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [canPrev, setCanPrev] = useState(false);
@@ -69,7 +71,12 @@ function HorizontalScroll<T>({
     <div className="flex items-center w-full relative">
       {/* 左按钮 */}
       {buttonPosition === "split" && canPrev && (
-        <div className="absolute top-0 bottom-0 flex items-center justify-center z-10 left-0 bg-[linear-gradient(to_left,transparent_0%,#1c1e20_70%,#1c1e20_100%)]">
+        <div
+          className={`absolute top-0 bottom-0 flex items-center justify-center z-10 left-0`}
+          style={{
+            background: `linear-gradient(to left,transparent 0%,${markColor || "#1c1e20"} 70%,${markColor || "#1c1e20"} 100%)`,
+          }}
+        >
           <button
             onClick={() => scroll("prev")}
             disabled={!canPrev}
@@ -88,7 +95,7 @@ function HorizontalScroll<T>({
       {/* 滚动区域 */}
       <div
         ref={containerRef}
-        className="flex flex-1 overflow-x-auto [&::-webkit-scrollbar]:hidden"
+        className="flex flex-1 shrink-0 overflow-x-auto [&::-webkit-scrollbar]:hidden"
         style={{
           gap,
           scrollSnapType: "x mandatory",
@@ -142,7 +149,12 @@ function HorizontalScroll<T>({
 
       {/* split模式右按钮 */}
       {buttonPosition === "split" && canNext && (
-        <div className="absolute top-0 bottom-0 flex items-center justify-center z-10 right-0 bg-[linear-gradient(to_right,transparent_0%,#1c1e20_70%,#1c1e20_100%)]">
+        <div
+          className={`absolute top-0 bottom-0 flex items-center justify-center z-10 right-0`}
+          style={{
+            background: `linear-gradient(to right,transparent 0%,${markColor || "#1c1e20"} 70%,${markColor || "#1c1e20"} 100%)`,
+          }}
+        >
           <button
             onClick={() => scroll("next")}
             disabled={!canNext}

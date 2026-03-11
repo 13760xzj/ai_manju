@@ -161,7 +161,6 @@ export const PropsSelectVideo: React.FC<PropsSelectVideoProps> = ({
                     { label: "添加音效", value: 2 },
                   ]}
                   onChange={(v) => {
-                    setAudioType(v as number);
                     if (v === 2) {
                       setContent(
                         "雷暴环境音：远处雷声低沉闷响，雨点密集敲打窗户玻璃，室内电脑主机低频运转声，偶尔闪电瞬间的电流噼啪声，营造闷热压抑的雨夜氛围",
@@ -169,6 +168,7 @@ export const PropsSelectVideo: React.FC<PropsSelectVideoProps> = ({
                     } else {
                       setContent("");
                     }
+                    setAudioType(v as number);
                   }}
                 />
                 <div className="h-35 border border-[#38447c] rounded-md p-2! text-white">

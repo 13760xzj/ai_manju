@@ -20,6 +20,7 @@ export {
 export { StoryboardTool } from "./StoryboardTool";
 export { StoryboardScript } from "./storyboardScript";
 export { StoryboardVideo } from "./storyboardVideo";
+export { ResourceSelect } from "./ResourceSelect";
 export {
   GeneratePicToPic,
   GenerateTxtToPic,

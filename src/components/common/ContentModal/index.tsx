@@ -11,6 +11,8 @@ interface ModalProps {
   onCancel?: () => void;
   width?: string | number;
   height?: string | number;
+  headerCenter?: React.ReactNode;
+  isDark?: boolean;
 }
 
 export const ContentModal: React.FC<ModalProps> = ({
@@ -23,6 +25,8 @@ export const ContentModal: React.FC<ModalProps> = ({
   onCancel,
   width = "80%",
   height = "85vh",
+  headerCenter,
+  isDark,
 }) => {
   const [show, setShow] = useState(visible);
   const [animate, setAnimate] = useState(false);
@@ -57,7 +61,7 @@ export const ContentModal: React.FC<ModalProps> = ({
       style={{
         position: "fixed",
         inset: 0,
-        backgroundColor: "rgba(0,0,0,0.4)",
+        backgroundColor: "rgba(0,0,0,0.7)",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
@@ -71,7 +75,7 @@ export const ContentModal: React.FC<ModalProps> = ({
         style={{
           width,
           height,
-          backgroundColor: "#fff",
+          backgroundColor: isDark ? "#0f1115" : "#fff",
           borderRadius: 12,
           display: "flex",
           flexDirection: "column",
@@ -87,16 +91,20 @@ export const ContentModal: React.FC<ModalProps> = ({
           <div
             style={{
               display: "flex",
-              justifyContent: "space-between",
               alignItems: "center",
               padding: "16px 24px",
-              borderBottom: "1px solid #f0f0f0",
+              borderBottom: `1px solid ${isDark ? "#282a2c" : "#f0f0f0"}`,
               fontWeight: 600,
               fontSize: 16,
               flexShrink: 0,
             }}
           >
-            <span>{title}</span>
+            <span
+              className={`shrink-0 ${isDark ? "text-white" : "text-black"}`}
+            >
+              {title}
+            </span>
+            <div className="flex-1 px-4! overflow-hidden">{headerCenter}</div>
             <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
               {headerRight}
               <div
@@ -107,7 +115,9 @@ export const ContentModal: React.FC<ModalProps> = ({
                   alignItems: "center",
                 }}
               >
-                <IoClose style={{ fontSize: "18px" }} />
+                <IoClose
+                  style={{ fontSize: "24px", color: isDark ? "#fff" : "#111" }}
+                />
               </div>
             </div>
           </div>
@@ -127,7 +137,7 @@ export const ContentModal: React.FC<ModalProps> = ({
         {footer && (
           <div
             style={{
-              borderTop: "1px solid #f0f0f0",
+              borderTop: `1px solid ${isDark ? "#282a2c" : "#f0f0f0"}`,
               flexShrink: 0,
               padding: "8px 16px",
             }}

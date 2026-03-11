@@ -2,6 +2,5 @@
   background-color: #2f3032; /* 黑色背景 */
   border-radius: 8px; /* 圆角 */
   padding: 0px; /* 内边距 */
-  transform: translateY(10px);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); /* 阴影 */
 }

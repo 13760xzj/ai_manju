@@ -35,7 +35,7 @@ export const GenerateMultiToPic: React.FC = () => {
           className="overflow-hidden rounded-xl border border-[#38447c]"
           areaA={
             <div className="h-full overflow-y-auto flex flex-col gap-4 p-3!">
-              <div className="flex items-center overflow-hidden">
+              <div className="flex items-center shrink-0 overflow-hidden">
                 <div className="text-sm text-white/80 mr-3!">
                   场<br />景
                 </div>
@@ -72,7 +72,7 @@ export const GenerateMultiToPic: React.FC = () => {
                   />
                 </div>
               </div>
-              <div className="flex items-center">
+              <div className="flex items-center shrink-0">
                 <div className="text-sm text-white/80 mr-3!">
                   角<br />色
                 </div>
@@ -109,7 +109,7 @@ export const GenerateMultiToPic: React.FC = () => {
                   />
                 </div>
               </div>
-              <div className="flex items-center">
+              <div className="flex items-center shrink-0">
                 <div className="text-sm text-white/80 mr-3!">
                   道<br />具
                 </div>
@@ -146,7 +146,7 @@ export const GenerateMultiToPic: React.FC = () => {
                   />
                 </div>
               </div>
-              <div className="flex items-center">
+              <div className="flex items-center shrink-0">
                 <div className="text-sm text-white/80 mr-3!">
                   其<br />他
                 </div>

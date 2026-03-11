@@ -19,7 +19,7 @@ const StoryboardTool: React.FC = ({ visible, onCancel }) => {
     <ContentModal
       visible={visible}
       showHeader={false}
-      width="900%"
+      width="100%"
       height="100vh"
       onCancel={onCancel}
     >
