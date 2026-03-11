@@ -1,12 +1,13 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useToast } from '@/hooks/useToast';
-import { ConfirmDialog } from '@/components/common';
-import { Button } from '@/components/common';
-import './index.css';
+import React, { useState, useEffect, useRef, useLayoutEffect } from "react";
+import { useToast } from "@/hooks/useToast";
+import { ConfirmDialog } from "@/components/common";
+import { Button } from "@/components/common";
+import videoUrl from "@/assets/mov_bbb.mp4";
+import "./index.css";
 
 export function VideoPreviewPage() {
   const toast = useToast();
-  const [videoStatus] = useState('准备就绪');
+  const [videoStatus] = useState("准备就绪");
   const timeRulerRef = useRef<HTMLDivElement>(null);
   const timelineRef = useRef<HTMLDivElement>(null);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
@@ -19,13 +20,16 @@ export function VideoPreviewPage() {
   const TIMELINE_SECONDS = 150;
   const PIXELS_PER_SECOND = 28;
   const timelineWidth = TIMELINE_SECONDS * PIXELS_PER_SECOND;
-  const playheadLeft = Math.max(0, Math.min(timelineWidth, currentTime * PIXELS_PER_SECOND));
+  const playheadLeft = Math.max(
+    0,
+    Math.min(timelineWidth, currentTime * PIXELS_PER_SECOND),
+  );
 
   const initTimeRuler = () => {
     const headerRuler = timeRulerRef.current;
     if (!headerRuler) return;
 
-    headerRuler.innerHTML = '';
+    headerRuler.innerHTML = "";
     const totalDuration = TIMELINE_SECONDS;
     const pixelsPerSecond = PIXELS_PER_SECOND;
 
@@ -37,21 +41,21 @@ export function VideoPreviewPage() {
       const timeInSeconds = i * STEP;
       const isWholeSecond = Number.isInteger(timeInSeconds);
 
-      const tick = document.createElement('div');
-      tick.className = 'time-tick' + (isWholeSecond ? ' major' : ' minor');
-      tick.style.left = (timeInSeconds * pixelsPerSecond) + 'px';
+      const tick = document.createElement("div");
+      tick.className = "time-tick" + (isWholeSecond ? " major" : " minor");
+      tick.style.left = timeInSeconds * pixelsPerSecond + "px";
       headerRuler.appendChild(tick);
 
       // 每秒显示一次时间：00:00、00:01、00:02...
       if (isWholeSecond) {
-        const marker = document.createElement('div');
-        marker.className = 'time-marker';
-        marker.style.left = (timeInSeconds * pixelsPerSecond) + 'px';
+        const marker = document.createElement("div");
+        marker.className = "time-marker";
+        marker.style.left = timeInSeconds * pixelsPerSecond + "px";
         const minutes = Math.floor(timeInSeconds / 60);
         const seconds = Math.floor(timeInSeconds % 60);
-        marker.textContent = `${minutes.toString().padStart(2, '0')}:${seconds
+        marker.textContent = `${minutes.toString().padStart(2, "0")}:${seconds
           .toString()
-          .padStart(2, '0')}`;
+          .padStart(2, "0")}`;
         headerRuler.appendChild(marker);
       }
     }
@@ -71,13 +75,13 @@ export function VideoPreviewPage() {
       ruler.style.transform = `translateX(-${timeline.scrollLeft}px)`;
     };
 
-    timeline.addEventListener('scroll', handleScroll);
+    timeline.addEventListener("scroll", handleScroll);
     return () => {
-      timeline.removeEventListener('scroll', handleScroll);
+      timeline.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
@@ -86,6 +90,7 @@ export function VideoPreviewPage() {
     };
 
     const handleLoadedMetadata = () => {
+      console.log("duration", video.duration);
       setDuration(video.duration);
     };
 
@@ -93,21 +98,21 @@ export function VideoPreviewPage() {
       setIsPlaying(false);
     };
 
-    video.addEventListener('timeupdate', handleTimeUpdate);
-    video.addEventListener('loadedmetadata', handleLoadedMetadata);
-    video.addEventListener('ended', handleEnded);
+    video.addEventListener("timeupdate", handleTimeUpdate);
+    video.addEventListener("loadedmetadata", handleLoadedMetadata);
+    video.addEventListener("ended", handleEnded);
 
     return () => {
-      video.removeEventListener('timeupdate', handleTimeUpdate);
-      video.removeEventListener('loadedmetadata', handleLoadedMetadata);
-      video.removeEventListener('ended', handleEnded);
+      video.removeEventListener("timeupdate", handleTimeUpdate);
+      video.removeEventListener("loadedmetadata", handleLoadedMetadata);
+      video.removeEventListener("ended", handleEnded);
     };
   }, []);
 
   const formatTime = (time: number) => {
     const minutes = Math.floor(time / 60);
     const seconds = Math.floor(time % 60);
-    return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    return `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
   };
 
   const togglePlay = () => {
@@ -126,14 +131,16 @@ export function VideoPreviewPage() {
     setShowConfirmDialog(true);
   };
   const confirmRegenerateVideo = () => {
-    toast.info('正在重新生成视频...');
+    toast.info("正在重新生成视频...");
   };
-  const handleSyncToTimeline = () => toast.success('已将当前视频同步到时间轴');
-  const handleExportVideo = () => toast.info('导出视频功能');
-  const handleSaveProject = () => toast.success('项目已保存');
-  const handleUploadDubbing = (index: number) => toast.info(`为分镜 ${index} 上传/替换配音文件`);
-  const handleEditSubtitle = (index: number) => toast.info(`编辑字幕 ${index}，修改文字和显示时间`);
-  const handleReplaceMusic = () => toast.info('替换背景音乐文件');
+  const handleSyncToTimeline = () => toast.success("已将当前视频同步到时间轴");
+  const handleExportVideo = () => toast.info("导出视频功能");
+  const handleSaveProject = () => toast.success("项目已保存");
+  const handleUploadDubbing = (index: number) =>
+    toast.info(`为分镜 ${index} 上传/替换配音文件`);
+  const handleEditSubtitle = (index: number) =>
+    toast.info(`编辑字幕 ${index}，修改文字和显示时间`);
+  const handleReplaceMusic = () => toast.info("替换背景音乐文件");
 
   const handlePlayheadMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -143,12 +150,15 @@ export function VideoPreviewPage() {
 
   const handlePlayheadMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!isDraggingPlayhead || !timelineRef.current) return;
-    
+
     const timeline = timelineRef.current;
     const rect = timeline.getBoundingClientRect();
     const x = e.clientX - rect.left;
-    const newTime = Math.max(0, Math.min(x / PIXELS_PER_SECOND, TIMELINE_SECONDS));
-    
+    const newTime = Math.max(
+      0,
+      Math.min(x / PIXELS_PER_SECOND, TIMELINE_SECONDS),
+    );
+
     setCurrentTime(newTime);
     if (videoRef.current) {
       videoRef.current.currentTime = newTime;
@@ -165,11 +175,11 @@ export function VideoPreviewPage() {
     };
 
     if (isDraggingPlayhead) {
-      document.addEventListener('mouseup', handleGlobalMouseUp);
+      document.addEventListener("mouseup", handleGlobalMouseUp);
     }
 
     return () => {
-      document.removeEventListener('mouseup', handleGlobalMouseUp);
+      document.removeEventListener("mouseup", handleGlobalMouseUp);
     };
   }, [isDraggingPlayhead]);
 
@@ -180,7 +190,11 @@ export function VideoPreviewPage() {
           视频信息：<span>{videoStatus}</span>
         </span>
         <div className="video-preview-actions-right video-preview-actions-right-large">
-          <Button variant="secondary" size="small" onClick={handleSyncToTimeline}>
+          <Button
+            variant="secondary"
+            size="small"
+            onClick={handleSyncToTimeline}
+          >
             同步视频到时间轴
           </Button>
           <Button variant="secondary" size="small" onClick={handleExportVideo}>
@@ -199,12 +213,15 @@ export function VideoPreviewPage() {
               <div className="video-player-wrapper">
                 <video
                   ref={videoRef}
-                  className="video-element"
-                  poster="https://via.placeholder.com/1280x720/1a1a2e/ffffff?text=Video+Preview"
+                  className="video-element object-contain!"
+                  poster="https://picsum.photos/1270/720?random=1"
                   onClick={togglePlay}
+                  onLoadedMetadata={() => {
+                    console.log("------------");
+                  }}
                   controls
                 >
-                  <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4" />
+                  <source src={videoUrl} type="video/mp4" />
                   您的浏览器不支持视频播放
                 </video>
 
@@ -248,133 +265,160 @@ export function VideoPreviewPage() {
                 </div>
               </div>
 
-              <div className="timeline-scroll" aria-label="时间轴滚动区域" ref={timelineRef}>
-                <div className="timeline-content" style={{ width: `${timelineWidth}px` }}>
-                  {currentTime > 0.01 || isDraggingPlayhead ? (
-                    <div
-                      className="timeline-playhead"
-                      style={{ left: `${playheadLeft}px` }}
-                      onMouseDown={handlePlayheadMouseDown}
-                      onMouseMove={handlePlayheadMouseMove}
-                      onMouseUp={handlePlayheadMouseUp}
-                    />
-                  ) : null}
+              <div
+                className="timeline-scroll relative"
+                aria-label="时间轴滚动区域"
+                ref={timelineRef}
+              >
+                {currentTime >= 0.0 || isDraggingPlayhead ? (
+                  <div
+                    className="timeline-playhead"
+                    style={{ left: `${playheadLeft - 1}px` }}
+                    onMouseDown={handlePlayheadMouseDown}
+                    onMouseMove={handlePlayheadMouseMove}
+                    onMouseUp={handlePlayheadMouseUp}
+                  />
+                ) : null}
+                <div className="absolute left-0 right-0 overflow-x-auto overflow-hidden">
+                  <div
+                    className="timeline-content absolute left-0 right-0"
+                    style={{ width: `${timelineWidth}px` }}
+                  >
+                    <div className="tracks-area">
+                      <div className="track track-video-dubbing">
+                        {[
+                          {
+                            width: 100,
+                            label: "分镜1",
+                            thumbnail:
+                              "https://picsum.photos/1270/720?random=2",
+                            hasAudio: false,
+                            dubbingText: "无配音",
+                          },
+                          {
+                            width: 100,
+                            label: "分镜2",
+                            thumbnail:
+                              "https://picsum.photos/1270/720?random=3",
+                            hasAudio: true,
+                            dubbingText: "配音1",
+                          },
+                          {
+                            width: 100,
+                            label: "分镜3",
+                            thumbnail:
+                              "https://picsum.photos/1270/720?random=4",
+                            hasAudio: true,
+                            dubbingText: "配音2",
+                          },
+                          {
+                            width: 100,
+                            label: "分镜4",
+                            thumbnail:
+                              "https://picsum.photos/1270/720?random=5",
+                            hasAudio: false,
+                            dubbingText: "无配音",
+                          },
+                          {
+                            width: 100,
+                            label: "分镜5",
+                            thumbnail:
+                              "https://picsum.photos/1270/720?random=6",
+                            hasAudio: true,
+                            dubbingText: "配音3",
+                          },
+                          {
+                            width: 100,
+                            label: "分镜6",
+                            thumbnail:
+                              "https://picsum.photos/1270/720?random=7",
+                            hasAudio: false,
+                            dubbingText: "无配音",
+                          },
+                          {
+                            width: 100,
+                            label: "分镜7",
+                            thumbnail:
+                              "https://picsum.photos/1270/720?random=8",
+                            hasAudio: true,
+                            dubbingText: "配音4",
+                          },
+                          {
+                            width: 100,
+                            label: "分镜8",
+                            thumbnail:
+                              "https://picsum.photos/1270/720?random=9",
+                            hasAudio: false,
+                            dubbingText: "无配音",
+                          },
+                        ].map((clip, i) => (
+                          <React.Fragment key={i}>
+                            <div className="track-video-layer">
+                              <div
+                                className="video-clip"
+                                style={{ width: clip.width + "px" }}
+                              >
+                                <img
+                                  src={clip.thumbnail}
+                                  alt={clip.label}
+                                  className="video-clip-thumbnail"
+                                />
+                                <div className="clip-handle clip-handle-left"></div>
+                                <div className="clip-handle clip-handle-right"></div>
+                              </div>
+                            </div>
+                            <div className="track-dubbing-layer">
+                              <div
+                                className={`dubbing-clip ${!clip.hasAudio ? "no-audio" : ""}`}
+                                style={{ width: clip.width + "px" }}
+                                onClick={() => handleUploadDubbing(i + 1)}
+                              >
+                                <span className="dubbing-clip-text">
+                                  {clip.dubbingText}
+                                </span>
+                              </div>
+                            </div>
+                          </React.Fragment>
+                        ))}
+                      </div>
 
-                  <div className="tracks-area">
-                <div className="track track-video-dubbing">
-                  {[
-                    {
-                      width: 100,
-                      label: '分镜1',
-                      thumbnail: 'https://via.placeholder.com/100x68/4a6cf7/ffffff?text=1',
-                      hasAudio: false,
-                      dubbingText: '无配音'
-                    },
-                    {
-                      width: 100,
-                      label: '分镜2',
-                      thumbnail: 'https://via.placeholder.com/100x68/5a7cff/ffffff?text=2',
-                      hasAudio: true,
-                      dubbingText: '配音1'
-                    },
-                    {
-                      width: 100,
-                      label: '分镜3',
-                      thumbnail: 'https://via.placeholder.com/100x68/6a8cff/ffffff?text=3',
-                      hasAudio: true,
-                      dubbingText: '配音2'
-                    },
-                    {
-                      width: 100,
-                      label: '分镜4',
-                      thumbnail: 'https://via.placeholder.com/100x68/7a9cff/ffffff?text=4',
-                      hasAudio: false,
-                      dubbingText: '无配音'
-                    },
-                    {
-                      width: 100,
-                      label: '分镜5',
-                      thumbnail: 'https://via.placeholder.com/100x68/8aacff/ffffff?text=5',
-                      hasAudio: true,
-                      dubbingText: '配音3'
-                    },
-                    {
-                      width: 100,
-                      label: '分镜6',
-                      thumbnail: 'https://via.placeholder.com/100x68/9abcff/ffffff?text=6',
-                      hasAudio: false,
-                      dubbingText: '无配音'
-                    },
-                    {
-                      width: 100,
-                      label: '分镜7',
-                      thumbnail: 'https://via.placeholder.com/100x68/aaccff/ffffff?text=7',
-                      hasAudio: true,
-                      dubbingText: '配音4'
-                    },
-                    {
-                      width: 100,
-                      label: '分镜8',
-                      thumbnail: 'https://via.placeholder.com/100x68/badcff/ffffff?text=8',
-                      hasAudio: false,
-                      dubbingText: '无配音'
-                    }
-                  ].map((clip, i) => (
-                    <React.Fragment key={i}>
-                      <div className="track-video-layer">
-                        <div className="video-clip" style={{ width: clip.width + 'px' }}>
-                          <img
-                            src={clip.thumbnail}
-                            alt={clip.label}
-                            className="video-clip-thumbnail"
-                          />
-                          <div className="clip-handle clip-handle-left"></div>
-                          <div className="clip-handle clip-handle-right"></div>
-                        </div>
+                      <div className="track track-subtitle">
+                        {[
+                          { width: 100, text: "无字幕" },
+                          { width: 80, text: "无字幕" },
+                          { width: 120, text: "掌门..." },
+                          { width: 80, text: "无字幕" },
+                          { width: 100, text: "无字幕" },
+                          { width: 120, text: "什么玩..." },
+                          { width: 80, text: "无字幕" },
+                          { width: 100, text: "掌门也..." },
+                        ].map((clip, i) => (
+                          <div
+                            key={i}
+                            className={`subtitle-clip ${clip.text === "无字幕" ? "no-subtitle" : ""}`}
+                            onClick={() => handleEditSubtitle(i + 1)}
+                          >
+                            <span className="subtitle-clip-text">
+                              {clip.text}
+                            </span>
+                          </div>
+                        ))}
                       </div>
-                      <div className="track-dubbing-layer">
+
+                      <div className="track track-music">
                         <div
-                          className={`dubbing-clip ${!clip.hasAudio ? 'no-audio' : ''}`}
-                          style={{ width: clip.width + 'px' }}
-                          onClick={() => handleUploadDubbing(i + 1)}
+                          className="music-clip no-music"
+                          style={{ width: "100%" }}
+                          onClick={handleReplaceMusic}
                         >
-                          <span className="dubbing-clip-text">{clip.dubbingText}</span>
+                          <span className="music-clip-text">
+                            <span>🎵</span>
+                            <span>无背景音乐</span>
+                          </span>
                         </div>
                       </div>
-                    </React.Fragment>
-                  ))}
-                </div>
-                
-                <div className="track track-subtitle">
-                  {[
-                    { width: 100, text: '无字幕' },
-                    { width: 80, text: '无字幕' },
-                    { width: 120, text: '掌门...' },
-                    { width: 80, text: '无字幕' },
-                    { width: 100, text: '无字幕' },
-                    { width: 120, text: '什么玩...' },
-                    { width: 80, text: '无字幕' },
-                    { width: 100, text: '掌门也...' }
-                  ].map((clip, i) => (
-                    <div 
-                      key={i} 
-                      className={`subtitle-clip ${clip.text === '无字幕' ? 'no-subtitle' : ''}`} 
-                      onClick={() => handleEditSubtitle(i + 1)}
-                    >
-                      <span className="subtitle-clip-text">{clip.text}</span>
                     </div>
-                  ))}
-                </div>
-                
-                <div className="track track-music">
-                  <div className="music-clip no-music" style={{ width: '100%' }} onClick={handleReplaceMusic}>
-                    <span className="music-clip-text">
-                      <span>🎵</span>
-                      <span>无背景音乐</span>
-                    </span>
                   </div>
-                </div>
-              </div>
                 </div>
               </div>
             </div>
