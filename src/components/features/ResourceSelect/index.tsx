@@ -14,7 +14,7 @@ export const ResourceSelect: React.FC<ResourceSelectProps> = ({
   const items = [
     { label: "本作品资产", value: 1 },
     { label: "恐怖游戏第一季", value: 2 },
-    { label: "星骸拾荒者的救赎", value: 3 },
+    { label: "星骸拾荒者的救赎2", value: 3 },
     { label: "111", value: 4 },
     { label: "《修仙悟了》", value: 5 },
     { label: "111", value: 6 },
