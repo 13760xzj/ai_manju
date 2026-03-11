@@ -1,94 +1,165 @@
 .video-preview-page {
   width: 100%;
-  height: 100%;
+  height: 100vh;
   margin: 0;
-  padding: 20px;
+  padding: 16px 24px 12px;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
-  background: var(--bg-color);
+  /* 允许页面垂直滚动，防止放大后底部时间轴滚动条被裁剪掉 */
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: #ffffff;
 }
 
-.page-toolbar {
+.video-preview-actions {
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
+  gap: 12px;
+  margin-bottom: 8px;
 }
 
-.toolbar-left {
+.video-preview-actions-right {
   display: flex;
-  gap: 10px;
   align-items: center;
+  gap: 10px;
 }
 
-.toolbar-right {
-  display: flex;
-  gap: 10px;
-  align-items: center;
+/* 顶部操作区：导出/保存/同步三个按钮整体放大一些，但不影响布局高度 */
+.video-preview-actions-right-large .btn {
+  transform: scale(1.12);
+  transform-origin: center;
 }
 
-.progress-info {
+.video-preview-actions-right-large .btn-primary:hover:not(:disabled),
+.video-preview-actions-right-large .btn-secondary:hover:not(:disabled) {
+  transform: scale(1.12) translateY(-1px);
+}
+
+.video-preview-page .progress-info,
+.video-preview-actions .progress-info {
   font-size: 13px;
   color: var(--text-weak);
 }
 
 .video-preview-container {
-  flex: 1;
+  /* 使用内容高度撑开，让视频区域 + 时间轴一起参与整体滚动 */
+  flex: 0 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 0;
-  overflow: hidden;
-  min-height: 0;
+  gap: 6px;
+  overflow: visible;
 }
 
 .main-video-player {
-  background-color: var(--surface-1);
-  border-radius: var(--border-radius-xl);
+  background-color: transparent;
+  border-radius: 0;
   padding: 0;
-  box-shadow: var(--shadow-sm);
+  border: none;
+  box-shadow: none;
   display: flex;
   flex-direction: column;
+  gap: 8px;
+  /* 不在内部再做裁剪，让时间轴完全显示，由外层页面控制滚动 */
+  flex: 0 0 auto;
+  overflow: visible;
+}
+
+.video-middle-layout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   gap: 0;
+  padding: 0 0 8px;
+}
+
+.video-side-panel {
+  flex: 0 0 220px;
+  height: 100%;
+  border-radius: var(--border-radius-xl);
+  background: #f3f4f6;
+}
+
+.video-center-panel {
   flex: 1;
-  overflow: hidden;
-  min-height: 0;
-  border: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .timeline-section {
-  background-color: var(--surface-1);
+  background: #ffffff;
+  border-radius: 0;
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  flex: 0 0 320px;
-  min-height: 320px;
-  border-top: 1px solid var(--border-light);
-  margin-top: 0;
+  flex: 0 0 auto;
+  /* 与轨道总高度一致：header 40px + 视频72 + 字幕38 + 音乐38 + 边框2 ≈ 190px，避免音乐框与滚动条间产生空白 */
+  min-height: 190px;
+  padding-bottom: 0;
+  border: none;
+  box-shadow: none;
+}
+
+.timeline-section::before {
+  content: none;
+}
+
+.timeline-header {
+  display: flex;
+  height: 40px;
+  border-bottom: 1px solid var(--border-color);
+  background: linear-gradient(to bottom, rgba(15, 23, 42, 0.02) 0%, #ffffff 100%);
+}
+
+.timeline-header-label {
+  width: 60px;
+  flex-shrink: 0;
+  border-right: none;
+}
+
+.timeline-header-ruler {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
 }
 
 .tracks-wrapper {
   display: flex;
   flex: 1;
   overflow: hidden;
+  min-height: 0;
 }
 
 .video-player-wrapper {
   position: relative;
   width: 100%;
   aspect-ratio: 16/9;
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-  border-radius: 12px 12px 0 0;
+  max-height: calc(100vh - 260px);
+  background: #020617;
+  border-radius: 16px;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 1px solid #1e293b;
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.6);
 }
 
 .video-element {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+/* 默认隐藏浏览器自带的视频控制条，仅在鼠标悬停视频区域时显示 */
+.video-element::-webkit-media-controls-panel {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.video-player-wrapper:hover .video-element::-webkit-media-controls-panel {
+  opacity: 1;
 }
 
 .video-overlay {
@@ -101,18 +172,26 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .play-button-overlay {
-  width: 80px;
-  height: 80px;
-  background-color: rgba(0, 0, 0, 0.7);
+  width: 96px;
+  height: 96px;
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 32px;
+  font-size: 36px;
   color: white;
+  box-shadow: 0 8px 24px rgba(74, 108, 247, 0.4);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.play-button-overlay:hover {
+  transform: scale(1.1);
+  box-shadow: 0 12px 32px rgba(74, 108, 247, 0.5);
 }
 
 .video-controls {
@@ -122,52 +201,61 @@
   right: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.8) 0%,
-    rgba(0, 0, 0, 0.4) 100%
+    rgba(255, 255, 255, 0.96) 0%,
+    rgba(255, 255, 255, 0.72) 60%,
+    transparent 100%
   );
-  padding: 15px;
-  color: white;
+  padding: 14px 16px;
+  color: var(--text-strong);
   opacity: 0;
   transition: opacity 0.3s ease;
+  pointer-events: none;
 }
 
 .video-player-wrapper:hover .video-controls {
   opacity: 1;
+  pointer-events: auto;
 }
 
 .progress-bar-container {
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
 .progress-bar {
   width: 100%;
-  height: 5px;
-  background: rgba(255, 255, 255, 0.3);
+  height: 6px;
+  background: rgba(15, 23, 42, 0.12);
   border-radius: 3px;
   outline: none;
   -webkit-appearance: none;
   appearance: none;
+  cursor: pointer;
 }
 
 .progress-bar::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
-  background: white;
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
   cursor: pointer;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 2px 8px rgba(74, 108, 247, 0.4);
+  transition: transform 0.2s ease;
+}
+
+.progress-bar::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
 }
 
 .progress-bar::-moz-range-thumb {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
-  background: white;
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
   cursor: pointer;
   border: none;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 2px 8px rgba(74, 108, 247, 0.4);
 }
 
 .controls-bottom {
@@ -179,28 +267,30 @@
 .controls-left {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 16px;
 }
 
 .controls-right {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 
 .control-btn {
-  background: rgba(255, 255, 255, 0.2);
-  border: none;
-  border-radius: 4px;
-  color: white;
-  padding: 6px 10px;
+  background: rgba(15, 23, 42, 0.04);
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  border-radius: 8px;
+  color: var(--text-strong);
+  padding: 8px 12px;
   cursor: pointer;
   font-size: 16px;
-  transition: background 0.3s ease;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(6px);
 }
 
 .control-btn:hover {
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(15, 23, 42, 0.06);
+  transform: translateY(-1px);
 }
 
 .volume-control {
@@ -211,68 +301,96 @@
 
 .volume-slider {
   width: 80px;
-  height: 5px;
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 3px;
+  height: 4px;
+  background: rgba(15, 23, 42, 0.12);
+  border-radius: 2px;
   outline: none;
   -webkit-appearance: none;
   appearance: none;
+  cursor: pointer;
 }
 
 .volume-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 12px;
-  height: 12px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
-  background: white;
+  background: #fff;
   cursor: pointer;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.15);
+  transition: transform 0.2s ease;
+}
+
+.volume-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
 }
 
 .volume-slider::-moz-range-thumb {
-  width: 12px;
-  height: 12px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
   background: white;
   cursor: pointer;
   border: none;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 
 .time-display {
   font-size: 14px;
-  font-family: monospace;
+  font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+  font-weight: 500;
+  color: var(--text-strong);
 }
 
 .track-labels {
   width: 60px;
-  background-color: rgba(15, 23, 42, 0.03);
-  border-right: 1px solid var(--border-color);
+  background: transparent;
+  border-right: none;
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
 }
 
 .track-label {
-  height: 60px;
+  height: 40px;
   display: flex;
   align-items: center;
-  padding: 0 5px;
-  font-size: 13px;
-  font-weight: 500;
+  justify-content: center;
+  padding: 0 8px;
+  font-size: 12px;
+  font-weight: 600;
   color: var(--text-strong);
-  border-bottom: 1px solid var(--border-light);
+  border-bottom: none;
+}
+
+.track-label-video {
+  height: 48px;
+}
+
+.track-label-dubbing {
+  height: 24px;
+}
+
+.track-labels .track-label:nth-child(3),
+.track-labels .track-label:nth-child(4) {
+  height: 38px;
+}
+
+/* 轻微下移“字幕”标题，让与对应轨道更贴近 */
+.track-labels .track-label:nth-child(3) {
+  align-items: flex-end;
+  padding-bottom: 4px;
 }
 
 .track-label-text {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 4px;
 }
 
 .track-label-icon {
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .track-label:nth-child(1) {
@@ -296,54 +414,75 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  background-color: var(--surface-1);
+  background: #ffffff;
+  padding-bottom: 0;
 }
 
 .timeline-scroll {
   flex: 1;
-  overflow: auto;
-  background: var(--surface-1);
+  overflow-x: auto;
+  overflow-y: hidden;
+  background: #ffffff;
+  padding-bottom: 0;
+}
+
+.timeline-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+
+.timeline-scroll::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.06);
+  margin: 0 10px;
+}
+
+.timeline-scroll::-webkit-scrollbar-thumb {
+  background: rgba(15, 23, 42, 0.2);
+  border-radius: 3px;
 }
 
 .timeline-content {
   position: relative;
-  min-height: 100%;
+  /* 不拉伸，让内容高度贴合轨道，使滚动条紧贴音乐框 */
+  min-height: min-content;
 }
 
-.time-ruler {
-  height: 50px;
-  background-color: rgba(15, 23, 42, 0.03);
-  border-bottom: 1px solid var(--border-color);
+.time-ruler,
+.timeline-header-ruler {
+  height: 40px;
+  background: transparent;
   position: relative;
   display: flex;
   align-items: flex-end;
-  padding-bottom: 5px;
+  padding-bottom: 4px;
 }
 
 .time-marker {
   position: absolute;
-  bottom: 25px;
-  font-size: 11px;
-  color: var(--text-weak);
-  font-weight: 500;
+  top: 4px;
+  bottom: auto;
+  font-size: 10px;
+  color: rgba(15, 23, 42, 0.7);
+  font-weight: 600;
   transform: translateX(-50%);
   white-space: nowrap;
+  user-select: none;
 }
 
 .time-tick {
   position: absolute;
   bottom: 0;
   width: 1px;
-  background-color: var(--border-color);
+  background-color: rgba(15, 23, 42, 0.12);
 }
 
 .time-tick.major {
-  height: 15px;
-  background-color: #ccc;
+  height: 12px;
+  background-color: rgba(15, 23, 42, 0.28);
 }
 
 .time-tick.minor {
-  height: 8px;
+  height: 6px;
+  background-color: rgba(15, 23, 42, 0.08);
 }
 
 .timeline-playhead {
@@ -351,14 +490,15 @@
   top: 0;
   bottom: 0;
   width: 2px;
-  background-color: #ff4d4f;
+  background: linear-gradient(180deg, var(--danger-color) 0%, #ff7875 100%);
   z-index: 200;
   cursor: grab;
   transition: opacity 0.2s;
+  box-shadow: 0 0 8px rgba(255, 77, 79, 0.4);
 }
 
 .timeline-playhead:hover {
-  opacity: 0.7;
+  opacity: 0.8;
 }
 
 .timeline-playhead:active {
@@ -369,45 +509,94 @@
   content: "";
   position: absolute;
   top: 0;
-  left: -6px;
+  left: -5px;
   width: 0;
   height: 0;
-  border-left: 7px solid transparent;
-  border-right: 7px solid transparent;
-  border-top: 10px solid #ff4d4f;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 8px solid var(--danger-color);
 }
 
 .track {
-  height: 60px;
-  border-bottom: 1px solid #f0f0f0;
+  height: 40px;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
   position: relative;
   display: flex;
   align-items: center;
-  padding: 8px 15px;
-  gap: 10px;
+  /* 右侧保留 10px 间距，左侧与 00:00 刻度对齐 */
+  padding: 6px 10px 6px 0;
+  gap: 6px;
 }
 
-.track-video {
-  background-color: rgba(74, 108, 247, 0.06);
+.track-video-dubbing {
+  /* 略微增大视频轨道高度，让分镜视频更明显 */
+  height: 80px;
+  padding: 8px 10px 8px 0;
+  background: #ffffff;
+  position: relative;
+  overflow: visible;
 }
 
-.track-dubbing {
-  background-color: rgba(123, 95, 255, 0.05);
+.track-video-layer {
+  position: absolute;
+  top: 0;
+  /* 视频片段左侧与 00:00 刻度对齐 */
+  left: 0;
+  right: 10px;
+  bottom: 0;
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.track-video-layer .video-clip {
+  pointer-events: auto;
+}
+
+.track-dubbing-layer {
+  position: absolute;
+  bottom: 2px;
+  /* 配音片段左侧与 00:00 刻度对齐 */
+  left: 0;
+  right: 10px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.track-dubbing-layer .dubbing-clip {
+  pointer-events: auto;
 }
 
 .track-subtitle {
-  background-color: rgba(82, 196, 26, 0.05);
+  /* 字幕轨道高度与音乐轨道一致，让视频在视觉上更突出 */
+  height: 30px;
+  background: #ffffff;
+  gap: 10px;
+  /* 覆盖通用 .track 的左右内边距，使字幕块左侧与 00:00 刻度对齐 */
+  padding: 6px 10px 6px 0;
 }
 
-.track-music {
-  background-color: rgba(250, 140, 22, 0.06);
-}
+ .track-music {
+   /* 降低音乐轨道整体高度，为视频轨道腾出更多垂直空间 */
+   height: 30px;
+   background: #ffffff;
+   margin-bottom: 0;
+   /* 与上方轨道保持同样的左对齐和右侧间距 */
+   padding: 4px 10px 4px 0;
+   border-bottom: none;
+ }
 
 .video-clip {
-  height: 45px;
-  background: white;
-  border-radius: 10px;
-  border: 1px solid rgba(74, 108, 247, 0.6);
+  /* 与上方轨道高度匹配，稍微加高视频块 */
+  height: 74px;
+  background: linear-gradient(135deg, #f0f4ff 0%, #e8edff 100%);
+  border-radius: 6px;
+  border: 1px solid rgba(74, 108, 247, 0.3);
   position: relative;
   cursor: move;
   transition: all 0.2s ease;
@@ -416,33 +605,57 @@
   justify-content: center;
   overflow: hidden;
   flex-shrink: 0;
+  box-shadow: 0 1px 3px rgba(74, 108, 247, 0.1);
 }
 
 .video-clip:hover {
-  box-shadow: 0 10px 26px rgba(74, 108, 247, 0.18);
+  box-shadow: 0 2px 8px rgba(74, 108, 247, 0.2);
+  border-color: var(--primary-color);
+}
+
+.video-clip + .video-clip {
+  box-shadow:
+    0 1px 3px rgba(74, 108, 247, 0.08),
+    -10px 0 0 -9px rgba(15, 23, 42, 0.10);
+}
+
+.video-clip-thumbnail {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 4px;
 }
 
 .video-clip-label {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
-  color: white;
-  font-size: 10px;
-  padding: 6px 5px 2px;
+  bottom: 2px;
+  left: 4px;
+  right: 4px;
+  font-size: 9px;
+  color: var(--text-strong);
   text-align: center;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 1px 4px;
+  border-radius: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .clip-handle {
   position: absolute;
   top: 0;
   bottom: 0;
-  width: 10px;
+  width: 8px;
   cursor: ew-resize;
-  background: rgba(74, 108, 247, 0.14);
+  background: rgba(74, 108, 247, 0.2);
   transition: all 0.2s ease;
   z-index: 10;
+  opacity: 0;
+}
+
+.video-clip:hover .clip-handle {
+  opacity: 1;
 }
 
 .clip-handle:hover {
@@ -460,66 +673,70 @@
 }
 
 .dubbing-clip {
-  height: 32px;
-  background: var(--surface-1);
-  border-radius: 16px;
-  border: 2px solid var(--secondary-color);
+  height: 22px;
+  min-height: 22px;
+  background: linear-gradient(135deg, #4a90e2 0%, #5a9ce8 100%);
+  border-radius: 4px;
   position: relative;
   cursor: pointer;
   transition: all 0.2s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 12px;
+  padding: 0 8px;
   flex-shrink: 0;
+  box-shadow: 0 1px 3px rgba(74, 144, 226, 0.25);
 }
 
 .dubbing-clip:hover {
-  box-shadow: 0 2px 12px rgba(123, 95, 255, 0.3);
-  background: rgba(123, 95, 255, 0.08);
+  box-shadow: 0 2px 8px rgba(74, 144, 226, 0.3);
+  transform: translateY(-1px);
 }
 
 .dubbing-clip.no-audio {
-  border-style: dashed;
-  border-color: rgba(15, 23, 42, 0.18);
+  background: linear-gradient(135deg, #e8e8e8 0%, #f0f0f0 100%);
+  border: 1px dashed var(--border-color);
   color: var(--text-faint);
 }
 
 .dubbing-clip-text {
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 500;
+  color: white;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 100px;
+  max-width: 80px;
 }
 
-.dubbing-upload-icon {
-  margin-right: 5px;
-  font-size: 12px;
+.dubbing-clip.no-audio .dubbing-clip-text {
+  color: var(--text-weak);
 }
 
 .subtitle-clip {
-  height: 32px;
+  width: 100px;
+  /* 与音乐块同高，让下两条轨道保持一致 */
+  height: 24px;
   background: linear-gradient(135deg, #52c41a 0%, #73d13d 100%);
-  border-radius: 16px;
+  border-radius: 4px;
   position: relative;
   cursor: pointer;
   transition: all 0.2s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 12px;
+  padding: 0 8px;
   flex-shrink: 0;
+  box-shadow: 0 1px 3px rgba(82, 196, 26, 0.2);
 }
 
 .subtitle-clip:hover {
-  box-shadow: 0 2px 12px rgba(82, 196, 26, 0.4);
-  transform: scaleY(1.05);
+  box-shadow: 0 2px 8px rgba(82, 196, 26, 0.3);
+  transform: translateY(-1px);
 }
 
 .subtitle-clip-text {
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 500;
   color: white;
   white-space: nowrap;
@@ -528,43 +745,66 @@
   max-width: 120px;
 }
 
-.music-clip {
-  height: 40px;
-  background: linear-gradient(135deg, #fa8c16 0%, #ffa940 100%);
-  border-radius: 8px;
-  position: relative;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 20px;
-  flex-shrink: 0;
+.subtitle-clip.no-subtitle {
+  background: linear-gradient(135deg, #e8e8e8 0%, #f0f0f0 100%);
+  border: 1px dashed var(--border-color);
 }
 
+.subtitle-clip.no-subtitle .subtitle-clip-text {
+  color: var(--text-weak);
+}
+
+ .music-clip {
+   /* 音乐块高度与轨道匹配，整体更紧凑 */
+   height: 24px;
+   background: linear-gradient(135deg, #fa8c16 0%, #ffa940 100%);
+   border-radius: 4px;
+   position: relative;
+   cursor: pointer;
+   transition: all 0.2s ease;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   padding: 0 12px;
+   flex-shrink: 0;
+   box-shadow: 0 1px 3px rgba(250, 140, 22, 0.2);
+ }
+
 .music-clip:hover {
-  box-shadow: 0 2px 12px rgba(250, 140, 22, 0.4);
+  box-shadow: 0 2px 8px rgba(250, 140, 22, 0.3);
+  transform: translateY(-1px);
+}
+
+.music-clip.no-music {
+  background: linear-gradient(135deg, #e8e8e8 0%, #f0f0f0 100%);
+  border: 1px dashed var(--border-color);
+}
+
+.music-clip.no-music .music-clip-text {
+  color: var(--text-weak);
 }
 
 .music-clip-text {
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 500;
   color: white;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
+  z-index: 10;
+  position: relative;
 }
 
 .music-clip-icon {
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .music-waveform {
   position: absolute;
-  top: 5px;
-  bottom: 5px;
-  left: 5px;
-  right: 5px;
+  top: 6px;
+  bottom: 6px;
+  left: 6px;
+  right: 6px;
   opacity: 0.3;
   display: flex;
   align-items: center;
@@ -578,12 +818,25 @@
 }
 
 @media (max-width: 768px) {
+  .timeline-section {
+    flex-basis: 190px;
+    min-height: 170px;
+  }
+
   .track-labels {
-    width: 100px;
+    width: 50px;
   }
 
   .track-label {
-    font-size: 11px;
-    padding: 0 10px;
+    font-size: 10px;
+    padding: 0 6px;
+  }
+
+  .track-label-video {
+    height: 40px;
+  }
+
+  .track-label-dubbing {
+    height: 10px;
   }
 }

@@ -64,23 +64,23 @@
 }
 
 .btn-mini {
-  padding: 4px 10px;
-  font-size: 11px;
+  padding: 2px 5px;
+  font-size: 10px;
 }
 
 .btn-small {
-  padding: 6px 12px;
-  font-size: 12px;
+  padding: 2px 6px;
+  font-size: 10px;
 }
 
 .btn-medium {
-  padding: 8px 16px;
-  font-size: 14px;
+  padding: 3px 8px;
+  font-size: 11px;
 }
 
 .btn-large {
-  padding: 12px 24px;
-  font-size: 16px;
+  padding: 6px 12px;
+  font-size: 13px;
 }
 
 .btn-success {

@@ -26,15 +26,15 @@ export function GlobalSettingsPage() {
         <div className="setting-card-header">
           <h3>基本设置</h3>
           <div className="action-buttons">
-            <Button variant="secondary" onClick={handleSave}>
+            <Button variant="secondary" size="large" onClick={handleSave}>
               保存设置
             </Button>
-            <Button variant="primary" onClick={handleNext}>
+            <Button variant="primary" size="large" onClick={handleNext}>
               下一步
             </Button>
           </div>
         </div>
-          
+        <div className="setting-card-body">
           <div className="setting-group">
             <label>默认画面比例</label>
             <div className="options-group">
@@ -134,6 +134,7 @@ export function GlobalSettingsPage() {
               </div>
             </div>
           </div>
+        </div>
       </div>
       </div>
   );

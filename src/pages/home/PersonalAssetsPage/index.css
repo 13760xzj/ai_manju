@@ -364,21 +364,22 @@
   grid-template-columns: 1fr;
 }
 
-/* 统一的资产网格容器 */
+/* 统一的资产网格容器
+   交给外层 .assets-content 控制滚动，避免内部再出现一条竖向滚动条（看起来像一根黑线） */
 .assets-grid-container {
-  height: 100%;
-  overflow-y: auto;
+  height: auto;
+  overflow-y: visible;
 }
 
-/* 作品区域样式 */
+/* 作品区域样式，同样去掉内层滚动条，保持只滚整个内容区 */
 .works-section {
-  height: 100%;
-  overflow-y: auto;
+  height: auto;
+  overflow-y: visible;
 }
 
 .work-category-assets {
-  height: 100%;
-  overflow-y: auto;
+  height: auto;
+  overflow-y: visible;
 }
 
 .category-header {

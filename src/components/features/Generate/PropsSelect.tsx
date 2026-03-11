@@ -1,16 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { CustomSelect } from "@/components/common";
 
 export interface PropsSelectProps {
   position?: "top" | "bottom";
 }
-export const PropsSelect: React.FC = ({ position }) => {
+
+export const PropsSelect: React.FC<PropsSelectProps> = ({ position }) => {
   return (
     <div className="flex items-center gap-2 w-full">
-      <div className="w-55">
+      <div className="w-45">
         <CustomSelect
           placeholder="生图模型"
-          panelWidth={"280px"}
+          panelWidth={280}
           position={position}
           options={[
             {
@@ -46,7 +47,6 @@ export const PropsSelect: React.FC = ({ position }) => {
               desc: "5秒内生成，高清图片",
             },
           ]}
-          width={240}
           onChange={(v) => console.log(v)}
           renderItem={(option) => (
             <div className="flex items-center gap-2">
@@ -80,7 +80,6 @@ export const PropsSelect: React.FC = ({ position }) => {
             { label: "5:4", value: "5:4" },
             { label: "21:9", value: "21:9" },
           ]}
-          width={240}
           onChange={(v) => console.log(v)}
         />
       </div>
@@ -88,30 +87,26 @@ export const PropsSelect: React.FC = ({ position }) => {
         <CustomSelect
           placeholder="数量"
           position={position}
-          options={[
-            { label: "1张", value: "1" },
-            { label: "2张", value: "2" },
-            {
-              label: "3张",
-              value: "3",
-              children: [{ label: "1张", value: "5" }],
-            },
-            { label: "4张", value: "4" },
-          ]}
-          width={240}
+          value={1}
+          options={new Array(4)
+            .fill(0)
+            .map((_, i) => ({ label: `${i + 1}张`, value: i + 1 }))}
           onChange={(v) => console.log(v)}
         />
       </div>
-      <div className="flex-1">
+      <div className="w-29">
         <CustomSelect
-          placeholder="分辨率"
+          placeholder="画质"
           position={position}
+          value={2}
           options={[
-            { label: "1k", value: "1" },
-            { label: "2k", value: "2" },
-            { label: "4k", value: "4" },
+            { label: "超清(2k)", value: 1 },
+            { label: "高清(1080)", value: 2 },
+            {
+              label: "标准(720)",
+              value: 3,
+            },
           ]}
-          width={240}
           onChange={(v) => console.log(v)}
         />
       </div>

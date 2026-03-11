@@ -102,18 +102,8 @@ function SortableListCard({
         <div className="storyboard-item">
           <div className="storyboard-label">分镜图片：</div>
           <div className="storyboard-image-box">
-            <div style={{ fontSize: "12px", marginTop: "8px" }}>
-              编辑分镜图片
-            </div>
-            <div
-              style={{
-                fontSize: "10px",
-                color: "var(--text-faint)",
-                marginTop: "4px",
-              }}
-            >
-              点击生成或编辑分镜图片
-            </div>
+            <div className="storyboard-image-title">编辑分镜图片</div>
+            <div className="storyboard-image-subtitle">点击生成或编辑分镜图片</div>
           </div>
         </div>
         <div className="storyboard-item">
@@ -409,7 +399,7 @@ export function StoryboardPage() {
 
   return (
     <div className="storyboard-page">
-      <div className="page-toolbar px-5! pt-5!">
+      <div className="page-toolbar">
         <div className="navigation-box ui-toolbar">
           <div className="nav-left">
             <div className="toggle-group">
@@ -463,7 +453,7 @@ export function StoryboardPage() {
           collisionDetection={closestCenter}
           onDragEnd={handleListDragEnd}
         >
-          <div className="list-view-container px-5! pb-5!">
+          <div className="list-view-container">
             <SortableContext
               items={listItems.map((item) => item.id)}
               strategy={verticalListSortingStrategy}
@@ -491,7 +481,7 @@ export function StoryboardPage() {
           collisionDetection={closestCenter}
           onDragEnd={handleCardDragEnd}
         >
-          <div className="card-view-container active px-5! pb-5!">
+          <div className="card-view-container active">
             <div className="card-grid">
               <SortableContext
                 items={cardItems.map((item) => item.id)}

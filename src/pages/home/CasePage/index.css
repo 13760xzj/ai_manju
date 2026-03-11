@@ -31,6 +31,8 @@
 
 .create-btn {
   margin-bottom: 0;
+  font-size: 18px !important;
+  padding: 14px 36px !important;
 }
 
 .hero-banner {

@@ -2,10 +2,26 @@
   width: 100%;
   height: 100%;
   margin: 0;
-  padding: 20px;
+  padding: 12px;
   display: flex;
   flex-direction: column;
   min-height: 0;
+  --dubbing-btn-scale: 1.14;
+}
+
+.dubbing-page .ui-toolbar {
+  padding: 6px 10px;
+}
+
+.dubbing-page .toolbar-right .btn,
+.dubbing-page .dubbing-actions .btn {
+  transform: scale(var(--dubbing-btn-scale));
+  transform-origin: center;
+}
+
+.dubbing-page .toolbar-right .btn-primary:hover:not(:disabled),
+.dubbing-page .dubbing-actions .btn-primary:hover:not(:disabled) {
+  transform: scale(var(--dubbing-btn-scale)) translateY(-1px);
 }
 
 .page-toolbar {
@@ -24,7 +40,7 @@
 
 .toolbar-right {
   display: flex;
-  gap: 10px;
+  gap: 14px;
   align-items: center;
 }
 
@@ -99,7 +115,7 @@
 
 .dubbing-actions {
   display: flex;
-  gap: 8px;
+  gap: 14px;
 }
 
 .dubbing-grid {

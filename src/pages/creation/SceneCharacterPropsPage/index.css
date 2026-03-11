@@ -1,25 +1,157 @@
 .scene-character-props-page {
   width: 100%;
   height: 100%;
-  padding: 20px;
+  padding: 12px;
   display: flex;
   flex-direction: column;
   min-height: 0;
+  background: var(--bg-color);
+  --scp-btn-scale: 1.18;
+}
+
+/* 本页：按钮更大，但不改变所在框尺寸（使用 transform 放大，不参与布局） */
+.scene-character-props-page .top-bar-actions .btn,
+.scene-character-props-page .tab-toolbar .btn,
+.scene-character-props-page .section-header-right .btn,
+.scene-character-props-page .character-actions .btn,
+.scene-character-props-page .props-actions .btn,
+.scene-character-props-page .section-header-right .add-btn {
+  transform: scale(var(--scp-btn-scale));
+  transform-origin: center;
+}
+
+/* 兼容 primary hover 的上浮效果，避免覆盖放大 */
+.scene-character-props-page .top-bar-actions .btn-primary:hover:not(:disabled) {
+  transform: scale(var(--scp-btn-scale)) translateY(-1px);
+}
+
+.scene-character-props-page .section-header-right .btn-primary:hover:not(:disabled) {
+  transform: scale(var(--scp-btn-scale)) translateY(-1px);
+}
+
+.scene-character-props-page .section-header-right {
+  gap: 10px;
+}
+
+.scene-character-props-page .character-actions {
+  gap: 10px;
+}
+
+.scene-character-props-page .props-actions {
+  gap: 10px;
 }
 
 .tab-content {
   flex: 1;
   overflow-y: auto;
-  /* padding: 12px 20px 20px; */
-  background: var(--bg-color);
+  padding: 0;
+}
+
+/* 顶部 TopBar 限宽居中（避免大屏过宽） */
+.scp-topbar {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+}
+
+/* 统一内容容器：避免内容贴边、提升视觉节奏 */
+.scp-content {
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-height: 0;
+}
+
+/* 顶部 TopBar 在本页更“正常”的密度（不影响全站） */
+.scene-character-props-page .top-bar {
+  /* 微微降低高度：减小上下内边距，按钮尺寸保持不变 */
+  padding: 4px 10px;
+  border-radius: 12px;
+  border: 1px solid var(--border-light);
+  box-shadow: 0 1px 1px rgba(15, 23, 42, 0.04);
+  margin-bottom: 2px;
+}
+
+.scene-character-props-page .segmented-tabs {
+  padding: 3px;
+  border-radius: 10px;
+}
+
+.scene-character-props-page .segmented-tab {
+  padding: 5px 12px;
+  font-size: 12px;
+  border-radius: 8px;
+}
+
+.scene-character-props-page .top-bar-actions {
+  gap: 14px;
+}
+
+.scene-character-props-page .stats-text {
+  font-size: 12px;
+}
+
+/* tab 顶部统计/操作区：做成统一工具栏 */
+.tab-toolbar {
+  background: var(--surface-1);
+  border: 1px solid var(--border-light);
+  border-radius: var(--border-radius-xl);
+  box-shadow: var(--shadow-sm);
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
 }
 
 .scene-section {
   background: var(--surface-1);
-  border-radius: var(--border-radius-xl);
+  border-radius: var(--border-radius-lg);
   box-shadow: var(--shadow-sm);
-  padding: 20px;
+  padding: 6px;
   border: 1px solid var(--border-light);
+}
+
+/* 场景区头部描述更紧凑，突出下方主体 */
+.scene-character-props-page .scene-section .section-header {
+  padding: 4px 6px;
+}
+
+.scene-character-props-page .scene-section .section-header-left {
+  gap: 1px;
+}
+
+.scene-character-props-page .scene-section .section-description {
+  font-size: 10px;
+  line-height: 1.15;
+}
+
+/* 统一本页卡片观感：轻微提升圆角与底色一致性 */
+.scene-character-props-page .angle-card,
+.scene-character-props-page .character-block,
+.scene-character-props-page .form-section {
+  border-color: var(--border-light);
+}
+
+.scene-character-props-page .angle-card {
+  border-radius: 10px;
+}
+
+.scene-character-props-page .angle-card-header,
+.scene-character-props-page .angle-card-actions {
+  background: rgba(15, 23, 42, 0.03);
+}
+
+.scene-character-props-page .angle-card-title {
+  font-size: 12px;
+}
+
+.scene-character-props-page .angle-action-btn {
+  padding: 4px 10px;
+  border-radius: 12px;
 }
 
 .props-section {
@@ -51,7 +183,7 @@
 
 .props-actions {
   display: flex;
-  gap: 6px;
+  gap: 10px;
 }
 
 .props-form-section {
@@ -66,9 +198,9 @@
 
 .angles-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 15px;
-  padding: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 12px;
+  padding: 0;
 }
 
 .angles-grid-2 {
@@ -77,21 +209,22 @@
 
 .angles-grid-1 {
   grid-template-columns: repeat(1, 1fr);
-  max-width: 400px;
+  max-width: 520px;
 }
 
 .character-page-header,
 .scene-page-header,
 .props-page-header {
+  /* 兼容旧结构（如果后续还有地方复用这些 class） */
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 16px;
+  padding: 10px 12px;
   background: var(--surface-1);
-  border-radius: var(--border-radius-lg);
+  border-radius: var(--border-radius-xl);
   border: 1px solid var(--border-light);
-  margin-top: 4px;
-  margin-bottom: 16px;
+  box-shadow: var(--shadow-sm);
+  margin: 0;
 }
 
 .character-page-info,
@@ -105,7 +238,7 @@
 .character-count-text,
 .scene-count-text,
 .props-count-text {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
   color: var(--text-strong);
 }
@@ -119,7 +252,7 @@
 .scene-page-actions,
 .props-page-actions {
   display: flex;
-  gap: 8px;
+  gap: 10px;
 }
 
 .add-section-wrapper {
@@ -155,10 +288,14 @@
 
 @media (max-width: 768px) {
   .angles-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .angles-grid-1 {
     max-width: 100%;
+  }
+
+  .scene-character-props-page .top-bar-left {
+    min-width: 0;
   }
 }

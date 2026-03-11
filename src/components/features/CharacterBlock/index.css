@@ -1,28 +1,28 @@
 .character-block {
   background: white;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
   border: 1px solid #e8e8e8;
-  border-radius: 8px;
-  padding: 16px;
+  border-radius: 6px;
+  padding: 12px;
 }
 
 .character-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
-  padding-bottom: 12px;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
   border-bottom: 1px solid #f0f0f0;
 }
 
 .character-info {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
 
 .character-title {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
   color: #333;
 }
@@ -30,7 +30,7 @@
 .character-actions {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
 
 .character-body {

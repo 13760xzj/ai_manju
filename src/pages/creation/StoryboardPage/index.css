@@ -2,13 +2,18 @@
   width: 100%;
   height: 100%;
   margin: 0;
+  padding: 12px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
 }
 
 .page-toolbar {
-  margin-bottom: 15px;
+  margin-bottom: 8px;
+}
+
+.storyboard-page .ui-toolbar {
+  padding: 6px 10px;
 }
 
 .navigation-box {
@@ -35,6 +40,23 @@
   display: flex;
   align-items: center;
   gap: 8px;
+}
+
+.storyboard-page {
+  --storyboard-top-btn-scale: 1.12;
+}
+
+.storyboard-page .nav-right .btn {
+  transform: scale(var(--storyboard-top-btn-scale));
+  transform-origin: center;
+}
+
+.storyboard-page .nav-right .btn-primary:hover:not(:disabled) {
+  transform: scale(var(--storyboard-top-btn-scale)) translateY(-1px);
+}
+
+.storyboard-page .nav-right {
+  gap: 12px;
 }
 
 .nav-divider {
@@ -71,8 +93,8 @@
 .storyboard-card {
   background-color: var(--surface-1);
   border-radius: var(--border-radius-xl);
-  padding: 18px;
-  margin-bottom: 20px;
+  padding: 8px;
+  margin-bottom: 6px;
   box-shadow: var(--shadow-sm);
   transition: var(--transition);
   border: 1px solid var(--border-light);
@@ -87,13 +109,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
-  padding-bottom: 12px;
+  margin-bottom: 6px;
+  padding-bottom: 4px;
   border-bottom: 1px solid var(--border-light);
 }
 
 .storyboard-title {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
   color: var(--text-strong);
   background: linear-gradient(
@@ -108,30 +130,52 @@
 
 .storyboard-actions {
   display: flex;
-  gap: 8px;
+  gap: 6px;
+}
+
+.storyboard-page {
+  --storyboard-action-btn-scale: 1.18;
+}
+
+.storyboard-page .storyboard-actions .btn {
+  transform: scale(var(--storyboard-action-btn-scale));
+  transform-origin: center;
+}
+
+.storyboard-page .storyboard-actions .btn-primary:hover:not(:disabled) {
+  transform: scale(var(--storyboard-action-btn-scale)) translateY(-1px);
+}
+
+.storyboard-page .storyboard-actions {
+  gap: 14px;
 }
 
 .storyboard-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 15px;
+  gap: 8px;
+  align-items: start;
 }
 
 .storyboard-item {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 4px;
+  align-items: stretch;
 }
 
 .storyboard-label {
-  font-size: 12px;
+  min-height: 14px;
+  display: flex;
+  align-items: center;
+  font-size: 11px;
   font-weight: 500;
   color: var(--text-weak);
 }
 
 .ref-grid {
   display: flex;
-  gap: 8px;
+  gap: 6px;
   flex-wrap: wrap;
 }
 
@@ -199,6 +243,19 @@
   transition: all 0.3s ease;
 }
 
+.storyboard-image-title {
+  font-size: 12px;
+  margin-top: 2px;
+  line-height: 1.2;
+}
+
+.storyboard-image-subtitle {
+  margin-top: 2px;
+  font-size: 10px;
+  color: var(--text-faint);
+  line-height: 1.2;
+}
+
 .storyboard-image-box:hover {
   border-color: var(--primary-color);
   background: linear-gradient(
@@ -215,16 +272,18 @@
   opacity: 0.5;
 }
 
+
 .card-view-container {
   flex: 1;
   overflow-y: auto;
+  padding: 0;
 }
 
 .card-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 20px;
-  padding: 10px 0;
+  gap: 12px;
+  padding: 0;
 }
 
 .storyboard-card-compact {
@@ -262,13 +321,15 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: 10px;
+  min-height: 28px;
+  padding-bottom: 6px;
   border-bottom: 1px solid var(--border-light);
 }
 
 .card-title {
   font-size: 14px;
   font-weight: 600;
+  line-height: 1.2;
   color: var(--text-strong);
   background: linear-gradient(
     135deg,

@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/useToast';
-import { DocumentTopBar, EditorToolbar, HistoryDrawer } from '@/components/features';
+import { Button } from '@/components/common';
+import { DocumentTopBar, HistoryDrawer } from '@/components/features';
 import type { HistoryVersion } from '@/components/features/HistoryDrawer';
 import './index.css';
 
@@ -70,10 +71,6 @@ export function StoryPlotPage() {
     setHasUnsavedChanges(false);
   };
 
-  const handleNext = () => {
-    navigate('/scene-character-props');
-  };
-
   const handleTitleChange = (newTitle: string) => {
     setStoryTitle(newTitle);
     toast.success(`标题已更新为：${newTitle}`);
@@ -85,6 +82,10 @@ export function StoryPlotPage() {
     addToHistory(version.content);
     setShowHistoryDrawer(false);
     toast.success('已恢复到此版本');
+  };
+
+  const handleNext = () => {
+    navigate('/scene-character-props');
   };
 
   const mockVersions: HistoryVersion[] = [
@@ -114,22 +115,45 @@ export function StoryPlotPage() {
       <DocumentTopBar
         title={storyTitle}
         unsaved={hasUnsavedChanges}
-        onNext={handleNext}
         onTitleChange={handleTitleChange}
+        onNext={handleNext}
       />
       <div className="editor-content">
-        <EditorToolbar
-          canUndo={canUndo}
-          canRedo={canRedo}
-          onUndo={handleUndo}
-          onRedo={handleRedo}
-          onCopy={handleCopy}
-          onClear={handleClear}
-          onImport={handleImport}
-          onHistory={handleHistory}
-          onSave={handleSave}
-          onNext={handleNext}
-        />
+        <div className="story-plot-actions">
+          <div className="story-plot-actions-left">
+            <Button
+              variant="secondary"
+              size="mini"
+              onClick={handleUndo}
+              disabled={!canUndo}
+            >
+              ↩ 撤销
+            </Button>
+            <Button
+              variant="secondary"
+              size="mini"
+              onClick={handleRedo}
+              disabled={!canRedo}
+            >
+              ↪ 重做
+            </Button>
+            <Button variant="secondary" size="mini" onClick={handleCopy}>
+              📋 复制
+            </Button>
+            <Button variant="secondary" size="mini" onClick={handleClear}>
+              🗑 清空
+            </Button>
+          </div>
+
+          <div className="story-plot-actions-right">
+            <Button variant="secondary" size="mini" onClick={handleImport}>
+              导入剧本 (单集)
+            </Button>
+            <Button variant="secondary" size="mini" onClick={handleHistory}>
+              ① 历史版本
+            </Button>
+          </div>
+        </div>
         <textarea
           className="script-editor"
           placeholder={`【剧本格式示例】

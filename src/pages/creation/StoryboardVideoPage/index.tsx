@@ -358,7 +358,7 @@ export function StoryboardVideoPage() {
       className="storyboard-video-page"
       onClick={() => setActiveDropdown(null)}
     >
-      <div className="page-toolbar ui-toolbar mx-5! mt-5!">
+      <div className="page-toolbar ui-toolbar">
         <div className="toolbar-left">
           <div className="toggle-group">
             <Button
@@ -408,7 +408,7 @@ export function StoryboardVideoPage() {
           collisionDetection={closestCenter}
           onDragEnd={handleListDragEnd}
         >
-          <div className="list-view-container px-5! pb-5!">
+          <div className="list-view-container">
             <SortableContext
               items={listItems.map((item) => item.id)}
               strategy={verticalListSortingStrategy}
@@ -434,7 +434,7 @@ export function StoryboardVideoPage() {
           collisionDetection={closestCenter}
           onDragEnd={handleCardDragEnd}
         >
-          <div className="card-view-container active px-5! pb-5!">
+          <div className="card-view-container active">
             <div className="card-grid">
               <SortableContext
                 items={cardItems.map((item) => item.id)}

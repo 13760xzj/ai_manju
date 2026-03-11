@@ -17,22 +17,22 @@
 .form-section-info {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
 
 .form-section-name {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
   color: #333;
 }
 
 .form-section-divider {
   color: #d0d0d0;
-  font-size: 12px;
+  font-size: 11px;
 }
 
 .form-section-voiceover {
-  font-size: 12px;
+  font-size: 11px;
   color: #666;
 }
 
@@ -75,14 +75,14 @@
 
 .form-section-actions {
   display: flex;
-  gap: 8px;
+  gap: 6px;
 }
 
 .action-btn {
-  padding: 5px 12px;
-  font-size: 12px;
+  padding: 4px 10px;
+  font-size: 11px;
   border: 1px solid #e0e0e0;
-  border-radius: 14px;
+  border-radius: 12px;
   background: white;
   color: #666;
   cursor: pointer;
