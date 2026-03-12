@@ -1,0 +1,21 @@
+.ant-modal-mask {
+  background-color: #444 !important;
+}
+.ant-modal-container {
+  padding: 0 !important;
+}
+.ant-modal-close {
+  color: #fff !important;
+  outline: none !important;
+  background: rgba(0, 0, 0, 0.35) !important;
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 20px !important;
+}
+.ant-modal-close:hover {
+  background: rgba(0, 0, 0, 0.6) !important;
+}
+
+.ant-modal-body {
+  outline: none !important;
+}

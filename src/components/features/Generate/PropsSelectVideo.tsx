@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { CustomSelect } from "@/components/common";
 import { Popover } from "antd";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import "@/components/features/Storyboard/components.css";
-import { AtInputArea } from "./AtInputArea";
+import { AtInputArea, type AtInputAreaRef } from "./AtInputArea";
 
 export interface PropsSelectVideoProps {
   position?: "top" | "bottom";
@@ -18,6 +18,7 @@ export const PropsSelectVideo: React.FC<PropsSelectVideoProps> = ({
   const [audioType, setAudioType] = useState<number | null>(1);
   const [open, setOpen] = useState(false);
   const [content, setContent] = useState("");
+  const contentRef = useRef<AtInputAreaRef>(null);
 
   const handleOpenChange = (newOpen: boolean) => {
     setOpen(newOpen);
@@ -162,17 +163,18 @@ export const PropsSelectVideo: React.FC<PropsSelectVideoProps> = ({
                   ]}
                   onChange={(v) => {
                     if (v === 2) {
-                      setContent(
+                      contentRef.current?.settValue!(
                         "雷暴环境音：远处雷声低沉闷响，雨点密集敲打窗户玻璃，室内电脑主机低频运转声，偶尔闪电瞬间的电流噼啪声，营造闷热压抑的雨夜氛围",
                       );
                     } else {
-                      setContent("");
+                      contentRef.current?.settValue!("");
                     }
                     setAudioType(v as number);
                   }}
                 />
                 <div className="h-35 border border-[#38447c] rounded-md p-2! text-white">
                   <AtInputArea
+                    ref={contentRef}
                     defaultValue={content}
                     openAt={false}
                     fontSize="13px"

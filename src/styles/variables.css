@@ -1,13 +1,13 @@
 :root {
   /* 颜色变量 */
   /* 品牌主色：苏梅（柔粉玫红） */
-  --primary-color: #DD7694;
+  --primary-color: #dd7694;
   --primary-color-dark: #c35a79;
   --primary-rgb: 221, 118, 148;
   --primary-color-rgb: 221, 118, 148;
 
   /* 辅助色：青翠（鲜嫩草绿） */
-  --secondary-color: #53B76F;
+  --secondary-color: #53b76f;
   --secondary-rgb: 83, 183, 111;
 
   --danger-color: #dc2626;
@@ -22,45 +22,46 @@
   /* 兼容别名（历史代码里可能仍在使用） */
   --error-color: var(--danger-color);
   --error-rgb: var(--danger-rgb);
-  
+
   /* 背景色（偏米白纸感） */
-  --bg-color: #F8F5F2;
+  --bg-color: #f8f5f2;
   --bg-white: rgba(255, 255, 255, 0.96);
   --bg-light: #f9f4ef;
   --bg-primary-light: rgba(var(--primary-rgb), 0.06);
-  --bg-primary-lighter: rgba(var(--primary-rgb), 0.10);
+  --bg-primary-lighter: rgba(var(--primary-rgb), 0.1);
 
   /* 深色面板（用于编辑器/生成页顶部栏等，替换偏绿的深色块） */
   /* 轻面板：清新、克制，不走深色系 */
   --panel-1: rgba(255, 255, 255, 0.86);
   --panel-2: rgba(var(--primary-rgb), 0.12);
   --panel-3: rgba(15, 23, 42, 0.04);
-  
+
   /* 文字颜色 */
-  --text-color: #0f172a;       /* slate-900 */
-  --text-secondary: #334155;   /* slate-700 */
-  --text-muted: #64748b;       /* slate-500 */
-  
+  --text-color: #0f172a; /* slate-900 */
+  --text-secondary: #334155; /* slate-700 */
+  --text-muted: #64748b; /* slate-500 */
+
   /* 边框颜色 */
   --border-color: rgba(120, 92, 76, 0.22); /* 参考纸张边缘的茶色 */
   --border-light: rgba(120, 92, 76, 0.12);
-  
+
   /* 阴影 */
-  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06), 0 1px 1px rgba(15, 23, 42, 0.04);
-  --shadow-md: 0 6px 18px rgba(15, 23, 42, 0.10);
+  --shadow-sm:
+    0 1px 2px rgba(15, 23, 42, 0.06), 0 1px 1px rgba(15, 23, 42, 0.04);
+  --shadow-md: 0 6px 18px rgba(15, 23, 42, 0.1);
   --shadow-lg: 0 12px 32px rgba(15, 23, 42, 0.14);
-  --shadow-primary: 0 10px 24px rgba(var(--primary-rgb), 0.20);
-  
+  --shadow-primary: 0 10px 24px rgba(var(--primary-rgb), 0.2);
+
   /* 圆角 */
   --border-radius-sm: 4px;
   --border-radius-md: 6px;
   --border-radius-lg: 8px;
   --border-radius-xl: 12px;
   --border-radius-round: 20px;
-  
+
   /* 过渡 */
   --transition: all 0.3s ease;
-  
+
   /* 语义化令牌（逐步用于统一设计系统） */
   --surface-1: var(--bg-white);
   --surface-2: var(--bg-light);
@@ -68,7 +69,7 @@
   --text-weak: var(--text-secondary);
   --text-faint: var(--text-muted);
   --focus-ring: 0 0 0 3px rgba(var(--primary-rgb), 0.22);
-  
+
   /* 间距 */
   --spacing-xs: 4px;
   --spacing-sm: 8px;

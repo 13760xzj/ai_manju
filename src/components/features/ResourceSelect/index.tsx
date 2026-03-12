@@ -1,4 +1,4 @@
-import { AtUpload, ContentModal, ImagePreview } from "@/components/common";
+import { AtUpload, ContentModal, MediaPreview } from "@/components/common";
 import AutoTabs from "@/components/common/AutoTabs";
 import React, { useState } from "react";
 import { HorizontalScroll } from "@components/features";
@@ -36,7 +36,7 @@ export const ResourceSelect: React.FC<ResourceSelectProps> = ({
 
   const [resources, setResources] = useState<Array<ResourceBase>>([
     {
-      image: "https://picsum.photos/1270/720?random=1",
+      image: "https://www.w3schools.com/html/mov_bbb.mp4",
       time: "2026-01-01 00:00:00",
       id: 1,
     },
@@ -139,14 +139,14 @@ export const ResourceSelect: React.FC<ResourceSelectProps> = ({
                 {item.time}
               </div>
               <div className="absolute right-2 top-2 z-2 gap-1 flex items-center justify-end">
-                <ImagePreview images={[item.image]}>
+                <MediaPreview urls={[item.image]}>
                   <div className="w-4 h-4 bg-black/60 hover:opacity-80 cursor-pointer rounded-sm flex items-center justify-center border border-white/30">
                     <AiOutlineArrowsAlt
                       style={{ color: "#fff" }}
                       className="w-full h-full"
                     />
                   </div>
-                </ImagePreview>
+                </MediaPreview>
                 <div className=" w-4 h-4 bg-black rounded-sm overflow-hidden">
                   {selectResult.includes(item.id) && (
                     <ImCheckboxChecked

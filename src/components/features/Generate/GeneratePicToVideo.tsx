@@ -4,7 +4,7 @@ import { RiRefreshLine } from "react-icons/ri";
 import { RiAiGenerate } from "react-icons/ri";
 import { PropsSelectVideo } from "./PropsSelectVideo";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { ToggleLayout, ImagePreview } from "@/components/common";
+import { ToggleLayout, MediaPreview } from "@/components/common";
 import PopoverSelect from "./PopoverSelect";
 import { AiOutlineArrowsAlt } from "react-icons/ai";
 import { BiTransfer } from "react-icons/bi";
@@ -23,12 +23,12 @@ export const GeneratePicToVideo: React.FC = () => {
 
   return (
     <div className="h-full overflow-hidden flex flex-col gap-4">
-      <div className="bg-[var(--panel-1)] border border-[var(--border-light)] p-1! rounded-sm backdrop-blur-sm flex items-center justify-between">
-        <div className="flex items-center gap-2 text-[var(--text-strong)]">
+      <div className="bg-[#203429] p-1! rounded-sm flex items-center justify-between">
+        <div className="flex items-center gap-2 text-white">
           <IoDocumentTextSharp />
-          <span className="text-sm text-[var(--text-weak)]">@分镜脚本1：分镜1-1</span>
+          <span className="text-sm">@分镜脚本1：分镜1-1</span>
         </div>
-        <div className="bg-[var(--panel-2)] text-sm px-2! py-1! rounded-sm flex items-center gap-1 cursor-pointer text-[var(--text-weak)] hover:opacity-90">
+        <div className="bg-[#32443a] text-sm px-2! py-1! rounded-sm flex items-center gap-1 cursor-pointer">
           <RiRefreshLine />
           生成提示词
         </div>
@@ -50,13 +50,13 @@ export const GeneratePicToVideo: React.FC = () => {
                   />
                   <div className="absolute top-1 left-1 right-1  group-hover:block">
                     <div className="flex items-center  justify-end">
-                      <ImagePreview
-                        images={["https://picsum.photos/1270/720?random=6"]}
+                      <MediaPreview
+                        urls={["https://picsum.photos/1270/720?random=6"]}
                       >
                         <div className="w-6 h-6 bg-black/70 hover:opacity-80 cursor-pointer rounded-sm flex items-center justify-center border border-white/20">
                           <AiOutlineArrowsAlt style={{ fontSize: "17px" }} />
                         </div>
-                      </ImagePreview>
+                      </MediaPreview>
                       <div className="w-6 h-6 bg-black/70 hover:opacity-80 cursor-pointer mx-2! rounded-sm flex items-center justify-center border border-white/20">
                         <BiTransfer style={{ fontSize: "15px" }} />
                       </div>
@@ -145,7 +145,7 @@ export const GeneratePicToVideo: React.FC = () => {
       <div className="flex items-center gap-2">
         <PropsSelectVideo />
       </div>
-      <div className="h-14 rounded-xl w-full cursor-pointer hover:opacity-90 bg-[linear-gradient(135deg,var(--secondary-color),var(--primary-color))] text-white flex items-center justify-center">
+      <div className="h-14 rounded-xl w-full cursor-pointer hover:opacity-90 bg-[linear-gradient(to_right_bottom,#6deafb,#66aef7)] text-black flex items-center justify-center">
         <RiAiGenerate style={{ fontSize: 20 }} />
         <div className="mx-2!">开始生视频</div>
         <span>消耗</span>

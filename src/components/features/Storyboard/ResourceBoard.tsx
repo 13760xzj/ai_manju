@@ -1,23 +1,29 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import ToggleButton from "./ToggleButton";
 import { FiUpload } from "react-icons/fi";
 import { GrDocumentUpload } from "react-icons/gr";
 import { Spin } from "antd";
 
 export interface ResourceBoardProps<T = object> {
-  layoutType: "list" | "card";
+  layoutType?: "list" | "card";
   index: number | null;
   onSelect: (index: number) => void;
   loading?: boolean;
   data: T[];
-  buildListItem: (args: { item: T; index: number; selected: boolean }) => React.ReactNode;
-  buildCardItem: (args: { item: T; index: number; selected: boolean }) => React.ReactNode;
+  buildListItem: (item: {
+    item: T;
+    index: number;
+    selected: number;
+  }) => React.ReactNode;
+  buildCardItem: (item: {
+    item: T;
+    index: number;
+    selected: number;
+  }) => React.ReactNode;
   dataChange?: (data: T[]) => void;
-  onLocalUpload?: () => Promise<T[] | T | null> | T[] | T | null;
-  onImportFromLibrary?: () => Promise<T[] | T | null> | T[] | T | null;
 }
 
-export default function ResourceBoard<T>({
+const ResourceBoard: React.FC<ResourceBoardProps> = ({
   layoutType = "list",
   index = null,
   onSelect,
@@ -26,30 +32,15 @@ export default function ResourceBoard<T>({
   buildCardItem,
   dataChange,
   data = [],
-  onLocalUpload,
-  onImportFromLibrary,
-}: ResourceBoardProps<T>) {
-  const [type, setType] = useState<ResourceBoardProps<T>["layoutType"]>(
-    layoutType,
-  );
+}) => {
+  const [type, setType] = useState(layoutType);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(index);
-  const [list, setList] = useState<T[]>(data);
+
+  const [list, setList] = useState<Array<object>>(data);
 
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
   const rightRefs = useRef<(HTMLDivElement | null)[]>([]);
   const leftContainerRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    setType(layoutType);
-  }, [layoutType]);
-
-  useEffect(() => {
-    setSelectedIndex(index);
-  }, [index]);
-
-  useEffect(() => {
-    setList(data);
-  }, [data]);
 
   /**
    * 点击左侧
@@ -77,27 +68,17 @@ export default function ResourceBoard<T>({
     });
   }
 
-  async function applyDataResult(result: T[] | T | null | undefined) {
-    if (result == null) return;
-    const next = Array.isArray(result) ? result : [...list, result];
-    setList(next);
-    dataChange?.(next);
+  function updateData() {
+    // 处理上传图片逻辑
+    const newData = [...list, list.length + 1];
+    setList(newData);
+    dataChange?.(newData);
     setTimeout(() => {
       leftContainerRef.current?.scrollTo({
         top: leftContainerRef.current.scrollHeight,
         behavior: "smooth",
       });
     }, 100);
-  }
-
-  async function handleLocalUpload() {
-    const result = await onLocalUpload?.();
-    await applyDataResult(result);
-  }
-
-  async function handleImportFromLibrary() {
-    const result = await onImportFromLibrary?.();
-    await applyDataResult(result);
   }
 
   if (loading) {
@@ -117,17 +98,14 @@ export default function ResourceBoard<T>({
 
           <div className="flex gap-2">
             <div
-              onClick={handleLocalUpload}
+              onClick={updateData}
               className="border border-white/30 rounded-md px-4! py-1! text-sm cursor-pointer flex items-center gap-1"
             >
               <FiUpload />
               本地图片上传
             </div>
 
-            <div
-              onClick={handleImportFromLibrary}
-              className="border border-white/30 rounded-md px-4! py-1! text-sm cursor-pointer flex items-center gap-1"
-            >
+            <div className="border border-white/30 rounded-md px-4! py-1! text-sm cursor-pointer flex items-center gap-1">
               <GrDocumentUpload />
               资源库导入图片
             </div>
@@ -142,9 +120,7 @@ export default function ResourceBoard<T>({
             {list.map((item, index) => (
               <div
                 key={index}
-                ref={(el) => {
-                  itemRefs.current[index] = el;
-                }}
+                ref={(el) => (itemRefs.current[index] = el)}
                 onClick={() => handleLeftClick(index)}
                 className="cursor-pointer box-border transition-all duration-500 mb-4! rounded-xl"
               >
@@ -152,7 +128,7 @@ export default function ResourceBoard<T>({
                   buildListItem({
                     item,
                     index,
-                    selected: selectedIndex === index,
+                    selected: selectedIndex === index ? 1 : 0,
                   })}
               </div>
             ))}
@@ -166,9 +142,7 @@ export default function ResourceBoard<T>({
             {list.map((item, index) => (
               <div
                 key={index}
-                ref={(el) => {
-                  itemRefs.current[index] = el;
-                }}
+                ref={(el) => (itemRefs.current[index] = el)}
                 onClick={() => handleLeftClick(index)}
                 className="cursor-pointer box-border transition-all duration-500 rounded-xl"
               >
@@ -176,7 +150,7 @@ export default function ResourceBoard<T>({
                   buildCardItem({
                     item,
                     index,
-                    selected: selectedIndex === index,
+                    selected: selectedIndex === index ? 1 : 0,
                   })}
               </div>
             ))}
@@ -187,12 +161,10 @@ export default function ResourceBoard<T>({
       {/* 右侧 */}
       {type === "list" && (
         <div className="w-25 h-full overflow-y-auto flex flex-col gap-2 p-1! box-border">
-          {list.map((_item, index) => (
+          {list.map((item, index) => (
             <div
               key={index}
-              ref={(el) => {
-                rightRefs.current[index] = el;
-              }}
+              ref={(el) => (rightRefs.current[index] = el)}
               onClick={() => handleRightClick(index)}
               className="h-20 shrink-0 bg-[#292b2d] rounded-md select-none flex items-center justify-center cursor-pointer transition-all duration-500"
               style={{
@@ -202,11 +174,13 @@ export default function ResourceBoard<T>({
                     : "2px solid transparent",
               }}
             >
-              {String(index + 1)}
+              {index}
             </div>
           ))}
         </div>
       )}
     </div>
   );
-}
+};
+
+export default ResourceBoard;

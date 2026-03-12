@@ -1,5 +1,10 @@
 import { Button, MarkdownPreview } from "@/components/common";
-import { ResourceSelect } from "@/components/features";
+import {
+  ResourceSelect,
+  StoryboardTool,
+  StoryboardScript,
+  StoryboardVideo,
+} from "@/components/features";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import "./index.css";
@@ -55,15 +60,27 @@ export function CasePage() {
         </div>
       </div>
 
-      <MarkdownPreview
+      {/* <MarkdownPreview
         visible={isPreviewOpen}
         title="我的第一动漫.md"
         // editable={true}
         onCancel={() => setIsPreviewOpen(false)}
         content={markdownContent}
-      />
+      /> */}
 
-      {/* <ResourceSelect
+      <ResourceSelect
+        visible={isPreviewOpen}
+        onCancel={() => setIsPreviewOpen(false)}
+      />
+      {/* <StoryboardTool
+        visible={isPreviewOpen}
+        onCancel={() => setIsPreviewOpen(false)}
+      /> */}
+      {/* <StoryboardVideo
+        visible={isPreviewOpen}
+        onCancel={() => setIsPreviewOpen(false)}
+      /> */}
+      {/* <StoryboardScript
         visible={isPreviewOpen}
         onCancel={() => setIsPreviewOpen(false)}
       /> */}

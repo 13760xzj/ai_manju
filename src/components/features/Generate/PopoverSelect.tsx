@@ -1,21 +1,24 @@
 import React, { useState } from "react";
 import { Popover } from "antd";
-import { MdOutlineKeyboardArrowDown } from "react-icons/md";
+import { MdKeyboardArrowRight } from "react-icons/md";
+import { RiCheckboxCircleFill } from "react-icons/ri";
 
-interface PopoverSelectOption {
+export interface PopoverOption {
   label: string;
   value: string | number;
+  desc?: string;
+  cost?: string;
   image?: string;
 }
 
-interface PopoverSelectProps {
-  title: string;
+interface Props {
+  title?: string;
   value?: string | number;
-  options: PopoverSelectOption[];
-  onChange?: (item: PopoverSelectOption) => void;
+  options: PopoverOption[];
+  onChange?: (item: PopoverOption) => void;
 }
 
-const PopoverSelect: React.FC<PopoverSelectProps> = ({
+const PopoverSelect: React.FC<Props> = ({
   title,
   value,
   options,
@@ -23,66 +26,71 @@ const PopoverSelect: React.FC<PopoverSelectProps> = ({
 }) => {
   const [open, setOpen] = useState(false);
 
-  const selectedOption = options.find((item) => item.value === value);
+  const current = options.find((i) => i.value === value);
 
-  const handleSelect = (item: PopoverSelectOption) => {
+  const handleSelect = (item: PopoverOption) => {
     onChange?.(item);
     setOpen(false);
   };
 
   return (
-    <Popover
-      open={open}
-      onOpenChange={setOpen}
-      trigger="click"
-      placement="bottom"
-      arrow={false}
-      overlayClassName="popover-select-overlay"
-      content={
-        <div className="bg-[#2f3032] rounded-md p-2! min-w-[200px] max-h-[300px] overflow-y-auto">
-          <div className="text-xs text-white/50 mb-2!">{title}</div>
-          <div className="flex flex-col gap-1">
-            {options.map((item) => (
-              <div
-                key={item.value}
-                onClick={() => handleSelect(item)}
-                className={`flex items-center gap-2 p-2! rounded-md cursor-pointer hover:bg-white/10 ${
-                  selectedOption?.value === item.value ? "bg-white/10" : ""
-                }`}
-              >
-                {item.image && (
-                  <img
-                    src={item.image}
-                    alt={item.label}
-                    className="w-10 h-10 rounded object-cover"
-                  />
-                )}
-                <span className="text-sm text-white/90">{item.label}</span>
-              </div>
-            ))}
+    <div className="h-full overflow-y-auto">
+      {title && <div className="text-[13px]">{title}</div>}
+
+      <Popover
+        trigger="click"
+        placement="right"
+        arrow={false}
+        open={open}
+        overlayClassName="custom-popover"
+        onOpenChange={setOpen}
+        content={
+          <div className="bg-[#2f3032] rounded-md shadow-3xl">
+            <div className="text-xs text-white/90 flex flex-wrap gap-2 max-w-108 max-h-100 overflow-y-auto p-2!">
+              {options.map((item) => {
+                const selected = item.value === value;
+
+                return (
+                  <div
+                    key={item.value}
+                    onClick={() => handleSelect(item)}
+                    className={`flex items-center justify-between gap-2 p-2! rounded-md cursor-pointer transition
+                    ${selected ? "bg-[#444547]" : "hover:bg-[#444547]"}`}
+                  >
+                    <div className="w-20 overflow-hidden flex flex-col items-center gap-2 relative">
+                      {item.image && (
+                        <img
+                          src={item.image}
+                          className="w-20 h-20  object-cover rounded-md"
+                          style={{
+                            border: selected ? "2px solid #526bef" : "none",
+                          }}
+                        />
+                      )}
+                      <div className="absolute right-1 top-1">
+                        {selected && (
+                          <RiCheckboxCircleFill className="text-green-400 text-xl bg-white rounded-full" />
+                        )}
+                      </div>
+                      <div className="text-sm w-full font-bold text-ellipsis line-clamp-1 text-center">
+                        <span>{item.label}</span>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
-        </div>
-      }
-    >
-      <div className="flex items-center justify-between p-2! bg-white/5 rounded-md cursor-pointer hover:bg-white/10">
-        <div className="flex items-center gap-2">
-          {selectedOption?.image && (
-            <img
-              src={selectedOption.image}
-              alt={selectedOption.label}
-              className="w-6 h-6 rounded object-cover"
-            />
-          )}
-          <span className="text-sm text-white/90">
-            {selectedOption ? selectedOption.label : title}
+        }
+      >
+        <div className="h-8 px-2! mt-1! bg-[#181819] hover:opacity-80 cursor-pointer rounded-md flex items-center justify-between border border-[#38447c]">
+          <span className="text-[13px] flex-1 text-ellipsis line-clamp-1">
+            {current?.label || "请选择"}
           </span>
+          <MdKeyboardArrowRight />
         </div>
-        <MdOutlineKeyboardArrowDown
-          style={{ fontSize: "16px", color: "white/50" }}
-          className={`transition-transform ${open ? "rotate-180" : ""}`}
-        />
-      </div>
-    </Popover>
+      </Popover>
+    </div>
   );
 };
 

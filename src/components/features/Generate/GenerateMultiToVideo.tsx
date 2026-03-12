@@ -13,7 +13,7 @@ export const GenerateMultiToVideo: React.FC = () => {
   const [content, setContent] = useState("");
   const [framing, setFraming] = useState("");
 
-  const options = new Array(15).fill(0).map((_v, i) => ({
+  const options = new Array(15).fill(0).map((v, i) => ({
     label: "构图" + (i + 1),
     value: i + "",
     image: `https://picsum.photos/120/70?random=${i}`,
@@ -21,12 +21,12 @@ export const GenerateMultiToVideo: React.FC = () => {
 
   return (
     <div className="h-full overflow-hidden flex flex-col gap-4">
-      <div className="bg-[var(--panel-1)] border border-[var(--border-light)] p-1! rounded-sm backdrop-blur-sm flex items-center justify-between">
-        <div className="flex items-center gap-2 text-[var(--text-strong)]">
+      <div className="bg-[#203429] p-1! rounded-sm flex items-center justify-between">
+        <div className="flex items-center gap-2 text-white">
           <IoDocumentTextSharp />
-          <span className="text-sm text-[var(--text-weak)]">@分镜脚本1：分镜1-1</span>
+          <span className="text-sm">@分镜脚本1：分镜1-1</span>
         </div>
-        <div className="bg-[var(--panel-2)] text-sm px-2! py-1! rounded-sm flex items-center gap-1 cursor-pointer text-[var(--text-weak)] hover:opacity-90">
+        <div className="bg-[#32443a] text-sm px-2! py-1! rounded-sm flex items-center gap-1 cursor-pointer">
           <RiRefreshLine />
           生成提示词
         </div>
@@ -194,7 +194,7 @@ export const GenerateMultiToVideo: React.FC = () => {
                   value={framing}
                   options={options}
                   onChange={(item) => {
-                    setFraming(String(item?.value ?? ""));
+                    console.log("选择了", item);
                   }}
                 />
               </div>
@@ -219,7 +219,7 @@ export const GenerateMultiToVideo: React.FC = () => {
       <div className="flex items-center gap-2">
         <PropsSelectVideo isMulti={true} />
       </div>
-      <div className="h-14 rounded-xl w-full cursor-pointer hover:opacity-90 bg-[linear-gradient(135deg,var(--secondary-color),var(--primary-color))] text-white flex items-center justify-center">
+      <div className="h-14 rounded-xl w-full cursor-pointer hover:opacity-90 bg-[linear-gradient(to_right_bottom,#6deafb,#66aef7)] text-black flex items-center justify-center">
         <RiAiGenerate style={{ fontSize: 20 }} />
         <div className="mx-2!">开始生视频</div>
         <span>消耗</span>

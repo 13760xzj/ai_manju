@@ -10,12 +10,12 @@ export const GeneratePicToPic: React.FC = () => {
   const [content, setContent] = useState("");
   return (
     <div className="h-full overflow-hidden flex flex-col gap-4">
-      <div className="bg-[var(--panel-1)] border border-[var(--border-light)] p-1! rounded-sm backdrop-blur-sm flex items-center justify-between">
-        <div className="flex items-center gap-2 text-[var(--text-strong)]">
+      <div className="bg-[#203429] p-1! rounded-sm flex items-center justify-between">
+        <div className="flex items-center gap-2 text-white">
           <IoDocumentTextSharp />
-          <span className="text-sm text-[var(--text-weak)]">@场景1：食神宗门</span>
+          <span className="text-sm">@场景1：食神宗门</span>
         </div>
-        <div className="bg-[var(--panel-2)] text-sm px-2! py-1! rounded-sm flex items-center gap-1 cursor-pointer text-[var(--text-weak)] hover:opacity-90">
+        <div className="bg-[#32443a] text-sm px-2! py-1! rounded-sm flex items-center gap-1 cursor-pointer">
           <RiRefreshLine />
           生成提示词
         </div>
@@ -63,7 +63,7 @@ export const GeneratePicToPic: React.FC = () => {
       <div className="flex items-center gap-2">
         <PropsSelect />
       </div>
-      <div className="h-14 rounded-xl w-full cursor-pointer hover:opacity-90 bg-[linear-gradient(135deg,var(--secondary-color),var(--primary-color))] text-white flex items-center justify-center">
+      <div className="h-14 rounded-xl w-full cursor-pointer hover:opacity-90 bg-[linear-gradient(to_right_bottom,#6deafb,#66aef7)] text-black flex items-center justify-center">
         <RiAiGenerate style={{ fontSize: 20 }} />
         <div className="mx-2!">开始生图</div>
         <span>消耗</span>

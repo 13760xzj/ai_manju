@@ -4,10 +4,10 @@ import { Popover } from "antd";
 import "./components.css";
 import { AiOutlineArrowsAlt } from "react-icons/ai";
 import { RiDownloadLine } from "react-icons/ri";
-import { ImagePreview } from "@/components/common";
+import { MediaPreview } from "@/components/common";
 
 export interface PicListItemProps {
-  item: { index: number; selected?: boolean };
+  item: object;
   generateThreeBtn?: boolean;
   isVideo?: boolean;
 }
@@ -46,11 +46,11 @@ export const PicListItem: React.FC<PicListItemProps> = ({
           }}
         />
         <div className="absolute right-3 top-3 flex items-center gap-1 justify-end">
-          <ImagePreview images={["https://picsum.photos/id/1015/800/600"]}>
+          <MediaPreview urls={["https://picsum.photos/id/1015/800/600"]}>
             <div className="w-6 h-6 bg-black/60 hover:opacity-80 cursor-pointer rounded-md flex items-center justify-center border border-white/60">
               <AiOutlineArrowsAlt style={{ fontSize: "16px" }} />
             </div>
-          </ImagePreview>
+          </MediaPreview>
 
           <div className="w-6 h-6 bg-black/60 hover:opacity-80 cursor-pointer rounded-md flex items-center justify-center border border-white/60">
             <RiDownloadLine style={{ fontSize: "16px" }} />

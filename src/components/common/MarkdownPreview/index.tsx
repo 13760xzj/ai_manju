@@ -1,7 +1,5 @@
-import { RiDownloadLine } from "react-icons/ri";
 import { FiCopy } from "react-icons/fi";
 import { useCopy } from "@/hooks/useCopy";
-import { useDownload } from "@/hooks/useDownload";
 import { ContentModal } from "../ContentModal";
 
 import React, { useRef, useState } from "react";
@@ -14,6 +12,7 @@ import TurndownService from "turndown";
 import { RiArrowGoBackFill } from "react-icons/ri";
 import { GrClearOption } from "react-icons/gr";
 import { MdDriveFolderUpload, MdHistory } from "react-icons/md";
+import { CommonDownload } from "../CommonDownload";
 
 interface MarkdownViewProps {
   initialValue?: string;
@@ -212,7 +211,6 @@ export const MarkdownPreview: React.FC<MarkdownPreviewProps> = ({
   editable,
 }) => {
   const { copyText } = useCopy();
-  const { downloadFile } = useDownload();
   return (
     <ContentModal
       visible={visible}
@@ -220,11 +218,8 @@ export const MarkdownPreview: React.FC<MarkdownPreviewProps> = ({
       onCancel={onCancel}
       headerRight={
         <div className="flex items-center">
-          <div
-            className="mx-3! cursor-pointer"
-            onClick={() => downloadFile(content, title)}
-          >
-            <RiDownloadLine style={{ fontSize: "18px" }} />
+          <div className="mx-3!">
+            <CommonDownload title={title} content={content} />
           </div>
           <div
             className="mx-3! cursor-pointer"
