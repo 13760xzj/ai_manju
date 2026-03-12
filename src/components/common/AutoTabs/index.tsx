@@ -100,7 +100,7 @@ const AutoTabs: React.FC<Props> = ({
             placement="bottom"
             overlayClassName="custom-popover"
             content={
-              <div className="p-2!">
+              <div className="p-2! max-h-70 overflow-auto hide-scrollbar">
                 {hiddenItems.map((item) => (
                   <div
                     key={item.value}
@@ -137,7 +137,13 @@ const AutoTabs: React.FC<Props> = ({
                 {middleEllipsis(moreLabel)}
               </span>
               <IoMdArrowDropdown
-                style={{ fontSize: "18px" }}
+                style={{
+                  fontSize: "18px",
+                  color:
+                    sliderIndex === items.length - hiddenItems.length
+                      ? "#6be5fb"
+                      : "",
+                }}
                 className={`transition-transform ${open ? "rotate-180" : ""}`}
               />
             </div>

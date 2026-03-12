@@ -1,8 +1,9 @@
-import { Button } from "@/components/common";
+import { Button, MarkdownPreview } from "@/components/common";
 import { ResourceSelect } from "@/components/features";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import "./index.css";
+import { markdownContent } from "@/mocks";
 
 export function CasePage() {
   const navigate = useNavigate();
@@ -54,17 +55,18 @@ export function CasePage() {
         </div>
       </div>
 
-      {/* <MarkdownPreview
+      <MarkdownPreview
         visible={isPreviewOpen}
         title="我的第一动漫.md"
+        // editable={true}
         onCancel={() => setIsPreviewOpen(false)}
         content={markdownContent}
-      /> */}
+      />
 
-      <ResourceSelect
+      {/* <ResourceSelect
         visible={isPreviewOpen}
         onCancel={() => setIsPreviewOpen(false)}
-      />
+      /> */}
     </div>
   );
 }
