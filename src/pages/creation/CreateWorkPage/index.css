@@ -7,7 +7,7 @@
 .create-work-mask {
   position: fixed;
   inset: 0;
-  background: rgba(15, 23, 42, 0.12);
+  background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(3px);
   -webkit-backdrop-filter: blur(3px);
   border: 0;
@@ -25,6 +25,7 @@
   border: 1px solid rgba(15, 23, 42, 0.08);
   padding: 36px 28px 28px;
   color: var(--text-color);
+  background: var(--bg-white);
 }
 
 .create-work-close {
@@ -120,6 +121,7 @@
   margin-top: 18px;
   border-radius: 14px;
   padding: 16px 16px 14px;
+  border: 1px dashed var(--border-color);
   background:
     radial-gradient(
       1200px 160px at 22% 110%,
