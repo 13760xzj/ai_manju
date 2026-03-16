@@ -96,7 +96,6 @@ export const ResourceSelect: React.FC<ResourceSelectProps> = ({
           <HorizontalScroll
             gap={8}
             buttonPosition="split"
-            markColor="#fff"
             data={new Array(50).fill(0).map((_, i) => ({
               id: i,
               name: `食神宗山门-林小当苏醒与魔云宗逼迫_副本`,

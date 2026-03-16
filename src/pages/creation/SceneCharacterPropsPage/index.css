@@ -52,7 +52,6 @@
   border-radius: 12px;
   border: 1px solid var(--border-light);
   box-shadow: 0 1px 1px rgba(15, 23, 42, 0.04);
-  margin-bottom: 2px;
 }
 
 .scene-character-props-page .segmented-tabs {
@@ -153,7 +152,7 @@
   align-items: center;
   margin-bottom: 8px;
   padding-bottom: 8px;
-  border-bottom: 1px solid var(--border-light);
+  border-bottom: 1px dashed var(--border-color);
 }
 
 .props-title {
