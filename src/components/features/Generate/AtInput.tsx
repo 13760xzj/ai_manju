@@ -218,27 +218,22 @@ const AtInput = forwardRef<AtInputRef, Props>(
       const node = range.startContainer;
       const offset = range.startOffset;
 
-      let textNode: Text | null = null;
+      if (node.nodeType !== Node.TEXT_NODE) return;
 
-      if (node.nodeType === Node.TEXT_NODE) {
-        textNode = node as Text;
-      } else if (node.nodeType === Node.ELEMENT_NODE) {
-        const child = node.childNodes[offset - 1];
-        if (child && child.nodeType === Node.TEXT_NODE) {
-          textNode = child as Text;
-        }
-      }
+      const textNode = node as Text;
+      const text = textNode.data.slice(0, offset);
 
-      if (textNode) {
-        const text = textNode.data;
+      // 找最近的 @
+      const atIndex = text.lastIndexOf("@");
+      if (atIndex === -1) return;
 
-        if (text.endsWith("@")) {
-          textNode.deleteData(text.length - 1, 1);
+      // 删除 @ 到光标之间的内容
+      const deleteLength = offset - atIndex;
 
-          range.setStart(textNode, text.length - 1);
-          range.collapse(true);
-        }
-      }
+      textNode.deleteData(atIndex, deleteLength);
+
+      range.setStart(textNode, atIndex);
+      range.collapse(true);
     }
 
     // ===== 插入 mention =====
@@ -257,17 +252,27 @@ const AtInput = forwardRef<AtInputRef, Props>(
         mention.contentEditable = "false";
         mention.dataset.value = name;
 
-        oldMention.replaceWith(mention); // ⭐替换
+        // 替换节点
+        oldMention.replaceWith(mention);
+
+        // 确保 range 设置安全
+        const sel = window.getSelection();
+        if (!mention.parentNode) {
+          // 如果没有 parentNode，说明节点还没插入到 DOM 中
+          // append 临时 div 后再移动光标
+          const temp = document.createElement("div");
+          temp.appendChild(mention);
+          document.body.appendChild(temp); // 临时挂载
+        }
 
         const range = document.createRange();
         range.setStartAfter(mention);
         range.collapse(true);
 
-        sel.removeAllRanges();
-        sel.addRange(range);
+        sel?.removeAllRanges();
+        sel?.addRange(range);
 
         mentionNodeRef.current = null;
-
         setShow(false);
         setSelected(null);
         callOnChange();
@@ -314,9 +319,11 @@ const AtInput = forwardRef<AtInputRef, Props>(
 
     // ===== 输入事件 =====
     const handleInput = () => {
-      if (isComposingRef.current) return; // ⭐关键
+      if (isComposingRef.current) return;
+
       const editor = editorRef.current;
       if (!editor) return;
+
       setIsEmpty(checkIsEmpty());
       callOnChange();
 
@@ -325,14 +332,80 @@ const AtInput = forwardRef<AtInputRef, Props>(
       const selection = window.getSelection();
       if (!selection || !selection.anchorNode) return;
 
-      const nodeText = selection.anchorNode.textContent || "";
-      if (nodeText.endsWith("@")) {
-        showPopover();
-      } else {
-        setShow(false);
-        setSelected(null);
+      const node = selection.anchorNode;
+      const offset = selection.anchorOffset;
+      if (node.nodeType === Node.TEXT_NODE) {
+        const text = node.textContent || "";
+
+        // ⭐ 判断光标前一个字符
+        console.log("text", offset, text);
+        if (offset > 0 && text[offset - 1] === "@") {
+          showPopover();
+          return;
+        }
       }
+
+      setShow(false);
+      setSelected(null);
     };
+
+    const pendingAtRef = useRef<{
+      node: Text;
+      offset: number;
+    } | null>(null);
+
+    // ===== 监听光标 确保@符号被正确移除 =====
+    useEffect(() => {
+      const handleInputOrSelection = () => {
+        const selection = window.getSelection();
+        if (!selection || selection.rangeCount === 0) return;
+
+        const range = selection.getRangeAt(0);
+
+        // 先处理未选择的 @
+        if (pendingAtRef.current) {
+          const { node, offset } = pendingAtRef.current;
+
+          // 光标不在未完成@的文本节点里或者 offset不在原位置
+          if (
+            range.startContainer !== node ||
+            range.startOffset !== offset + 1
+          ) {
+            // 删除未完成@
+            node.deleteData(offset, 1); // 删除@
+            pendingAtRef.current = null;
+          }
+        }
+
+        // 检查光标前一个字符
+        const preRange = range.cloneRange();
+        if (range.startOffset > 0) {
+          try {
+            preRange.setStart(range.startContainer, range.startOffset - 1);
+            const prevChar = preRange.toString();
+            if (prevChar === "@") {
+              showPopover();
+              // 保存@的位置
+              pendingAtRef.current = {
+                node: range.startContainer as Text,
+                offset: range.startOffset - 1,
+              };
+            } else {
+              setShow(false);
+            }
+          } catch {
+            setShow(false);
+          }
+        } else {
+          setShow(false);
+        }
+      };
+
+      document.addEventListener("selectionchange", handleInputOrSelection);
+      return () => {
+        document.removeEventListener("selectionchange", handleInputOrSelection);
+      };
+    }, []);
 
     // ===== maxlength =====
     const handleBeforeInput = (e: React.FormEvent<HTMLDivElement>) => {
@@ -355,7 +428,6 @@ const AtInput = forwardRef<AtInputRef, Props>(
     // ===== 点击 mention 弹框 =====
     const handleEditorClick = (e: React.MouseEvent) => {
       const target = e.target as HTMLElement;
-
       if (target.classList.contains("mention")) {
         mentionNodeRef.current = target; // ⭐记录
 
@@ -383,7 +455,7 @@ const AtInput = forwardRef<AtInputRef, Props>(
       const node = range.startContainer;
       if (node.nodeType === Node.TEXT_NODE) {
         const text = node.textContent || "";
-        if (text.endsWith("@")) node.textContent = text.slice(0, -1);
+        if (text.indexOf("@") !== -1) node.textContent = text.replace(/@/g, "");
       }
     };
 

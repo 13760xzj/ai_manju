@@ -1,7 +1,7 @@
 .detail-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(15, 23, 42, 0.18);
+  background: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(2px);
   -webkit-backdrop-filter: blur(2px);
   z-index: 999;
@@ -15,7 +15,7 @@
   opacity: 0;
   width: min(560px, calc(100vw - 32px));
   max-height: calc(100vh - 64px);
-  background-color: var(--bg-color);
+  background-color: var(--bg-white);
   box-shadow: 0 20px 80px rgba(15, 23, 42, 0.22);
   border: 1px solid rgba(15, 23, 42, 0.08);
   border-radius: 16px;
