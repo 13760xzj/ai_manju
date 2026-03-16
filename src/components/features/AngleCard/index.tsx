@@ -15,6 +15,7 @@ export interface AngleCardProps {
   onDelete?: () => void;
   previewImages?: string[];
   children?: ReactNode;
+  onClick?: () => void;
 }
 
 export function AngleCard({
@@ -25,6 +26,7 @@ export function AngleCard({
   onDelete,
   previewImages,
   children,
+  onClick,
 }: AngleCardProps) {
   const [showDropdown, setShowDropdown] = useState(false);
   const rootRef = useRef<HTMLDivElement | null>(null);
@@ -116,7 +118,7 @@ export function AngleCard({
         </div>
       </div>
 
-      <div className="angle-card-image">
+      <div className="angle-card-image cursor-pointer" onClick={onClick}>
         {imageUrl ? (
           <img src={imageUrl} alt={title} />
         ) : (
@@ -126,7 +128,10 @@ export function AngleCard({
         )}
       </div>
 
-      <div className="angle-card-actions">
+      <div
+        className="angle-card-actions items-center gap-1!"
+        onClick={(e) => e.stopPropagation()}
+      >
         {images.length > 0 ? (
           <MediaPreview urls={images}>
             <PillActionButton

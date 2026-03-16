@@ -19,11 +19,13 @@ function TopBar<T>({
     <div className="flex items-center w-full h-25">
       {/* 返回按钮 */}
       <button
-        className="bg-[rgba(255,255,255,0.1)] cursor-pointer border border-[rgba(255,255,255,0.1)] rounded-2xl py-1! px-3! flex items-center justify-center mx-4!"
+        className="bg-(--bg-color) cursor-pointer border border-(--text-color)/20 rounded-2xl py-1! px-3! flex items-center justify-center mx-4!"
         onClick={onCancel}
       >
-        <IoChevronBack style={{ width: 14, height: 14, color: "#fff" }} />
-        <span className="ml-1 text-white">返回</span>
+        <IoChevronBack
+          style={{ width: 14, height: 14, color: "var(--text-color)" }}
+        />
+        <span className="ml-1 text-(--text-color)">返回</span>
       </button>
 
       <div className="flex-1 overflow-hidden">

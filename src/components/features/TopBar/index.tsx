@@ -1,5 +1,5 @@
-import { Button } from '@/components/common';
-import './index.css';
+import { Button } from "@/components/common";
+import "./index.css";
 
 export interface TopBarProps {
   projectName?: string;
@@ -24,30 +24,29 @@ export function TopBar({
   onTabChange,
   onRegenerate,
   onNext,
-  regenerateButtonText = '重新生成',
+  regenerateButtonText = "重新生成",
   leftContent,
-  rightContent
+  rightContent,
 }: TopBarProps) {
   return (
     <div className="top-bar">
       <div className="top-bar-left">
-        {leftContent || (
-          projectName && currentStep && (
+        {leftContent ||
+          (projectName && currentStep && (
             <div className="project-info">
               <span className="project-name">{projectName}</span>
               <span className="step-separator">/</span>
               <span className="current-step">{currentStep}</span>
             </div>
-          )
-        )}
+          ))}
       </div>
-      
+
       <div className="top-bar-center">
         <div className="segmented-tabs">
           {tabs.map((tab) => (
             <Button
               key={tab.value}
-              variant={activeTab === tab.value ? 'primary' : 'secondary'}
+              variant={activeTab === tab.value ? "primary" : "secondary"}
               size="small"
               className="segmented-tab"
               onClick={() => onTabChange?.(tab.value)}
@@ -57,24 +56,16 @@ export function TopBar({
           ))}
         </div>
       </div>
-      
+
       <div className="top-bar-right">
         {rightContent || (
           <>
             {stats && <span className="stats-text">{stats}</span>}
             <div className="top-bar-actions">
-              <Button 
-                variant="secondary" 
-                size="small"
-                onClick={onRegenerate}
-              >
+              <Button variant="secondary" size="small" onClick={onRegenerate}>
                 {regenerateButtonText}
               </Button>
-              <Button 
-                variant="primary" 
-                size="small"
-                onClick={onNext}
-              >
+              <Button variant="primary" size="small" onClick={onNext}>
                 下一步
               </Button>
             </div>

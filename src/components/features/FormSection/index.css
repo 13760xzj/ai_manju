@@ -1,5 +1,4 @@
 .form-section {
-  border-bottom: 1px solid #e8e8e8;
   padding: 4px 0;
 }
 
@@ -23,17 +22,17 @@
 .form-section-name {
   font-size: 12px;
   font-weight: 600;
-  color: #333;
+  color: var(--text-color);
 }
 
 .form-section-divider {
-  color: #d0d0d0;
+  color: var(--border-color);
   font-size: 11px;
 }
 
 .form-section-voiceover {
   font-size: 11px;
-  color: #666;
+  color: rgba(var(--text-rgb), 0.7);
 }
 
 .form-section-audition-btn {
@@ -68,7 +67,7 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 16px;
-  max-width: 900px;
+  max-width: 600px;
 }
 
 .form-images .angle-card {

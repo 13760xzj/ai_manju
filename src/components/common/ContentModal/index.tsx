@@ -5,6 +5,7 @@ import { createPortal } from "react-dom";
 interface ModalProps {
   visible: boolean;
   title?: string;
+  subTitle?: string;
   showHeader?: boolean;
   children?: React.ReactNode;
   footer?: React.ReactNode;
@@ -28,6 +29,7 @@ export const ContentModal: React.FC<ModalProps> = ({
   height = "85vh",
   headerCenter,
   isDark,
+  subTitle,
 }) => {
   const [show, setShow] = useState(visible);
   const [animate, setAnimate] = useState(false);
@@ -76,7 +78,7 @@ export const ContentModal: React.FC<ModalProps> = ({
         style={{
           width,
           height,
-          backgroundColor: isDark ? "#0f1115" : "#fff",
+          backgroundColor: "var(--bg-color)",
           borderRadius: 12,
           display: "flex",
           flexDirection: "column",
@@ -84,6 +86,7 @@ export const ContentModal: React.FC<ModalProps> = ({
           opacity: animate ? 1 : 0,
           transition: "all 0.3s ease",
           overflow: "hidden",
+          color: "var(--text-color))",
         }}
         onClick={(e) => e.stopPropagation()} // 阻止点击穿透到遮罩
       >
@@ -94,17 +97,18 @@ export const ContentModal: React.FC<ModalProps> = ({
               display: "flex",
               alignItems: "center",
               padding: "16px 24px",
-              borderBottom: `1px solid ${isDark ? "#282a2c" : "#f0f0f0"}`,
+              borderBottom: `1px solid var(--border-color)`,
               fontWeight: 600,
               fontSize: 16,
               flexShrink: 0,
             }}
           >
-            <span
-              className={`shrink-0 ${isDark ? "text-white" : "text-black"}`}
-            >
-              {title}
-            </span>
+            <div className="flex items-center gap-2 shrink-0">
+              <span className={`text-(--text-color)`}>{title}</span>
+              <span className={`text-xs font-normal text-(--text-color)`}>
+                {subTitle}
+              </span>
+            </div>
             <div className="flex-1 px-4! overflow-hidden">{headerCenter}</div>
             <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
               {headerRight}
@@ -117,7 +121,7 @@ export const ContentModal: React.FC<ModalProps> = ({
                 }}
               >
                 <IoClose
-                  style={{ fontSize: "24px", color: isDark ? "#fff" : "#111" }}
+                  style={{ fontSize: "24px", color: "var(--text-color)" }}
                 />
               </div>
             </div>

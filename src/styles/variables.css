@@ -1,10 +1,10 @@
 :root {
   /* 颜色变量 */
   /* 品牌主色：苏梅（柔粉玫红） */
-  --primary-color: #dd7694;
-  --primary-color-dark: #c35a79;
-  --primary-rgb: 221, 118, 148;
-  --primary-color-rgb: 221, 118, 148;
+  --primary-color: #e9622c;
+  --primary-color-dark: #f5c144;
+  --primary-rgb: 233, 98, 44;
+  --primary-color-rgb: 245, 193, 68;
 
   /* 辅助色：青翠（鲜嫩草绿） */
   --secondary-color: #53b76f;
@@ -24,11 +24,16 @@
   --error-rgb: var(--danger-rgb);
 
   /* 背景色（偏米白纸感） */
-  --bg-color: #f8f5f2;
-  --bg-white: rgba(255, 255, 255, 0.96);
-  --bg-light: #f9f4ef;
+  /* --bg-color: #f8f5f2; */
+  --bg-color: #1c1e20;
+  /* --bg-white: rgba(255, 255, 255, 0.96); */
+  --bg-white: #252729;
+  /* --bg-light: #f9f4ef; */
+  --bg-light: #494b4d;
   --bg-primary-light: rgba(var(--primary-rgb), 0.06);
   --bg-primary-lighter: rgba(var(--primary-rgb), 0.1);
+
+  --hover-bg-color: rgba(var(--primary-rgb), 0.2);
 
   /* 深色面板（用于编辑器/生成页顶部栏等，替换偏绿的深色块） */
   /* 轻面板：清新、克制，不走深色系 */
@@ -37,13 +42,18 @@
   --panel-3: rgba(15, 23, 42, 0.04);
 
   /* 文字颜色 */
-  --text-color: #0f172a; /* slate-900 */
-  --text-secondary: #334155; /* slate-700 */
-  --text-muted: #64748b; /* slate-500 */
+  /* --text-color: #0f172a;  */
+  --text-color: #fff; /* slate-900 */
+  --text-rgb: 255, 255, 255;
+  --text-secondary: rgba(255, 255, 255, 0.7); /* slate-700 */
+  --text-muted: rgba(255, 255, 255, 0.7); /* slate-500 */
+  --text-white: #fff;
 
   /* 边框颜色 */
-  --border-color: rgba(120, 92, 76, 0.22); /* 参考纸张边缘的茶色 */
+  /* --border-color: #dbd4cf;  */
+  --border-color: #4c4c4c;
   --border-light: rgba(120, 92, 76, 0.12);
+  --hover-border-color: rgba(255, 255, 255, 0.3);
 
   /* 阴影 */
   --shadow-sm:
@@ -81,5 +91,5 @@
 
   /* 页面布局 */
   --page-padding: 20px;
-  --page-padding-expanded: 30px;
+  --page-padding-expanded: 10px;
 }

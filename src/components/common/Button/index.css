@@ -55,7 +55,7 @@
 }
 
 .btn-ghost {
-  background-color: transparent;
+  background-color: rgba(var(--text-rgb), 0.2);
   color: var(--text-secondary);
 }
 
@@ -70,8 +70,8 @@
 }
 
 .btn-small {
-  padding: 2px 6px;
-  font-size: 10px;
+  padding: 3px 6px;
+  font-size: 11px;
 }
 
 .btn-medium {
@@ -121,35 +121,35 @@
 }
 
 .btn-dashed {
-  border: 2px dashed #d0d0d0;
-  background: white;
-  color: #666;
+  border: 2px dashed var(--border-color);
+  background: var(--bg-color);
+  color: var(--text-color);
 }
 
 .btn-dashed:hover:not(:disabled) {
   border-color: rgba(var(--primary-rgb), 0.55);
-  color: var(--primary-color);
-  background: var(--bg-primary-light);
+  color: rgba(var(--text-rgb), 0.5);
+  background: var(--bg-light);
 }
 
 /* 主 CTA（例如“我要创作”）：苏梅实底 + 白字 */
 .btn-primary-cta {
   background-color: var(--primary-color);
-  color: #ffffff;
+  color: var(--text-color);
   border-color: transparent;
 }
 
 .btn-primary-cta:hover:not(:disabled) {
   background-color: var(--primary-color-dark);
-  box-shadow: 0 10px 26px rgba(var(--primary-rgb), 0.30);
+  box-shadow: 0 10px 26px rgba(var(--primary-rgb), 0.3);
   transform: translateY(-1px);
 }
 
 /* 功能型按钮（如 AI 生成 / 智能剪辑）：青翠轻描边块 */
 .btn-feature {
-  background-color: rgba(var(--secondary-rgb), 0.10);
+  background-color: rgba(var(--secondary-rgb), 0.1);
   color: rgb(var(--secondary-rgb));
-  border-color: rgba(var(--secondary-rgb), 0.20);
+  border-color: rgba(var(--secondary-rgb), 0.2);
 }
 
 .btn-feature:hover:not(:disabled) {
@@ -182,8 +182,7 @@
 .btn-ghost:disabled,
 .btn-dashed:disabled {
   opacity: 1;
-  background: #f3f4f6;
-  border-color: #e5e7eb;
+  background: rgba(var(--text-rgb), 0.2);
   color: #9ca3af;
   box-shadow: none;
 }

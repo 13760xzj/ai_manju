@@ -24,7 +24,9 @@ export const MediaPreview: React.FC<MediaPreviewProps> = ({
     return urls.length === 1 && isVideo(urls[0]);
   }, [urls]);
 
-  const openPreview = () => {
+  const openPreview = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.nativeEvent.stopImmediatePropagation();
     setCurrent(startIndex);
     setVisible(true);
   };
@@ -32,9 +34,9 @@ export const MediaPreview: React.FC<MediaPreviewProps> = ({
   return (
     <>
       {/* 触发元素 */}
-      <span onClick={openPreview} style={{ cursor: "pointer" }}>
+      <div onClick={openPreview} style={{ cursor: "pointer" }}>
         {children}
-      </span>
+      </div>
 
       {/* 视频预览 */}
       {isVideoPreview && (

@@ -99,13 +99,13 @@ const ResourceBoard: React.FC<ResourceBoardProps> = ({
           <div className="flex gap-2">
             <div
               onClick={updateData}
-              className="border border-white/30 rounded-md px-4! py-1! text-sm cursor-pointer flex items-center gap-1"
+              className="border border-(--text-color)/30 rounded-md px-4! py-1! text-sm cursor-pointer flex items-center gap-1"
             >
               <FiUpload />
               本地图片上传
             </div>
 
-            <div className="border border-white/30 rounded-md px-4! py-1! text-sm cursor-pointer flex items-center gap-1">
+            <div className="border border-(--text-color)/30 rounded-md px-4! py-1! text-sm cursor-pointer flex items-center gap-1">
               <GrDocumentUpload />
               资源库导入图片
             </div>
@@ -166,7 +166,7 @@ const ResourceBoard: React.FC<ResourceBoardProps> = ({
               key={index}
               ref={(el) => (rightRefs.current[index] = el)}
               onClick={() => handleRightClick(index)}
-              className="h-20 shrink-0 bg-[#292b2d] rounded-md select-none flex items-center justify-center cursor-pointer transition-all duration-500"
+              className="h-20 shrink-0 bg-(--text-color)/10 rounded-md select-none flex items-center justify-center cursor-pointer transition-all duration-500"
               style={{
                 border:
                   selectedIndex === index

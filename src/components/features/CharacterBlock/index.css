@@ -1,7 +1,7 @@
 .character-block {
-  background: white;
+  background: var(--bg-white);
   margin-bottom: 12px;
-  border: 1px solid #e8e8e8;
+  border: 1px solid var(--border-color);
   border-radius: 6px;
   padding: 12px;
 }
@@ -12,7 +12,7 @@
   align-items: center;
   margin-bottom: 10px;
   padding-bottom: 8px;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .character-info {
@@ -24,7 +24,7 @@
 .character-title {
   font-size: 13px;
   font-weight: 600;
-  color: #333;
+  color: var(--text-color);
 }
 
 .character-actions {
@@ -40,7 +40,7 @@
 .add-form-footer {
   margin-top: 8px;
   padding-top: 8px;
-  border-top: 1px dashed #e8e8e8;
+  border-top: 1px dashed var(--border-color);
   display: flex;
   justify-content: center;
 }

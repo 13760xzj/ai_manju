@@ -88,7 +88,7 @@
 }
 
 .timeline-section {
-  background: #ffffff;
+  background: var(--bg-white);
   border-radius: 0;
   display: flex;
   flex-direction: column;
@@ -109,11 +109,7 @@
   display: flex;
   height: 40px;
   border-bottom: 1px solid var(--border-color);
-  background: linear-gradient(
-    to bottom,
-    rgba(15, 23, 42, 0.02) 0%,
-    #ffffff 100%
-  );
+  background: var(--bg-white);
 }
 
 .timeline-header-label {
@@ -140,14 +136,13 @@
   width: 100%;
   aspect-ratio: 16/9;
   max-height: calc(100vh - 260px);
-  background: #020617;
+  background: var(--bg-white);
   border-radius: 16px;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
   border: 1px solid #1e293b;
-  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.6);
 }
 
 .video-element {
@@ -176,19 +171,14 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  background: rgba(255, 255, 255, 0.08);
   border: none;
   padding: 0;
 }
 
 .play-button-overlay {
-  width: 96px;
-  height: 96px;
-  background: linear-gradient(
-    135deg,
-    var(--primary-color) 0%,
-    var(--secondary-color) 100%
-  );
+  width: 88px;
+  height: 88px;
+  background: rgba(0, 0, 0, 0.7);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -432,13 +422,13 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  background: #ffffff;
+  background: var(--bg-white);
   padding-bottom: 0;
 }
 
 .timeline-scroll {
   flex: 1;
-  background: #ffffff;
+  background: var(--bg-white);
   padding-bottom: 0;
 }
 
@@ -476,7 +466,7 @@
   top: 4px;
   bottom: auto;
   font-size: 7px;
-  color: rgba(15, 23, 42, 0.7);
+  color: rgba(var(--text-rgbs), 0.7);
   font-weight: 600;
   transform: translateX(-50%);
   white-space: nowrap;
@@ -487,17 +477,17 @@
   position: absolute;
   bottom: 0;
   width: 1px;
-  background-color: rgba(15, 23, 42, 0.12);
+  background-color: rgba(var(--text-rgb), 0.12);
 }
 
 .time-tick.major {
   height: 12px;
-  background-color: rgba(15, 23, 42, 0.28);
+  background-color: rgba(var(--text-rgb), 0.28);
 }
 
 .time-tick.minor {
   height: 6px;
-  background-color: rgba(15, 23, 42, 0.08);
+  background-color: rgba(var(--text-rgb), 0.08);
 }
 
 .timeline-playhead {
@@ -547,7 +537,6 @@
   /* 略微增大视频轨道高度，让分镜视频更明显 */
   height: 80px;
   padding: 8px 10px 8px 0;
-  background: #ffffff;
   position: relative;
   overflow: visible;
 }
@@ -590,7 +579,6 @@
 .track-subtitle {
   /* 字幕轨道高度与音乐轨道一致，让视频在视觉上更突出 */
   height: 30px;
-  background: #ffffff;
   gap: 10px;
   /* 覆盖通用 .track 的左右内边距，使字幕块左侧与 00:00 刻度对齐 */
   padding: 6px 10px 6px 0;
@@ -599,7 +587,6 @@
 .track-music {
   /* 降低音乐轨道整体高度，为视频轨道腾出更多垂直空间 */
   height: 30px;
-  background: #ffffff;
   margin-bottom: 0;
   /* 与上方轨道保持同样的左对齐和右侧间距 */
   padding: 4px 10px 4px 0;
@@ -609,9 +596,9 @@
 .video-clip {
   /* 与上方轨道高度匹配，稍微加高视频块 */
   height: 74px;
-  background: linear-gradient(135deg, #f0f4ff 0%, #e8edff 100%);
+  background: var(--bg-light);
   border-radius: 6px;
-  border: 1px solid rgba(74, 108, 247, 0.3);
+  border: 1px solid var(--border-color);
   position: relative;
   cursor: move;
   transition: all 0.2s ease;
@@ -620,7 +607,6 @@
   justify-content: center;
   overflow: hidden;
   flex-shrink: 0;
-  box-shadow: 0 1px 3px rgba(74, 108, 247, 0.1);
 }
 
 .video-clip:hover {
@@ -690,7 +676,11 @@
 .dubbing-clip {
   height: 22px;
   min-height: 22px;
-  background: linear-gradient(135deg, #4a90e2 0%, #5a9ce8 100%);
+  background: linear-gradient(
+    135deg,
+    var(--bg-primary-dark) 0%,
+    var(--primary-color) 100%
+  );
   border-radius: 4px;
   position: relative;
   cursor: pointer;
@@ -700,7 +690,6 @@
   justify-content: center;
   padding: 0 8px;
   flex-shrink: 0;
-  box-shadow: 0 1px 3px rgba(74, 144, 226, 0.25);
 }
 
 .dubbing-clip:hover {
@@ -709,7 +698,7 @@
 }
 
 .dubbing-clip.no-audio {
-  background: linear-gradient(135deg, #e8e8e8 0%, #f0f0f0 100%);
+  background: var(--bg-light);
   border: 1px dashed var(--border-color);
   color: var(--text-faint);
 }
@@ -732,7 +721,11 @@
   width: 100px;
   /* 与音乐块同高，让下两条轨道保持一致 */
   height: 24px;
-  background: linear-gradient(135deg, #52c41a 0%, #73d13d 100%);
+  background: linear-gradient(
+    to left,
+    var(--primary-color) 0%,
+    var(--primary-color-dark) 100%
+  );
   border-radius: 4px;
   position: relative;
   cursor: pointer;
@@ -761,7 +754,7 @@
 }
 
 .subtitle-clip.no-subtitle {
-  background: linear-gradient(135deg, #e8e8e8 0%, #f0f0f0 100%);
+  background: var(--bg-light);
   border: 1px dashed var(--border-color);
 }
 
@@ -791,7 +784,7 @@
 }
 
 .music-clip.no-music {
-  background: linear-gradient(135deg, #e8e8e8 0%, #f0f0f0 100%);
+  background: var(--bg-light);
   border: 1px dashed var(--border-color);
 }
 

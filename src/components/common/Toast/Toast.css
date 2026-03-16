@@ -15,8 +15,9 @@
   gap: 12px;
   padding: 14px 16px;
   border-radius: 8px;
-  background-color: white;
+  background-color: var(--bg-light);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border: 1px solid var(--border-color);
   animation: slideIn 0.3s ease;
   min-width: 280px;
 }
@@ -41,7 +42,7 @@
 .toast-message {
   flex: 1;
   font-size: 14px;
-  color: #333;
+  color: var(--text-color);
   line-height: 1.4;
 }
 
@@ -49,7 +50,7 @@
   background: none;
   border: none;
   font-size: 20px;
-  color: #999;
+  color: var(--text-color);
   cursor: pointer;
   padding: 0;
   width: 24px;
@@ -63,8 +64,7 @@
 }
 
 .toast-close:hover {
-  background-color: rgba(0, 0, 0, 0.05);
-  color: #333;
+  background-color: rgba(var(--text-rgb), 0.2);
 }
 
 .toast-success {

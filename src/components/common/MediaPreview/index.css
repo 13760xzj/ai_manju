@@ -19,3 +19,6 @@
 .ant-modal-body {
   outline: none !important;
 }
+.ant-image {
+  position: absolute;
+}

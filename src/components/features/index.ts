@@ -17,7 +17,7 @@ export {
   PicCardItem,
   HorizontalScroll,
 } from "./Storyboard";
-export { StoryboardTool } from "./StoryboardTool";
+export { StoryboardAssets } from "./StoryboardAssets/index.tsx";
 export { StoryboardScript } from "./storyboardScript/index.tsx";
 export { StoryboardVideo } from "./storyboardVideo/index.tsx";
 export { ResourceSelect } from "./ResourceSelect";
@@ -31,3 +31,5 @@ export {
   GenerateMultiToVideo,
   FirstLastFrame,
 } from "./Generate";
+export { CameraViewer } from "./CameraViewer";
+export { ParamSelect } from "./ParamSelect";

@@ -1,5 +1,5 @@
 export interface ResourceBase {
-  image: string;
+  image?: string;
   time: string;
   id: string | number;
 }

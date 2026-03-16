@@ -1,7 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/useToast";
-import { Button, ConfirmDialog, IconButton, PillActionButton } from "@/components/common";
+import {
+  Button,
+  ConfirmDialog,
+  ContentModal,
+  IconButton,
+  MarkdownPreview,
+  PillActionButton,
+} from "@/components/common";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { Divider, Tooltip } from "antd";
 import { MdDragIndicator } from "react-icons/md";
@@ -24,6 +31,8 @@ import {
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import "./index.css";
+import { ParamSelect, StoryboardScript } from "@/components/features";
+import { markdownContent } from "@/mocks";
 
 interface StoryboardItem {
   id: number;
@@ -35,6 +44,7 @@ interface StoryboardItem {
 function SortableListCard({
   item,
   onEditImage,
+  onEditScript,
   onCopy,
   onReplaceStoryboardImage,
   onDownloadStoryboardImage,
@@ -46,6 +56,7 @@ function SortableListCard({
   onReplaceStoryboardImage: (id: number) => void;
   onDownloadStoryboardImage: (id: number) => void;
   onDelete: () => void;
+  onEditScript: () => void;
 }) {
   const {
     attributes,
@@ -85,7 +96,7 @@ function SortableListCard({
           <Button variant="info" size="mini">
             配音对口型
           </Button>
-          <Button variant="secondary" size="mini" onClick={onEditImage}>
+          <Button variant="secondary" size="mini" onClick={onEditScript}>
             修改脚本描述
           </Button>
           <Button variant="primary" size="mini" onClick={onEditImage}>
@@ -102,7 +113,10 @@ function SortableListCard({
       <div className="storyboard-grid">
         <div className="storyboard-item">
           <div className="storyboard-label">分镜图片：</div>
-          <div className={`storyboard-image-box ${item.imageUrl ? "has-image" : ""}`}>
+          <div
+            onClick={onEditImage}
+            className={`storyboard-image-box ${item.imageUrl ? "has-image" : ""}`}
+          >
             {item.imageUrl ? (
               <img
                 src={item.imageUrl}
@@ -120,7 +134,9 @@ function SortableListCard({
             <PillActionButton
               type="button"
               disabled={!item.imageUrl}
-              onClick={() => item.imageUrl && window.open(item.imageUrl, "_blank")}
+              onClick={() =>
+                item.imageUrl && window.open(item.imageUrl, "_blank")
+              }
               icon={
                 <svg
                   width="14"
@@ -192,7 +208,11 @@ function SortableListCard({
                 variant={i === 4 ? "dashed" : "secondary"}
                 size="large"
                 className={`ref-tile ${
-                  i === 4 ? "is-add" : item.refImageUrls?.[i - 1] ? "has-image" : ""
+                  i === 4
+                    ? "is-add"
+                    : item.refImageUrls?.[i - 1]
+                      ? "has-image"
+                      : ""
                 }`}
                 aria-label={i === 4 ? "添加参考图" : `参考图 ${i}`}
               >
@@ -202,7 +222,11 @@ function SortableListCard({
                   <img
                     src={item.refImageUrls[i - 1]}
                     alt={`参考图 ${i}`}
-                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                    }}
                   />
                 ) : (
                   <span className="ref-plus">+</span>
@@ -242,11 +266,11 @@ function SortableListCard({
           </div>
         </div>
       </div>
-      <div className="h-5 w-full absolute left-0 translate-y-5! bottom-0 z-10 group">
+      <div className="h-4 w-full absolute left-0 translate-y-4! bottom-0 z-99 group overflow-visible">
         <div className="opacity-0 flex h-full items-center group-hover:opacity-100 pr-5!">
           <Tooltip title="插入空白卡片">
             <IoIosAddCircleOutline
-              className="scale-150"
+              className="scale-150 cursor-pointer"
               style={{ color: "var(--primary-color)", flexShrink: 0 }}
               onClick={() => alert()}
             />
@@ -300,6 +324,22 @@ function SortableCardView({
     setActiveCardMenu(activeCardMenu === index ? null : index);
   };
 
+  useEffect(() => {
+    if (activeCardMenu !== index) return;
+    const onDocMouseDown = (e: MouseEvent) => {
+      const target = e.target;
+      if (!(target instanceof Element)) {
+        setActiveCardMenu(null);
+        return;
+      }
+      if (target.closest(".card-menu-btn") || target.closest(".menu-item"))
+        return;
+      setActiveCardMenu(null);
+    };
+    document.addEventListener("mousedown", onDocMouseDown);
+    return () => document.removeEventListener("mousedown", onDocMouseDown);
+  }, [activeCardMenu, index]);
+
   return (
     <div
       ref={setNodeRef}
@@ -307,11 +347,11 @@ function SortableCardView({
       className="storyboard-card-compact relative"
       {...attributes}
     >
-      <div className="h-full w-5 absolute left-0 -translate-x-5! top-0 z-10 group">
+      <div className="h-full w-3 absolute left-0 -translate-x-3! top-0 z-10 group overflow-visible">
         <div className="opacity-0 flex h-full flex-col items-center group-hover:opacity-100">
           <Tooltip title="插入空白卡片">
             <IoIosAddCircleOutline
-              className="scale-150"
+              className="scale-150 cursor-pointer"
               style={{ color: "var(--primary-color)" }}
               onClick={() => alert()}
             />
@@ -351,20 +391,38 @@ function SortableCardView({
           </IconButton>
           {activeCardMenu === index && (
             <div className="card-menu-dropdown">
-              <Button className="menu-item" variant="secondary" size="small" onClick={onEditImage}>
+              <Button
+                className="menu-item"
+                variant="secondary"
+                size="small"
+                onClick={() => {
+                  setActiveCardMenu(null);
+                  onEditImage();
+                }}
+              >
                 <span>编辑分镜图</span>
               </Button>
-              <Button className="menu-item" variant="secondary" size="small" onClick={onCopy}>
+              <Button
+                className="menu-item"
+                variant="secondary"
+                size="small"
+                onClick={onCopy}
+              >
                 <span>复制分镜</span>
               </Button>
-              <Button className="menu-item delete" variant="danger" size="small" onClick={onDelete}>
+              <Button
+                className="menu-item delete"
+                variant="danger"
+                size="small"
+                onClick={onDelete}
+              >
                 <span>删除分镜</span>
               </Button>
             </div>
           )}
         </div>
       </div>
-      <div className="card-image-container">
+      <div className="card-image-container" onClick={onEditImage}>
         {item.imageUrl ? (
           <img
             src={item.imageUrl}
@@ -385,10 +443,28 @@ export function StoryboardPage() {
   const [viewMode, setViewMode] = useState<"list" | "card">("list");
   const [progressCount] = useState(0);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+  const [paramsPopVisible, setParamsPopVisible] = useState(false);
+  const [editPicture, setEditPicture] = useState(false);
+  const [editScript, setEditScript] = useState(false);
   const [listItems, setListItems] = useState<StoryboardItem[]>([
-    { id: 1, title: "分镜脚本 1：分镜 1-1", imageUrl: undefined, refImageUrls: [] },
-    { id: 2, title: "分镜脚本 2：分镜 1-2", imageUrl: undefined, refImageUrls: [] },
-    { id: 3, title: "分镜脚本 3：分镜 1-3", imageUrl: undefined, refImageUrls: [] },
+    {
+      id: 1,
+      title: "分镜脚本 1：分镜 1-1",
+      imageUrl: undefined,
+      refImageUrls: [],
+    },
+    {
+      id: 2,
+      title: "分镜脚本 2：分镜 1-2",
+      imageUrl: undefined,
+      refImageUrls: [],
+    },
+    {
+      id: 3,
+      title: "分镜脚本 3：分镜 1-3",
+      imageUrl: undefined,
+      refImageUrls: [],
+    },
   ]);
   const [cardItems, setCardItems] = useState<StoryboardItem[]>([
     { id: 1, title: "分镜 1-1" },
@@ -463,7 +539,7 @@ export function StoryboardPage() {
 
   return (
     <div className="storyboard-page">
-      <div className="page-toolbar">
+      <div className="page-toolbar px-3! mb-2! mt-3!">
         <div className="navigation-box ui-toolbar">
           <div className="nav-left">
             <div className="toggle-group">
@@ -496,6 +572,13 @@ export function StoryboardPage() {
           <div className="nav-right">
             <Button
               variant="secondary"
+              size="medium"
+              onClick={() => setParamsPopVisible(true)}
+            >
+              生成参数设置
+            </Button>
+            <Button
+              variant="secondary"
               size="small"
               onClick={handleAddStoryboard}
             >
@@ -517,7 +600,7 @@ export function StoryboardPage() {
           collisionDetection={closestCenter}
           onDragEnd={handleListDragEnd}
         >
-          <div className="list-view-container">
+          <div className="list-view-container px-3!">
             <SortableContext
               items={listItems.map((item) => item.id)}
               strategy={verticalListSortingStrategy}
@@ -526,7 +609,8 @@ export function StoryboardPage() {
                 <SortableListCard
                   key={item.id}
                   item={item}
-                  onEditImage={handleEditImage}
+                  onEditScript={() => setEditScript(true)}
+                  onEditImage={() => setEditPicture(true)}
                   onCopy={handleCopyCard}
                   onReplaceStoryboardImage={() => replaceStoryboardImage()}
                   onDownloadStoryboardImage={() => downloadStoryboardImage()}
@@ -545,7 +629,7 @@ export function StoryboardPage() {
           onDragEnd={handleCardDragEnd}
         >
           <div className="card-view-container active">
-            <div className="card-grid">
+            <div className="card-grid px-4!">
               <SortableContext
                 items={cardItems.map((item) => item.id)}
                 strategy={horizontalListSortingStrategy}
@@ -555,7 +639,7 @@ export function StoryboardPage() {
                     key={item.id}
                     item={item}
                     index={index}
-                    onEditImage={handleEditImage}
+                    onEditImage={() => setEditPicture(true)}
                     onCopy={handleCopyCard}
                     onDelete={handleDeleteCard}
                   />
@@ -587,6 +671,40 @@ export function StoryboardPage() {
         confirmText="确定"
         cancelText="取消"
         variant="warning"
+      />
+
+      <ContentModal
+        visible={paramsPopVisible}
+        onCancel={() => setParamsPopVisible(false)}
+        subTitle="为分镜脚本、分镜图设置生成参数"
+        title="生成设置"
+      >
+        <ParamSelect
+          type="script"
+          onCancel={() => setParamsPopVisible(false)}
+        />
+      </ContentModal>
+
+      <StoryboardScript
+        visible={editPicture}
+        onCancel={() => setEditPicture(false)}
+      />
+
+      <MarkdownPreview
+        visible={editScript}
+        title="我的第一动漫.md"
+        editable={true}
+        headerRight={
+          <div className="flex items-center gap-2">
+            <button
+              className={`px-2! font-normal flex items-center gap-1 py-1! text-xs  bg-(--text-color)/10 rounded cursor-pointer hover:bg-(--text-color)/20`}
+            >
+              <span>保存</span>
+            </button>
+          </div>
+        }
+        onCancel={() => setEditScript(false)}
+        content={markdownContent}
       />
     </div>
   );

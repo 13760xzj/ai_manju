@@ -1,8 +1,8 @@
 .angle-card {
-  background: white;
+  background: var(--bg-color);
   border-radius: 4px;
   overflow: hidden;
-  border: 1px solid #e8e8e8;
+  border: 1px solid var(--border-color);
   transition: all 0.2s ease;
 }
 
@@ -16,14 +16,13 @@
   justify-content: space-between;
   align-items: center;
   padding: 6px 8px;
-  background: #fafafa;
-  border-bottom: 1px solid #e8e8e8;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .angle-card-title {
   font-size: 11px;
   font-weight: 600;
-  color: #333;
+  color: var(--text-color);
 }
 
 .angle-card-menu {
@@ -117,8 +116,7 @@
 
 .angle-card-image {
   width: 100%;
-  aspect-ratio: 4 / 3;
-  background: linear-gradient(135deg, #f8f8f8 0%, #f0f0f0 100%);
+  aspect-ratio: 4 / 2;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -138,7 +136,7 @@
 }
 
 .image-placeholder::before {
-  content: '📷';
+  content: "📷";
   font-size: 24px;
   display: block;
   margin-bottom: 6px;
@@ -149,7 +147,6 @@
   display: flex;
   gap: 0px;
   padding: 6px 8px;
-  background: #fafafa;
-  border-top: 1px solid #e8e8e8;
+  border-top: 1px solid var(--border-color);
   justify-content: center;
 }

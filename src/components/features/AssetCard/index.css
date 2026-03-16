@@ -1,5 +1,5 @@
 .asset-card {
-  background-color: white;
+  background-color: var(--bg-color);
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
@@ -51,7 +51,7 @@
 .asset-name {
   font-size: 15px;
   font-weight: 600;
-  color: #333;
+  color: var(--text-color);
   margin-bottom: 8px;
 }
 
@@ -64,7 +64,7 @@
 
 .tag {
   padding: 3px 10px;
-  background-color: #f0f4ff;
+  background-color: var(--bg-light);
   border-radius: 12px;
   font-size: 11px;
   color: #4a6cf7;

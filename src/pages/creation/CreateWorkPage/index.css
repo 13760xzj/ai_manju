@@ -21,11 +21,10 @@
   transform: translate(-50%, -50%);
   width: min(800px, calc(100vw - 40px));
   border-radius: 16px;
-  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
   box-shadow: 0 20px 80px rgba(15, 23, 42, 0.18);
   border: 1px solid rgba(15, 23, 42, 0.08);
   padding: 36px 28px 28px;
-  color: rgba(15, 23, 42, 0.92);
+  color: var(--text-color);
 }
 
 .create-work-close {
@@ -35,12 +34,14 @@
   width: 36px;
   height: 36px;
   border-radius: 10px;
-  border: 1px solid rgba(15, 23, 42, 0.12) !important;
+  border: 1px solid var(--border-color) !important;
   background: rgba(15, 23, 42, 0.04) !important;
-  color: rgba(15, 23, 42, 0.8);
+  color: var(--text-color);
   font-size: 22px;
-  line-height: 1;
   transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .create-work-close:hover {
@@ -55,13 +56,13 @@
 .create-work-title {
   font-size: 22px;
   font-weight: 700;
-  color: rgba(15, 23, 42, 0.92);
+  color: var(--text-color);
 }
 
 .create-work-subtitle {
   margin-top: 8px;
   font-size: 13px;
-  color: rgba(15, 23, 42, 0.6);
+  color: rgba(var(--text-rgb), 0.7);
 }
 
 .create-work-form {
@@ -71,13 +72,13 @@
 .create-work-label {
   font-size: 14px;
   font-weight: 600;
-  color: rgba(15, 23, 42, 0.9);
+  color: var(--text-color);
   margin-bottom: 10px;
 }
 
 .create-work-label-hint {
   font-weight: 500;
-  color: rgba(15, 23, 42, 0.45);
+  color: rgba(var(--text-rgb), 0.7);
 }
 
 .create-work-input-row {
@@ -88,16 +89,17 @@
   width: 100%;
   height: 48px;
   border-radius: 12px;
-  border: 1px solid rgba(15, 23, 42, 0.12);
-  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid var(--border-color);
+  background: var(--bg-white);
   padding: 0 64px 0 14px;
-  color: rgba(15, 23, 42, 0.92);
+  color: var(--text-color);
   outline: none;
   transition: var(--transition);
 }
 
 .create-work-input::placeholder {
-  color: rgba(15, 23, 42, 0.35);
+  color: rgba(var(--text-rgb), 0.4);
+  font-size: 14px;
 }
 
 .create-work-input:focus {
@@ -111,7 +113,7 @@
   top: 50%;
   transform: translateY(-50%);
   font-size: 12px;
-  color: rgba(15, 23, 42, 0.55);
+  color: rgba(var(--text-rgb), 0.7);
 }
 
 .create-work-steps {
@@ -119,17 +121,24 @@
   border-radius: 14px;
   padding: 16px 16px 14px;
   background:
-    radial-gradient(1200px 160px at 22% 110%, rgba(var(--primary-rgb), 0.20) 0%, rgba(255, 255, 255, 0) 62%),
-    radial-gradient(900px 180px at 86% -10%, rgba(var(--primary-rgb), 0.10) 0%, rgba(255, 255, 255, 0) 62%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.72) 0%, rgba(var(--primary-rgb), 0.06) 100%);
-  border: 1px solid rgba(15, 23, 42, 0.08);
+    radial-gradient(
+      1200px 160px at 22% 110%,
+      rgba(var(--primary-rgb), 0.2) 0%,
+      rgba(255, 255, 255, 0) 62%
+    ),
+    radial-gradient(
+      900px 180px at 86% -10%,
+      rgba(var(--primary-rgb), 0.1) 0%,
+      rgba(255, 255, 255, 0) 62%
+    ),
+    linear-gradient(180deg, var(--bg-color) 0%, var(--bg-white) 100%);
 }
 
 .create-work-steps-title {
   text-align: center;
   font-size: 13px;
   font-weight: 600;
-  color: rgba(15, 23, 42, 0.65);
+  color: var(--text-color);
   margin-bottom: 12px;
 }
 
@@ -165,14 +174,14 @@
 .create-work-step-text {
   font-size: 13px;
   font-weight: 600;
-  color: rgba(15, 23, 42, 0.82);
+  color: rgba(var(--text-rgb), 0.82);
   white-space: nowrap;
 }
 
 .create-work-step-arrow {
   margin-left: 8px;
   font-size: 12px;
-  color: rgba(15, 23, 42, 0.35);
+  color: rgba(var(--text-rgb), 0.35);
 }
 
 .create-work-footer {
@@ -206,4 +215,3 @@
     display: none;
   }
 }
-

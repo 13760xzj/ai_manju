@@ -46,7 +46,7 @@ const PopoverSelect: React.FC<Props> = ({
         onOpenChange={setOpen}
         content={
           <div className="bg-[#2f3032] rounded-md shadow-3xl">
-            <div className="text-xs text-white/90 flex flex-wrap gap-2 max-w-108 max-h-100 overflow-y-auto p-2!">
+            <div className="text-xs text-(--text-color)/90 flex flex-wrap gap-2 max-w-108 max-h-100 overflow-y-auto p-2!">
               {options.map((item) => {
                 const selected = item.value === value;
 
@@ -69,7 +69,7 @@ const PopoverSelect: React.FC<Props> = ({
                       )}
                       <div className="absolute right-1 top-1">
                         {selected && (
-                          <RiCheckboxCircleFill className="text-green-400 text-xl bg-white rounded-full" />
+                          <RiCheckboxCircleFill className="text-green-400 text-xl bg-(--bg-light) rounded-full" />
                         )}
                       </div>
                       <div className="text-sm w-full font-bold text-ellipsis line-clamp-1 text-center">
@@ -83,7 +83,7 @@ const PopoverSelect: React.FC<Props> = ({
           </div>
         }
       >
-        <div className="h-8 px-2! mt-1! bg-[#181819] hover:opacity-80 cursor-pointer rounded-md flex items-center justify-between border border-[#38447c]">
+        <div className="h-8 px-2! mt-1! bg-(--bg-color) hover:opacity-80 cursor-pointer rounded-md flex items-center justify-between border border-(--border-color)">
           <span className="text-[13px] flex-1 text-ellipsis line-clamp-1">
             {current?.label || "请选择"}
           </span>

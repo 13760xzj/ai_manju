@@ -1,10 +1,10 @@
 .pill-action-btn {
   padding: 3px 8px;
   font-size: 11px;
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--border-color);
   border-radius: 10px;
-  background: white;
-  color: #666;
+  background: var(--bg-color);
+  color: var(--text-color);
   cursor: pointer;
   transition: all 0.2s ease;
   font-weight: 500;
@@ -18,8 +18,8 @@
 
 .pill-action-btn:hover:not(:disabled) {
   border-color: #4a6cf7;
-  color: #4a6cf7;
-  background: #f9f9ff;
+  color: rgba(var(--text-rgb), 0.6);
+  background: var(--bg-white);
 }
 
 .pill-action-btn:disabled {
@@ -50,4 +50,3 @@
 .pill-action-text {
   line-height: 1;
 }
-

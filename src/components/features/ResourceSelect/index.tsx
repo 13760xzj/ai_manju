@@ -1,23 +1,25 @@
-import { AtUpload, ContentModal, MediaPreview } from "@/components/common";
+import { AtUpload, ContentModal } from "@/components/common";
 import AutoTabs from "@/components/common/AutoTabs";
 import React, { useState } from "react";
 import { HorizontalScroll } from "@components/features";
 import type { ResourceBase } from "@/types";
-import { ImCheckboxChecked } from "react-icons/im";
-import { AiOutlineArrowsAlt } from "react-icons/ai";
 import { MdOutlineFileUpload } from "react-icons/md";
+import PictureRes from "./PictureRes";
+import DocumentRes from "./DocumentRes";
 
 export interface ResourceSelectProps {
   visible: boolean;
   onCancel: () => void;
   multiple?: boolean;
   onConfirm?: (data: ResourceBase[]) => void;
+  isPicture?: boolean; // 图片资源|文档资源
 }
 export const ResourceSelect: React.FC<ResourceSelectProps> = ({
   visible,
   onCancel,
   multiple = false,
   onConfirm,
+  isPicture = true,
 }) => {
   const items = [
     { label: "素材库", value: 0 },
@@ -83,7 +85,6 @@ export const ResourceSelect: React.FC<ResourceSelectProps> = ({
   return (
     <ContentModal
       visible={visible}
-      isDark={true}
       title="选择场景"
       width="90%"
       height="90vh"
@@ -95,7 +96,7 @@ export const ResourceSelect: React.FC<ResourceSelectProps> = ({
           <HorizontalScroll
             gap={8}
             buttonPosition="split"
-            markColor="#0f1115"
+            markColor="#fff"
             data={new Array(50).fill(0).map((_, i) => ({
               id: i,
               name: `食神宗山门-林小当苏醒与魔云宗逼迫_副本`,
@@ -105,7 +106,7 @@ export const ResourceSelect: React.FC<ResourceSelectProps> = ({
               return (
                 <div
                   onClick={() => setSelectType(index)}
-                  className="h-13 flex items-center justify-center text-xs rounded-md overflow-hidden p-2! box-border bg-[#0f1115] cursor-pointer hover:bg-[#282a2c]"
+                  className="h-13 flex items-center justify-center text-xs rounded-md overflow-hidden p-2! box-border bg-(--text-color)/10 cursor-pointer hover:bg-(--hover-bg-color)"
                   style={{
                     border:
                       index === selectType
@@ -114,7 +115,7 @@ export const ResourceSelect: React.FC<ResourceSelectProps> = ({
                   }}
                 >
                   <span
-                    className={`${index === selectType ? "text-white" : "text-white/50"} line-clamp-2`}
+                    className={`${index === selectType ? "text-(--text-color)" : "text-(--text-color)/50"} line-clamp-2`}
                   >
                     {item.name}
                   </span>
@@ -123,51 +124,37 @@ export const ResourceSelect: React.FC<ResourceSelectProps> = ({
             }}
           />
         </div>
-        <div className="flex-1 w-full grow shrink gap-3 overflow-y-scroll flex justify-start items-start content-start flex-wrap">
-          {resources.map((item, i) => (
-            <div
-              key={i}
-              onClick={() => setSelect(item.id)}
-              className={`flex flex-col border cursor-pointer relative rounded-xl overflow-hidden ${selectResult.includes(item.id) ? "border-(--primary-color)" : "border-[#38447c]"}`}
-            >
-              <img
-                src={item.image}
-                className="w-50 h-30 object-cover"
-                alt="picture"
+        <div className="flex-1 w-full grow shrink gap-4 overflow-y-scroll flex justify-start items-start content-start flex-wrap">
+          {resources.map((item) =>
+            isPicture ? (
+              <PictureRes
+                item={item}
+                onSelect={(id: string | number) => setSelect(id)}
+                active={selectResult.includes(item.id)}
               />
-              <div className="text-xs text-white/50 px-2! py-3!">
-                {item.time}
-              </div>
-              <div className="absolute right-2 top-2 z-2 gap-1 flex items-center justify-end">
-                <MediaPreview urls={[item.image]}>
-                  <div className="w-4 h-4 bg-black/60 hover:opacity-80 cursor-pointer rounded-sm flex items-center justify-center border border-white/30">
-                    <AiOutlineArrowsAlt
-                      style={{ color: "#fff" }}
-                      className="w-full h-full"
-                    />
-                  </div>
-                </MediaPreview>
-                <div className=" w-4 h-4 bg-black rounded-sm overflow-hidden">
-                  {selectResult.includes(item.id) && (
-                    <ImCheckboxChecked
-                      style={{ color: "#84de7b" }}
-                      className="w-full h-full"
-                    />
-                  )}
-                </div>
-              </div>
-            </div>
-          ))}
+            ) : (
+              <DocumentRes
+                item={item}
+                onSelect={(id: string | number) => setSelect(id)}
+                active={selectResult.includes(item.id)}
+              />
+            ),
+          )}
         </div>
         <div className="h-15 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <AtUpload action="//jsonplaceholder.typicode.com/posts/">
-              <div className="px-3! py-1! cursor-pointer flex items-center gap-1 border border-white/20 rounded-md hover:bg-white/10">
+            <AtUpload
+              acceptType={isPicture ? "picture" : "doc"}
+              action="//jsonplaceholder.typicode.com/posts/"
+            >
+              <div className="px-3! py-1! cursor-pointer flex items-center gap-1 border border-(--text-color)/20 rounded-md hover:bg-(--primary-color)/10">
                 <MdOutlineFileUpload style={{ color: "#ffffff66" }} />
-                <div className="text-sm text-white/50">选择本地文件</div>
+                <div className="text-sm text-(--text-color)/70">
+                  选择本地文件
+                </div>
               </div>
             </AtUpload>
-            {/* <div className="px-3! py-1! cursor-pointer flex items-center gap-1 border border-white/20 rounded-md hover:bg-white/10">
+            {/* <div className="px-3! py-1! cursor-pointer flex items-center gap-1 border border-(--text-color)/20 rounded-md hover:bg-(--primary-color)/10">
               <MdDriveFolderUpload style={{ color: "#ffffff66" }} />
               <div className="text-sm text-white/50">导入资产库</div>
             </div> */}
@@ -175,15 +162,15 @@ export const ResourceSelect: React.FC<ResourceSelectProps> = ({
           <div className="flex items-center gap-2">
             <div
               onClick={onCancel}
-              className="px-10! py-1! cursor-pointer flex items-center gap-1 border border-white/20 rounded-md hover:bg-white/10"
+              className="px-10! py-2! cursor-pointer flex items-center gap-1 border border-(--text-color)/20 rounded-md hover:bg-(--primary-color)/10"
             >
-              <div className="text-sm text-white">取消</div>
+              <div className="text-sm text-(--text-color)">取消</div>
             </div>
             <div
               onClick={onConfirmHandler}
-              className={`px-10! py-1! ${selectResult.length === 0 ? "cursor-not-allowed opacity-60" : "cursor-pointer opacity-80 hover:opacity-100"} flex items-center gap-1 border  border-white/20 bg-[linear-gradient(to_right,#7660f6,#5968f0)] rounded-md`}
+              className={`px-10! py-2! ${selectResult.length === 0 ? "cursor-not-allowed opacity-60" : "cursor-pointer opacity-80 hover:opacity-100"} flex items-center gap-1 border  border-(--text-color)/20 bg-[linear-gradient(to_right_bottom,var(--primary-color),var(--primary-color-dark))] rounded-md`}
             >
-              <div className="text-sm text-black">确定</div>
+              <div className="text-sm text-(--text-white)">确定</div>
             </div>
           </div>
         </div>

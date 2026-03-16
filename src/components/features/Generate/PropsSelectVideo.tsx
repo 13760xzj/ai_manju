@@ -70,11 +70,13 @@ export const PropsSelectVideo: React.FC<PropsSelectVideoProps> = ({
             <div className="flex items-center gap-2">
               <img src={option.icon} className="w-10 h-10 rounded-full" />
               <div>
-                <div className="text-md text-white">{option.label}</div>
-                <div className="text-xs text-white/50 my-0.5!">
+                <div className="text-md text-(--text-color)">
+                  {option.label}
+                </div>
+                <div className="text-xs text-(--text-color)/50 my-0.5!">
                   {option.desc}
                 </div>
-                <div className="text-xs text-white">
+                <div className="text-xs text-(--text-color)">
                   {option.dpi} {option.price}
                 </div>
               </div>
@@ -152,7 +154,7 @@ export const PropsSelectVideo: React.FC<PropsSelectVideoProps> = ({
             open={open}
             onOpenChange={handleOpenChange}
             content={
-              <div className="flex w-50 flex-col gap-2 p-2! bg-[#1f1f1f] shadow-3xl rounded-xl border border-[#38447c]">
+              <div className="flex w-50 flex-col gap-2 p-2! bg-(--bg-color) shadow-3xl rounded-xl border border-(--border-color)">
                 <CustomSelect
                   placeholder="选择音效"
                   position={position}
@@ -172,7 +174,7 @@ export const PropsSelectVideo: React.FC<PropsSelectVideoProps> = ({
                     setAudioType(v as number);
                   }}
                 />
-                <div className="h-35 border border-[#38447c] rounded-md p-2! text-white">
+                <div className="h-35 border border-(--border-color) rounded-md p-2! text-(--text-color)">
                   <AtInputArea
                     ref={contentRef}
                     defaultValue={content}
@@ -188,7 +190,7 @@ export const PropsSelectVideo: React.FC<PropsSelectVideoProps> = ({
               </div>
             }
           >
-            <div className="flex w-full items-center justify-between border select_input">
+            <div className="flex w-full items-center justify-between border border-(--text-color)/20 select_input">
               <div className="flex-1 flex items-center gap-2">
                 <span className="flex-1 text-ellipsis line-clamp-1 text-sm">
                   {!audioType

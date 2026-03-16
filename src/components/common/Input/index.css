@@ -8,7 +8,7 @@
 .input-label {
   font-size: 15px;
   font-weight: 500;
-  color: #333;
+  color: rgba(var(--text-rgb), 0.7);
 }
 
 .input-field {

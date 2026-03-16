@@ -1,7 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/useToast";
-import { Button, ConfirmDialog, IconButton } from "@/components/common";
+import {
+  Button,
+  ConfirmDialog,
+  ContentModal,
+  IconButton,
+} from "@/components/common";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { Divider, Tooltip } from "antd";
 import { MdDragIndicator } from "react-icons/md";
@@ -24,6 +29,7 @@ import {
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import "./index.css";
+import { ParamSelect, StoryboardVideo } from "@/components/features";
 
 interface VideoItem {
   id: number;
@@ -94,7 +100,7 @@ function SortableListCard({
         </div>
       </div>
       <div className="storyboard-grid">
-        <div className="storyboard-item">
+        <div className="storyboard-item" onClick={onEdit}>
           <div className="storyboard-label">分镜视频：</div>
           <div className="storyboard-image-box">
             <div style={{ fontSize: "12px", marginTop: "8px" }}>
@@ -113,7 +119,7 @@ function SortableListCard({
         </div>
         <div className="storyboard-item">
           <div className="storyboard-label">图生视频：</div>
-          <div className="storyboard-image-box" style={{ width: "200px", height: "180px" }}>
+          <div className="storyboard-image-box" style={{ width: "200px" }}>
             <span>暂无图片</span>
           </div>
         </div>
@@ -130,11 +136,11 @@ function SortableListCard({
           </div>
         </div>
       </div>
-      <div className="h-5 w-full absolute left-0 translate-y-5! bottom-0 z-10 group">
+      <div className="h-4 w-full absolute left-0 translate-y-4! bottom-0 z-10 group">
         <div className="opacity-0 flex h-full items-center group-hover:opacity-100 pr-5!">
           <Tooltip title="插入空白卡片">
             <IoIosAddCircleOutline
-              className="scale-150"
+              className="scale-150 cursor-pointer"
               style={{ color: "var(--primary-color)", flexShrink: 0 }}
               onClick={() => alert()}
             />
@@ -192,6 +198,25 @@ function SortableCardView({
     );
   };
 
+  useEffect(() => {
+    if (activeDropdown !== `dropdown-${index}`) return;
+    const onDocMouseDown = (e: MouseEvent) => {
+      const target = e.target;
+      if (!(target instanceof Element)) {
+        setActiveDropdown(null);
+        return;
+      }
+      if (
+        target.closest(".video-card-menu-btn") ||
+        target.closest(".video-card-dropdown")
+      )
+        return;
+      setActiveDropdown(null);
+    };
+    document.addEventListener("mousedown", onDocMouseDown);
+    return () => document.removeEventListener("mousedown", onDocMouseDown);
+  }, [activeDropdown, index]);
+
   return (
     <div
       ref={setNodeRef}
@@ -199,11 +224,11 @@ function SortableCardView({
       className="video-card-compact relative"
       {...attributes}
     >
-      <div className="h-full w-5 absolute left-0 -translate-x-5! top-0 z-10 group">
+      <div className="h-full w-3 absolute left-0 -translate-x-3! top-0 z-10 group">
         <div className="opacity-0 flex h-full flex-col items-center group-hover:opacity-100">
           <Tooltip title="插入空白卡片">
             <IoIosAddCircleOutline
-              className="scale-150"
+              className="scale-150 cursor-pointer"
               style={{ color: "var(--primary-color)" }}
               onClick={() => alert()}
             />
@@ -242,24 +267,44 @@ function SortableCardView({
         </IconButton>
         {activeDropdown === `dropdown-${index}` && (
           <div className="video-card-dropdown show top-10! right-2!">
-            <Button className="video-card-dropdown-item" variant="secondary" size="small" onClick={onEdit}>
+            <Button
+              className="video-card-dropdown-item"
+              variant="secondary"
+              size="small"
+              onClick={onEdit}
+            >
               <span>编辑分镜视频</span>
             </Button>
-            <Button className="video-card-dropdown-item" variant="secondary" size="small" onClick={onCopy}>
+            <Button
+              className="video-card-dropdown-item"
+              variant="secondary"
+              size="small"
+              onClick={onCopy}
+            >
               <span>复制分镜</span>
             </Button>
             <div className="video-card-dropdown-divider"></div>
-            <Button className="video-card-dropdown-item danger" variant="danger" size="small" onClick={onDelete}>
+            <Button
+              className="video-card-dropdown-item danger"
+              variant="danger"
+              size="small"
+              onClick={onDelete}
+            >
               <span>删除分镜</span>
             </Button>
             <div className="video-card-dropdown-divider"></div>
-            <Button className="video-card-dropdown-item" variant="secondary" size="small" onClick={onDubbing}>
+            <Button
+              className="video-card-dropdown-item"
+              variant="secondary"
+              size="small"
+              onClick={onDubbing}
+            >
               <span>配音对口型</span>
             </Button>
           </div>
         )}
       </div>
-      <div className="video-card-image-box">
+      <div className="video-card-image-box" onClick={onEdit}>
         <span>点击编辑分镜视频</span>
       </div>
     </div>
@@ -272,6 +317,8 @@ export function StoryboardVideoPage() {
   const [viewMode, setViewMode] = useState<"list" | "card">("list");
   const [progressCount] = useState(0);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+  const [editVideo, setEditVideo] = useState(false);
+  const [paramsPopVisible, setParamsPopVisible] = useState(false);
   const [listItems, setListItems] = useState<VideoItem[]>([
     { id: 1, title: "分镜视频 1：分镜 1-1", subtitle: "分镜 1-1" },
     { id: 2, title: "分镜视频 2：分镜 1-2", subtitle: "分镜 1-2" },
@@ -345,50 +392,57 @@ export function StoryboardVideoPage() {
   };
 
   return (
-    <div
-      className="storyboard-video-page"
-    >
-      <div className="page-toolbar ui-toolbar">
-        <div className="toolbar-left">
-          <div className="toggle-group">
+    <div className="storyboard-video-page">
+      <div className="page-toolbar px-3! mb-2! mt-3!">
+        <div className="navigation-box ui-toolbar">
+          <div className="toolbar-left">
+            <div className="toggle-group">
+              <Button
+                variant={viewMode === "list" ? "primary" : "secondary"}
+                size="small"
+                className={
+                  viewMode === "list" ? "toggle-btn text-white!" : "toggle-btn"
+                }
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setViewMode("list");
+                }}
+              >
+                列表
+              </Button>
+              <Button
+                variant={viewMode === "card" ? "primary" : "secondary"}
+                size="small"
+                className={
+                  viewMode === "card" ? "toggle-btn text-white!" : "toggle-btn"
+                }
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setViewMode("card");
+                }}
+              >
+                卡片
+              </Button>
+            </div>
+            <div className="progress-info">
+              视频完成进度：<span>{progressCount}</span>/16
+            </div>
+          </div>
+          <div className="toolbar-right">
             <Button
-              variant={viewMode === "list" ? "primary" : "secondary"}
-              size="small"
-              className={
-                viewMode === "list" ? "toggle-btn text-white!" : "toggle-btn"
-              }
-              onClick={(e) => {
-                e.stopPropagation();
-                setViewMode("list");
-              }}
+              variant="secondary"
+              size="medium"
+              onClick={() => setParamsPopVisible(true)}
             >
-              列表
+              生成参数设置
             </Button>
-            <Button
-              variant={viewMode === "card" ? "primary" : "secondary"}
-              size="small"
-              className={
-                viewMode === "card" ? "toggle-btn text-white!" : "toggle-btn"
-              }
-              onClick={(e) => {
-                e.stopPropagation();
-                setViewMode("card");
-              }}
-            >
-              卡片
+            <Button variant="secondary" size="small" onClick={handleRegenerate}>
+              重新生成分镜
+            </Button>
+            <Button variant="primary" size="small" onClick={handleNext}>
+              下一步
             </Button>
           </div>
-          <div className="progress-info">
-            视频完成进度：<span>{progressCount}</span>/16
-          </div>
-        </div>
-        <div className="toolbar-right">
-          <Button variant="secondary" size="small" onClick={handleRegenerate}>
-            重新生成分镜
-          </Button>
-          <Button variant="primary" size="small" onClick={handleNext}>
-            下一步
-          </Button>
         </div>
       </div>
 
@@ -398,7 +452,7 @@ export function StoryboardVideoPage() {
           collisionDetection={closestCenter}
           onDragEnd={handleListDragEnd}
         >
-          <div className="list-view-container">
+          <div className="list-view-container px-3!">
             <SortableContext
               items={listItems.map((item) => item.id)}
               strategy={verticalListSortingStrategy}
@@ -407,7 +461,7 @@ export function StoryboardVideoPage() {
                 <SortableListCard
                   key={item.id}
                   item={item}
-                  onEdit={handleEdit}
+                  onEdit={() => setEditVideo(true)}
                   onCopy={handleCopy}
                   onDelete={handleDelete}
                   onDubbing={handleDubbing}
@@ -425,7 +479,7 @@ export function StoryboardVideoPage() {
           onDragEnd={handleCardDragEnd}
         >
           <div className="card-view-container active">
-            <div className="card-grid">
+            <div className="card-grid px-4!">
               <SortableContext
                 items={cardItems.map((item) => item.id)}
                 strategy={horizontalListSortingStrategy}
@@ -435,7 +489,7 @@ export function StoryboardVideoPage() {
                     key={item.id}
                     item={item}
                     index={index}
-                    onEdit={handleEdit}
+                    onEdit={() => setEditVideo(true)}
                     onCopy={handleCopy}
                     onDelete={handleDelete}
                     onDubbing={handleDubbing}
@@ -457,6 +511,20 @@ export function StoryboardVideoPage() {
         cancelText="取消"
         variant="warning"
       />
+
+      <StoryboardVideo
+        visible={editVideo}
+        onCancel={() => setEditVideo(false)}
+      />
+
+      <ContentModal
+        visible={paramsPopVisible}
+        onCancel={() => setParamsPopVisible(false)}
+        subTitle="为分镜脚本、分镜图设置生成参数"
+        title="生成设置"
+      >
+        <ParamSelect type="video" onCancel={() => setParamsPopVisible(false)} />
+      </ContentModal>
     </div>
   );
 }

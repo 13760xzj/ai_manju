@@ -21,7 +21,7 @@ const CardTabs: React.FC<CardTabProps> = ({ tabs, defaultWidth = "120px" }) => {
             key={index}
             onClick={() => setActiveIndex(index)}
             style={{ width: tab.width || defaultWidth }}
-            className={`cursor-pointer tab_item flex-1 p-4! text-center whitespace-nowrap text-ellipsis ${
+            className={`cursor-pointer tab_item flex-1 p-4! text-center  ${
               index === activeIndex ? "tab_item_active" : ""
             }`}
           >
@@ -37,7 +37,7 @@ const CardTabs: React.FC<CardTabProps> = ({ tabs, defaultWidth = "120px" }) => {
       </div>
 
       {/* 内容区域 */}
-      <div className="p-4! rounded-b-lg overflow-hidden bg-[#1c1e20] text-white flex-1 border border-t-0 border-[#38447c]">
+      <div className="p-4! rounded-b-lg overflow-hidden bg-(--bg-color) text-(--text-color) flex-1 border border-t-0 border-(--border-color)">
         {tabs[activeIndex].content}
       </div>
     </div>

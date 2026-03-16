@@ -10,7 +10,8 @@
 }
 
 .dubbing-page .ui-toolbar {
-  padding: 6px 10px;
+  padding: 10px 10px;
+  width: 100%;
 }
 
 .dubbing-page .toolbar-right .btn,
@@ -30,7 +31,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 6px;
   flex-shrink: 0;
 }
 
@@ -80,8 +80,8 @@
 .dubbing-card {
   background-color: var(--surface-1);
   border-radius: var(--border-radius-xl);
-  padding: 18px;
-  margin-bottom: 20px;
+  padding: 12px;
+  margin-bottom: 14px;
   box-shadow: var(--shadow-sm);
   transition: var(--transition);
   border: 1px solid var(--border-light);
@@ -227,13 +227,13 @@
 
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 10px;
   padding: 10px 0;
 }
 
 .dubbing-card-compact {
-  background-color: white;
+  background-color: var(--bg-white);
   border-radius: 12px;
   padding: 16px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);

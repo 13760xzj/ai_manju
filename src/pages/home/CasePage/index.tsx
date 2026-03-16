@@ -1,18 +1,11 @@
-import { Button, MarkdownPreview } from "@/components/common";
-import {
-  ResourceSelect,
-  StoryboardTool,
-  StoryboardScript,
-  StoryboardVideo,
-} from "@/components/features";
+import { Button } from "@/components/common";
+
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+
 import "./index.css";
-import { markdownContent } from "@/mocks";
 
 export function CasePage() {
   const navigate = useNavigate();
-  const [isPreviewOpen, setIsPreviewOpen] = useState(false);
 
   return (
     <div className="case-page">
@@ -34,10 +27,7 @@ export function CasePage() {
           <div className="banner-card card-1">
             <div className="card-content">AI 生成</div>
           </div>
-          <div
-            className="banner-card card-2"
-            onClick={() => setIsPreviewOpen(true)}
-          >
+          <div className="banner-card card-2">
             <div className="card-content">智能剪辑</div>
           </div>
           <div className="banner-card card-3">
@@ -59,31 +49,6 @@ export function CasePage() {
           ))}
         </div>
       </div>
-
-      {/* <MarkdownPreview
-        visible={isPreviewOpen}
-        title="我的第一动漫.md"
-        // editable={true}
-        onCancel={() => setIsPreviewOpen(false)}
-        content={markdownContent}
-      /> */}
-
-      <ResourceSelect
-        visible={isPreviewOpen}
-        onCancel={() => setIsPreviewOpen(false)}
-      />
-      {/* <StoryboardTool
-        visible={isPreviewOpen}
-        onCancel={() => setIsPreviewOpen(false)}
-      /> */}
-      {/* <StoryboardVideo
-        visible={isPreviewOpen}
-        onCancel={() => setIsPreviewOpen(false)}
-      /> */}
-      {/* <StoryboardScript
-        visible={isPreviewOpen}
-        onCancel={() => setIsPreviewOpen(false)}
-      /> */}
     </div>
   );
 }

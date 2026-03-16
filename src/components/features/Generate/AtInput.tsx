@@ -447,7 +447,7 @@ const AtInput = forwardRef<AtInputRef, Props>(
         {show && (
           <div
             ref={popRef}
-            className="shadow-lg border p-2! border-[#38447c] bg-[#1f1f1f] text-white rounded-xl overflow-hidden"
+            className="shadow-lg border p-2! border-(--border-color) bg-(--bg-color) text-(--text-color) rounded-xl overflow-hidden"
             style={{
               position: "fixed",
               zIndex: 2002,
@@ -458,13 +458,15 @@ const AtInput = forwardRef<AtInputRef, Props>(
           >
             {options.length === 0 ? (
               <div className="py-2!">
-                <div className="text-[#b5b5b5] text-xs">{emptyText}</div>
+                <div className="text-(--text-color)/60 text-xs">
+                  {emptyText}
+                </div>
               </div>
             ) : (
               options.map((u, i) => (
                 <div
                   key={i}
-                  className={`px-2! max-w-55 py-1! my-1! cursor-pointer rounded-sm hover:bg-[#333333] gap-2 flex items-center justify-between ${
+                  className={`px-2! max-w-55 py-1! my-1! cursor-pointer rounded-sm hover:bg-(--primary-color)/10 gap-2 flex items-center justify-between ${
                     selected === u ? "bg-[#333333]" : ""
                   }`}
                   onMouseDown={(e) => {

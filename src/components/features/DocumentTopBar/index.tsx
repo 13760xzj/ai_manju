@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { Button } from '@/components/common';
-import './index.css';
+import { useState } from "react";
+import { Button } from "@/components/common";
+import "./index.css";
 
 export interface DocumentTopBarProps {
   title?: string;
@@ -12,12 +12,12 @@ export interface DocumentTopBarProps {
 }
 
 export function DocumentTopBar({
-  title = '未命名剧本',
+  title = "未命名剧本",
   subtitle,
   unsaved = false,
   onSave,
   onNext,
-  onTitleChange
+  onTitleChange,
 }: DocumentTopBarProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [editValue, setEditValue] = useState(title);
@@ -33,10 +33,10 @@ export function DocumentTopBar({
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       setIsEditing(false);
       onTitleChange?.(editValue);
-    } else if (e.key === 'Escape') {
+    } else if (e.key === "Escape") {
       setIsEditing(false);
       setEditValue(title);
     }
@@ -45,11 +45,9 @@ export function DocumentTopBar({
   return (
     <div className="document-top-bar">
       <div className="document-top-bar-left">
-        {unsaved && (
-          <span className="unsaved-indicator">●</span>
-        )}
+        {unsaved && <span className="unsaved-indicator">●</span>}
       </div>
-      
+
       <div className="document-top-bar-center">
         {isEditing ? (
           <input
@@ -69,7 +67,7 @@ export function DocumentTopBar({
         )}
         {subtitle && <span className="document-subtitle">{subtitle}</span>}
       </div>
-      
+
       <div className="document-top-bar-right">
         <div className="document-top-bar-actions">
           {onSave && (

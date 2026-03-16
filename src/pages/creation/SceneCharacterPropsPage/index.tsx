@@ -1,11 +1,28 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useToast } from '@/hooks/useToast';
-import { TopBar, SectionHeader, AngleCard, CharacterBlock, FormSection } from '@/components/features';
-import { Button, CardGrid, Toolbar } from '@/components/common';
-import './index.css';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useToast } from "@/hooks/useToast";
+import {
+  TopBar,
+  SectionHeader,
+  AngleCard,
+  CharacterBlock,
+  FormSection,
+  ParamSelect,
+  ResourceSelect,
+  StoryboardAssets,
+} from "@/components/features";
+import {
+  Button,
+  CardGrid,
+  ContentModal,
+  MarkdownPreview,
+  Toolbar,
+} from "@/components/common";
+import "./index.css";
+import { markdownContent } from "@/mocks";
+import type { AssetType } from "@/constant";
 
-type ActiveTab = 'scene' | 'character' | 'props';
+export type ActiveTab = AssetType;
 
 type ImageView = {
   id: string;
@@ -43,66 +60,88 @@ type PropAsset = {
   }>;
 };
 
-const DEFAULT_SCENE_VIEWS: Array<Omit<ImageView, 'id'>> = [
-  { title: '正面视角' },
-  { title: '反面视角' },
-  { title: '左侧面视角' },
-  { title: '右侧面视角' },
+const DEFAULT_SCENE_VIEWS: Array<Omit<ImageView, "id">> = [
+  { title: "正面视角" },
+  { title: "反面视角" },
+  { title: "左侧面视角" },
+  { title: "右侧面视角" },
 ];
 
-const DEFAULT_CHARACTER_VIEWS: Array<Omit<ImageView, 'id'>> = [
-  { title: '三视图' },
-  { title: '全身照' },
+const DEFAULT_CHARACTER_VIEWS: Array<Omit<ImageView, "id">> = [
+  { title: "三视图" },
+  { title: "全身照" },
 ];
 
 export function SceneCharacterPropsPage() {
   const navigate = useNavigate();
   const toast = useToast();
-  const [activeTab, setActiveTab] = useState<ActiveTab>('scene');
+  const [activeTab, setActiveTab] = useState<ActiveTab>("scene");
+  const [paramsPopVisible, setParamsPopVisible] = useState(false);
+  const [replaceVisible, setReplaceVisible] = useState(false);
+  const [editVisible, setEditVisible] = useState(false);
+  const [updateVisible, setUpdateVisible] = useState(false);
 
   const [scenes, setScenes] = useState<SceneAsset[]>(() => [
     {
-      id: 'scene-1',
-      title: '场景 1',
-      description: '场景描述内容',
-      views: DEFAULT_SCENE_VIEWS.map((v) => ({ id: `scene-1-${v.title}`, title: v.title })),
+      id: "scene-1",
+      title: "场景 1",
+      description: "场景描述内容",
+      views: DEFAULT_SCENE_VIEWS.map((v, i) => ({
+        id: `scene-1-${v.title}`,
+        title: v.title,
+        imageUrl: `https://picsum.photos/1270/720?random=${i}`,
+      })),
     },
   ]);
 
   const [characters, setCharacters] = useState<CharacterAsset[]>(() => [
     {
-      id: 'char-1',
-      name: '角色1: 林柯宇',
+      id: "char-1",
+      name: "角色1: 林柯宇",
       forms: [
         {
-          id: 'char-1-form-1',
-          name: '形态 1: 林柯宇 - 现代装',
-          voiceover: '温柔女声',
-          views: DEFAULT_CHARACTER_VIEWS.map((v) => ({ id: `char-1-form-1-${v.title}`, title: v.title })),
+          id: "char-1-form-1",
+          name: "形态 1: 林柯宇 - 现代装",
+          voiceover: "温柔女声",
+          views: DEFAULT_CHARACTER_VIEWS.map((v, i) => ({
+            id: `char-1-form-1-${v.title}`,
+            title: v.title,
+            imageUrl: `https://picsum.photos/1270/720?random=${i}`,
+          })),
         },
         {
-          id: 'char-1-form-2',
-          name: '形态 2: 林柯宇 - 古装',
-          voiceover: '清冷女声',
-          views: DEFAULT_CHARACTER_VIEWS.map((v) => ({ id: `char-1-form-2-${v.title}`, title: v.title })),
+          id: "char-1-form-2",
+          name: "形态 2: 林柯宇 - 古装",
+          voiceover: "清冷女声",
+          views: DEFAULT_CHARACTER_VIEWS.map((v, i) => ({
+            id: `char-1-form-2-${v.title}`,
+            title: v.title,
+            imageUrl: `https://picsum.photos/1270/720?random=${i}`,
+          })),
         },
       ],
     },
     {
-      id: 'char-2',
-      name: '角色2: 林柯宇',
+      id: "char-2",
+      name: "角色2: 林柯宇",
       forms: [
         {
-          id: 'char-2-form-1',
-          name: '形态 1: 林柯宇 - 现代装',
-          voiceover: '温柔女声',
-          views: DEFAULT_CHARACTER_VIEWS.map((v) => ({ id: `char-2-form-1-${v.title}`, title: v.title })),
+          id: "char-2-form-1",
+          name: "形态 1: 林柯宇 - 现代装",
+          voiceover: "温柔女声",
+          views: DEFAULT_CHARACTER_VIEWS.map((v) => ({
+            id: `char-2-form-1-${v.title}`,
+            title: v.title,
+          })),
         },
         {
-          id: 'char-2-form-2',
-          name: '形态 2: 林柯宇 - 古装',
-          voiceover: '清冷女声',
-          views: DEFAULT_CHARACTER_VIEWS.map((v) => ({ id: `char-2-form-2-${v.title}`, title: v.title })),
+          id: "char-2-form-2",
+          name: "形态 2: 林柯宇 - 古装",
+          voiceover: "清冷女声",
+          views: DEFAULT_CHARACTER_VIEWS.map((v) => ({
+            id: `char-2-form-2-${v.title}`,
+            title: v.title,
+          })),
         },
       ],
     },
@@ -110,24 +149,36 @@ export function SceneCharacterPropsPage() {
 
   const [propsAssets, setPropsAssets] = useState<PropAsset[]>(() => [
     {
-      id: 'prop-1',
-      title: '道具 1',
+      id: "prop-1",
+      title: "道具 1",
       forms: [
         {
-          id: 'prop-1-form-1',
-          name: '形态 1',
-          views: [{ id: 'prop-1-form-1-view-1', title: '道具图' }],
+          id: "prop-1-form-1",
+          name: "形态 1",
+          views: [
+            {
+              id: "prop-1-form-1-view-1",
+              title: "道具图",
+              imageUrl: `https://picsum.photos/1270/720?random=4`,
+            },
+          ],
         },
       ],
     },
     {
-      id: 'prop-2',
-      title: '道具 2',
+      id: "prop-2",
+      title: "道具 2",
       forms: [
         {
-          id: 'prop-2-form-1',
-          name: '形态 1',
-          views: [{ id: 'prop-2-form-1-view-1', title: '道具图' }],
+          id: "prop-2-form-1",
+          name: "形态 1",
+          views: [
+            {
+              id: "prop-2-form-1-view-1",
+              title: "道具图",
+              imageUrl: `https://picsum.photos/1270/720?random=5`,
+            },
+          ],
         },
       ],
     },
@@ -144,19 +195,19 @@ export function SceneCharacterPropsPage() {
   const handleRegenerate = () => toast.info(getRegenerateButtonText());
 
   const handleNext = () => {
-    if (activeTab === 'scene') {
-      setActiveTab('character');
-    } else if (activeTab === 'character') {
-      setActiveTab('props');
+    if (activeTab === "scene") {
+      setActiveTab("character");
+    } else if (activeTab === "character") {
+      setActiveTab("props");
     } else {
-      navigate('/storyboard');
+      navigate("/storyboard");
     }
   };
 
   const getRegenerateButtonText = () => {
-    if (activeTab === 'character') return '重新生成角色图';
-    if (activeTab === 'props') return '重新生成道具图';
-    return '重新生成场景图';
+    if (activeTab === "character") return "重新生成角色图";
+    if (activeTab === "props") return "重新生成道具图";
+    return "重新生成场景图";
   };
 
   const handleAddScene = () => {
@@ -167,16 +218,19 @@ export function SceneCharacterPropsPage() {
       {
         id,
         title: `场景 ${nextIndex}`,
-        description: '场景描述内容',
-        views: DEFAULT_SCENE_VIEWS.map((v) => ({ id: `${id}-${v.title}`, title: v.title })),
+        description: "场景描述内容",
+        views: DEFAULT_SCENE_VIEWS.map((v) => ({
+          id: `${id}-${v.title}`,
+          title: v.title,
+        })),
       },
     ]);
-    toast.success('已添加场景');
+    toast.success("已添加场景");
   };
 
   const handleDeleteScene = (sceneId: string) => {
     setScenes((prev) => prev.filter((s) => s.id !== sceneId));
-    toast.success('已删除场景');
+    toast.success("已删除场景");
   };
 
   const handleAddCharacter = () => {
@@ -190,19 +244,22 @@ export function SceneCharacterPropsPage() {
         forms: [
           {
             id: `${id}-form-1`,
-            name: '形态 1: 新角色 - 默认装',
-            voiceover: '默认配音',
-            views: DEFAULT_CHARACTER_VIEWS.map((v) => ({ id: `${id}-form-1-${v.title}`, title: v.title })),
+            name: "形态 1: 新角色 - 默认装",
+            voiceover: "默认配音",
+            views: DEFAULT_CHARACTER_VIEWS.map((v) => ({
+              id: `${id}-form-1-${v.title}`,
+              title: v.title,
+            })),
           },
         ],
       },
     ]);
-    toast.success('已添加角色');
+    toast.success("已添加角色");
   };
 
   const handleDeleteCharacter = (characterId: string) => {
     setCharacters((prev) => prev.filter((c) => c.id !== characterId));
-    toast.success('已删除角色');
+    toast.success("已删除角色");
   };
 
   const handleAddProp = () => {
@@ -216,18 +273,18 @@ export function SceneCharacterPropsPage() {
         forms: [
           {
             id: `${id}-form-1`,
-            name: '形态 1',
-            views: [{ id: `${id}-form-1-view-1`, title: '道具图' }],
+            name: "形态 1",
+            views: [{ id: `${id}-form-1-view-1`, title: "道具图" }],
           },
         ],
       },
     ]);
-    toast.success('已添加道具');
+    toast.success("已添加道具");
   };
 
   const handleDeleteProp = (propId: string) => {
     setPropsAssets((prev) => prev.filter((p) => p.id !== propId));
-    toast.success('已删除道具');
+    toast.success("已删除道具");
   };
 
   return (
@@ -235,9 +292,9 @@ export function SceneCharacterPropsPage() {
       <div className="scp-topbar">
         <TopBar
           tabs={[
-            { label: '场景', value: 'scene' },
-            { label: '角色', value: 'character' },
-            { label: '道具', value: 'props' }
+            { label: "场景", value: "scene" },
+            { label: "角色", value: "character" },
+            { label: "道具", value: "props" },
           ]}
           activeTab={activeTab}
           onTabChange={(tab) => setActiveTab(tab as ActiveTab)}
@@ -246,7 +303,14 @@ export function SceneCharacterPropsPage() {
           regenerateButtonText={getRegenerateButtonText()}
           stats={undefined}
           rightContent={
-            <div className="top-bar-actions scp-topbar-actions">
+            <div className="top-bar-actions scp-topbar-actions gap-2!">
+              <Button
+                variant="secondary"
+                size="medium"
+                onClick={() => setParamsPopVisible(true)}
+              >
+                生成参数设置
+              </Button>
               <Button
                 variant="secondary"
                 size="medium"
@@ -254,11 +318,7 @@ export function SceneCharacterPropsPage() {
               >
                 {getRegenerateButtonText()}
               </Button>
-              <Button
-                variant="primary"
-                size="medium"
-                onClick={handleNext}
-              >
+              <Button variant="primary" size="medium" onClick={handleNext}>
                 下一步
               </Button>
             </div>
@@ -266,11 +326,15 @@ export function SceneCharacterPropsPage() {
         />
       </div>
 
-      {activeTab === 'scene' && (
+      {activeTab === "scene" && (
         <div className="tab-content">
           <div className="scp-content">
             <Toolbar
-              left={<span className="scene-count-text">场景数：{scenes.length} 项</span>}
+              left={
+                <span className="scene-count-text">
+                  场景数：{scenes.length} 项
+                </span>
+              }
               right={
                 <Button variant="ghost" size="medium" onClick={handleAddScene}>
                   + 添加场景
@@ -285,13 +349,25 @@ export function SceneCharacterPropsPage() {
                   description={scene.description}
                   actions={
                     <>
-                      <Button variant="secondary" size="medium" onClick={() => toast.info('修改场景设定')}>
+                      <Button
+                        variant="secondary"
+                        size="medium"
+                        onClick={() => setUpdateVisible(true)}
+                      >
                         修改场景设定
                       </Button>
-                      <Button variant="secondary" size="medium" onClick={() => toast.info('复制场景')}>
+                      <Button
+                        variant="secondary"
+                        size="medium"
+                        onClick={() => toast.info("复制场景")}
+                      >
                         复制场景
                       </Button>
-                      <Button variant="danger" size="medium" onClick={() => handleDeleteScene(scene.id)}>
+                      <Button
+                        variant="danger"
+                        size="medium"
+                        onClick={() => handleDeleteScene(scene.id)}
+                      >
                         删除场景
                       </Button>
                     </>
@@ -303,9 +379,17 @@ export function SceneCharacterPropsPage() {
                       key={view.id}
                       title={view.title}
                       imageUrl={view.imageUrl}
-                      onReplace={() => toast.info(`替换：${scene.title}-${view.title}`)}
-                      onDownload={() => handleDownload('场景图', `${scene.title}-${view.title}`)}
-                      onDelete={() => handleDelete('场景图', `${scene.title}-${view.title}`)}
+                      onClick={() => setEditVisible(true)}
+                      onReplace={() =>
+                        // toast.info(`替换：${scene.title}-${view.title}`)
+                        setReplaceVisible(true)
+                      }
+                      onDownload={() =>
+                        handleDownload("场景图", `${scene.title}-${view.title}`)
+                      }
+                      onDelete={() =>
+                        handleDelete("场景图", `${scene.title}-${view.title}`)
+                      }
                     />
                   ))}
                 </CardGrid>
@@ -315,13 +399,21 @@ export function SceneCharacterPropsPage() {
         </div>
       )}
 
-      {activeTab === 'character' && (
+      {activeTab === "character" && (
         <div className="tab-content">
           <div className="scp-content">
             <Toolbar
-              left={<span className="character-count-text">角色数：{characters.length} 项</span>}
+              left={
+                <span className="character-count-text">
+                  角色数：{characters.length} 项
+                </span>
+              }
               right={
-                <Button variant="ghost" size="medium" onClick={handleAddCharacter}>
+                <Button
+                  variant="ghost"
+                  size="medium"
+                  onClick={handleAddCharacter}
+                >
                   + 添加角色
                 </Button>
               }
@@ -333,28 +425,44 @@ export function SceneCharacterPropsPage() {
                 characterId={character.id}
                 characterName={character.name}
                 characterCount={character.forms.length}
-                onEditCharacter={() => toast.info('修改角色设定')}
+                onEditCharacter={() => toast.info("修改角色设定")}
                 onDeleteCharacter={() => handleDeleteCharacter(character.id)}
-                onAddForm={() => toast.info('添加形态')}
+                onAddForm={() => toast.info("添加形态")}
               >
                 {character.forms.map((form) => (
                   <FormSection
                     key={form.id}
                     formName={form.name}
                     voiceover={form.voiceover}
-                    onEditFormImage={() => toast.info('编辑形态图')}
-                    onCopyForm={() => toast.info('复制形态')}
-                    onDeleteForm={() => toast.info('删除形态')}
-                    onAudition={() => toast.info('试听配音')}
+                    onEditFormImage={() => toast.info("编辑形态图")}
+                    onCopyForm={() => toast.info("复制形态")}
+                    onDeleteForm={() => toast.info("删除形态")}
+                    onAudition={() => toast.info("试听配音")}
                   >
                     {form.views.map((view) => (
                       <AngleCard
                         key={view.id}
                         title={view.title}
                         imageUrl={view.imageUrl}
-                        onReplace={() => toast.info(`替换：${character.name}-${form.name}-${view.title}`)}
-                        onDownload={() => handleDownload('角色图', `${character.name}-${form.name}-${view.title}`)}
-                        onDelete={() => handleDelete('角色图', `${character.name}-${form.name}-${view.title}`)}
+                        onClick={() => setEditVisible(true)}
+                        onReplace={
+                          () => setReplaceVisible(true)
+                          // toast.info(
+                          //   `替换：${character.name}-${form.name}-${view.title}`,
+                          // )
+                        }
+                        onDownload={() =>
+                          handleDownload(
+                            "角色图",
+                            `${character.name}-${form.name}-${view.title}`,
+                          )
+                        }
+                        onDelete={() =>
+                          handleDelete(
+                            "角色图",
+                            `${character.name}-${form.name}-${view.title}`,
+                          )
+                        }
                       />
                     ))}
                   </FormSection>
@@ -365,11 +473,15 @@ export function SceneCharacterPropsPage() {
         </div>
       )}
 
-      {activeTab === 'props' && (
+      {activeTab === "props" && (
         <div className="tab-content">
           <div className="scp-content">
             <Toolbar
-              left={<span className="props-count-text">道具数：{propsAssets.length} 项</span>}
+              left={
+                <span className="props-count-text">
+                  道具数：{propsAssets.length} 项
+                </span>
+              }
               right={
                 <Button variant="ghost" size="medium" onClick={handleAddProp}>
                   + 添加道具
@@ -382,10 +494,18 @@ export function SceneCharacterPropsPage() {
                 <div className="props-header">
                   <span className="props-title">{prop.title}</span>
                   <div className="props-actions">
-                    <Button variant="secondary" size="medium" onClick={() => toast.info('修改道具设定')}>
+                    <Button
+                      variant="secondary"
+                      size="medium"
+                      onClick={() => toast.info("修改道具设定")}
+                    >
                       修改道具设定
                     </Button>
-                    <Button variant="danger" size="medium" onClick={() => handleDeleteProp(prop.id)}>
+                    <Button
+                      variant="danger"
+                      size="medium"
+                      onClick={() => handleDeleteProp(prop.id)}
+                    >
                       删除道具
                     </Button>
                   </div>
@@ -394,9 +514,9 @@ export function SceneCharacterPropsPage() {
                   <div key={form.id} className="props-form-section">
                     <FormSection
                       formName={form.name}
-                      onEditFormImage={() => toast.info('编辑形态图')}
-                      onCopyForm={() => toast.info('复制形态')}
-                      onDeleteForm={() => toast.info('删除形态')}
+                      onEditFormImage={() => toast.info("编辑形态图")}
+                      onCopyForm={() => toast.info("复制形态")}
+                      onDeleteForm={() => toast.info("删除形态")}
                     >
                       <CardGrid variant="one" maxWidth={520}>
                         {form.views.map((view) => (
@@ -404,15 +524,33 @@ export function SceneCharacterPropsPage() {
                             key={view.id}
                             title={view.title}
                             imageUrl={view.imageUrl}
-                            onReplace={() => toast.info(`替换：${prop.title}-${form.name}`)}
-                            onDownload={() => handleDownload('道具图', `${prop.title}-${form.name}`)}
-                            onDelete={() => handleDelete('道具图', `${prop.title}-${form.name}`)}
+                            onClick={() => setEditVisible(true)}
+                            onReplace={
+                              () => setReplaceVisible(true)
+                              // toast.info(`替换：${prop.title}-${form.name}`)
+                            }
+                            onDownload={() =>
+                              handleDownload(
+                                "道具图",
+                                `${prop.title}-${form.name}`,
+                              )
+                            }
+                            onDelete={() =>
+                              handleDelete(
+                                "道具图",
+                                `${prop.title}-${form.name}`,
+                              )
+                            }
                           />
                         ))}
                       </CardGrid>
                     </FormSection>
                     <div className="add-form-footer">
-                      <Button variant="dashed" size="small" onClick={() => toast.info('添加形态')}>
+                      <Button
+                        variant="dashed"
+                        size="small"
+                        onClick={() => toast.info("添加形态")}
+                      >
                         + 添加形态
                       </Button>
                     </div>
@@ -423,6 +561,53 @@ export function SceneCharacterPropsPage() {
           </div>
         </div>
       )}
+
+      <ContentModal
+        visible={paramsPopVisible}
+        onCancel={() => setParamsPopVisible(false)}
+        subTitle="为场景图设置生成参数"
+        title="生成设置"
+      >
+        <ParamSelect
+          type="assets"
+          onCancel={() => setParamsPopVisible(false)}
+        />
+      </ContentModal>
+
+      <ResourceSelect
+        visible={replaceVisible}
+        // isPicture={false}
+        onCancel={() => setReplaceVisible(false)}
+      />
+
+      <StoryboardAssets
+        visible={editVisible}
+        assetType={activeTab}
+        onCancel={() => setEditVisible(false)}
+      />
+
+      <MarkdownPreview
+        visible={updateVisible}
+        title="我的第一动漫.md"
+        editable={true}
+        headerRight={
+          <div className="flex items-center gap-2 font-normal">
+            <button
+              className={`px-2! flex items-center gap-1 py-1! text-xs  bg-(--text-color)/10 rounded cursor-pointer hover:bg-(--text-color)/20`}
+            >
+              <span>仅保存</span>
+            </button>
+
+            <button
+              className={`px-2! flex items-center gap-1 py-1! text-xs bg-(--text-color)/10 rounded cursor-pointer hover:bg-(--text-color)/20`}
+            >
+              <span>保存并更新</span>
+            </button>
+          </div>
+        }
+        onCancel={() => setUpdateVisible(false)}
+        content={markdownContent}
+      />
     </div>
   );
 }

@@ -23,19 +23,19 @@ export const GeneratePicToVideo: React.FC = () => {
 
   return (
     <div className="h-full overflow-hidden flex flex-col gap-4">
-      <div className="bg-[#203429] p-1! rounded-sm flex items-center justify-between">
-        <div className="flex items-center gap-2 text-white">
+      <div className="bg-(--text-color)/10 p-1! rounded-sm flex items-center justify-between">
+        <div className="flex items-center gap-2 text-(--text-color)">
           <IoDocumentTextSharp />
           <span className="text-sm">@分镜脚本1：分镜1-1</span>
         </div>
-        <div className="bg-[#32443a] text-sm px-2! py-1! rounded-sm flex items-center gap-1 cursor-pointer">
+        <div className="bg-(--text-color)/20 text-sm px-2! py-1! rounded-sm flex items-center gap-1 cursor-pointer">
           <RiRefreshLine />
           生成提示词
         </div>
       </div>
       <div className="flex-1 overflow-hidden">
         <ToggleLayout
-          className="overflow-hidden rounded-xl border border-[#38447c]"
+          className="overflow-hidden rounded-xl border border-(--border-color)"
           areaA={
             <div className="h-full overflow-y-auto flex flex-col gap-3 p-3!">
               <div className="flex items-center gap-2">
@@ -43,24 +43,27 @@ export const GeneratePicToVideo: React.FC = () => {
                 <Switch size="small" defaultChecked />
               </div>
               <div className="flex-1 overflow-y-auto">
-                <div className="w-30 h-20 border border-white/40 overflow-hidden rounded-xl cursor-pointer relative group">
+                <div className="w-30 h-20 border border-(--text-color)/40 overflow-hidden rounded-xl cursor-pointer relative group">
                   <img
                     src={"https://picsum.photos/1270/720?random=6"}
                     className="w-full h-full object-contain hover:scale-125 transition-all duration-300 ease-in-out"
                   />
                   <div className="absolute top-1 left-1 right-1  group-hover:block">
-                    <div className="flex items-center  justify-end">
+                    <div
+                      className="flex items-center  justify-end"
+                      onClick={(e) => e.stopPropagation()}
+                    >
                       <MediaPreview
                         urls={["https://picsum.photos/1270/720?random=6"]}
                       >
-                        <div className="w-6 h-6 bg-black/70 hover:opacity-80 cursor-pointer rounded-sm flex items-center justify-center border border-white/20">
+                        <div className="w-6 h-6 bg-(--text-color)/30 text-(--bg-light) hover:opacity-80 cursor-pointer rounded-sm flex items-center justify-center border border-(--bg-light)/20">
                           <AiOutlineArrowsAlt style={{ fontSize: "17px" }} />
                         </div>
                       </MediaPreview>
-                      <div className="w-6 h-6 bg-black/70 hover:opacity-80 cursor-pointer mx-2! rounded-sm flex items-center justify-center border border-white/20">
+                      <div className="w-6 h-6 bg-(--text-color)/30 text-(--bg-light)  hover:opacity-80 cursor-pointer mx-2! rounded-sm flex items-center justify-center border border-(--bg-light)/20">
                         <BiTransfer style={{ fontSize: "15px" }} />
                       </div>
-                      <div className="w-6 h-6 bg-black/70 hover:opacity-80 cursor-pointer rounded-sm flex items-center justify-center border border-white/20">
+                      <div className="w-6 h-6 bg-(--text-color)/30 text-(--bg-light) hover:opacity-80 cursor-pointer rounded-sm flex items-center justify-center border border-(--bg-light)/20">
                         <RiDeleteBin6Line style={{ fontSize: "15px" }} />
                       </div>
                     </div>
@@ -81,7 +84,7 @@ export const GeneratePicToVideo: React.FC = () => {
                   }}
                 />
               </div>
-              <div className="h-30 shrink-0 p-2! flex flex-col overflow-hidden rounded-xl border border-[#38447c]">
+              <div className="h-30 shrink-0 p-2! flex flex-col overflow-hidden rounded-xl border border-(--border-color)">
                 <AtInputArea
                   fontSize="12px"
                   options={[
@@ -145,7 +148,7 @@ export const GeneratePicToVideo: React.FC = () => {
       <div className="flex items-center gap-2">
         <PropsSelectVideo />
       </div>
-      <div className="h-14 rounded-xl w-full cursor-pointer hover:opacity-90 bg-[linear-gradient(to_right_bottom,#6deafb,#66aef7)] text-black flex items-center justify-center">
+      <div className="h-14 rounded-xl w-full cursor-pointer hover:opacity-90 bg-[linear-gradient(to_left,var(--primary-color),var(--primary-color-dark))] text-(--text-color) flex items-center justify-center">
         <RiAiGenerate style={{ fontSize: 20 }} />
         <div className="mx-2!">开始生视频</div>
         <span>消耗</span>

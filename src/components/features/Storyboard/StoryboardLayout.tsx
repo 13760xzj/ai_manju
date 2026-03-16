@@ -50,7 +50,7 @@ export const StoryboardLayout: React.FC<StoryboardLayoutProps> = ({
                 onClick={() => handleThumbClick(index)}
               >
                 <div
-                  className="flex-1 w-full h-full overflow-hidden rounded bg-gray-50/50"
+                  className="flex-1 w-full h-full overflow-hidden rounded bg-(--text-color)/10"
                   style={{
                     boxShadow: isSelected
                       ? `0 0 0 2px var(--primary-color)`
@@ -64,7 +64,9 @@ export const StoryboardLayout: React.FC<StoryboardLayoutProps> = ({
                 </div>
                 <div
                   className={`text-xs text-center mt-2! ${
-                    isSelected ? "text-white" : "text-gray-500"
+                    isSelected
+                      ? "text-(--text-color)"
+                      : "text-(--text-color)/50"
                   }`}
                 >
                   分镜 {index + 1}

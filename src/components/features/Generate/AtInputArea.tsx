@@ -107,7 +107,7 @@ export const AtInputArea = forwardRef<AtInputAreaRef, AtInputAreaProps>(
             className={`flex items-center pt-2! ${btnPosition === "right" && !showCounter ? "justify-end" : "justify-between"}`}
           >
             {showCounter && btnPosition === "right" && (
-              <div className="text-white/70 text-xs">
+              <div className="text-(--text-color)/70 text-xs">
                 {content.length}/{maxLength}
               </div>
             )}
@@ -120,7 +120,7 @@ export const AtInputArea = forwardRef<AtInputAreaRef, AtInputAreaProps>(
                   width: iconSize ? iconSize + "px" : "24px",
                   height: iconSize ? iconSize + "px" : "24px",
                 }}
-                className="p-1! box-border bg-white/10 hover:opacity-80 cursor-pointer rounded-md flex items-center justify-center border border-white/20"
+                className="p-1! box-border bg-(--text-color)/10 hover:opacity-80 cursor-pointer rounded-md flex items-center justify-center border border-(--text-color)/20"
               >
                 <FiCopy style={{ width: "100%", height: "100%" }} />
               </div>
@@ -130,13 +130,13 @@ export const AtInputArea = forwardRef<AtInputAreaRef, AtInputAreaProps>(
                   width: iconSize ? iconSize + "px" : "24px",
                   height: iconSize ? iconSize + "px" : "24px",
                 }}
-                className="p-1! box-border bg-white/10 hover:opacity-80 cursor-pointer rounded-md flex items-center justify-center border border-white/20"
+                className="p-1! box-border bg-(--text-color)/10 hover:opacity-80 cursor-pointer rounded-md flex items-center justify-center border border-(--text-color)/20"
               >
                 <RiDeleteBin6Line style={{ width: "100%", height: "100%" }} />
               </div>
             </div>
             {showCounter && btnPosition === "left" && (
-              <div className="text-white/70 text-xs">
+              <div className="text-(--text-color)/70 text-xs">
                 {content.length}/{maxLength}
               </div>
             )}

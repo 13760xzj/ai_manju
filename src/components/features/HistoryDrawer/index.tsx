@@ -1,5 +1,5 @@
-import { Button, IconButton } from '@/components/common';
-import './index.css';
+import { Button, IconButton } from "@/components/common";
+import "./index.css";
 
 export interface HistoryVersion {
   id: string | number;
@@ -20,59 +20,67 @@ export function HistoryDrawer({
   visible,
   versions = [],
   onClose,
-  onRestore
+  onRestore,
 }: HistoryDrawerProps) {
-  if (!visible) return null;
-
   return (
     <>
-      <div className="history-drawer-overlay" onClick={onClose} />
-      <div className={`history-drawer ${visible ? 'visible' : ''}`}>
-        <div className="history-drawer-header">
-          <h3>历史版本</h3>
-          <IconButton
-            ariaLabel="关闭历史版本"
-            className="history-close-btn"
-            onClick={onClose}
-          >
-            ×
-          </IconButton>
-        </div>
-        
-        <div className="history-drawer-content">
-          {versions.length === 0 ? (
-            <div className="history-empty">
-              <div className="history-empty-icon">📜</div>
-              <div className="history-empty-text">暂无历史版本</div>
-            </div>
-          ) : (
-            <div className="history-list">
-              {versions.map((version) => (
-                <div 
-                  key={version.id} 
-                  className={`history-item ${version.isCurrent ? 'current' : ''}`}
-                >
-                  <div className="history-item-header">
-                    <span className="history-item-title">{version.title}</span>
-                    {version.isCurrent && (
-                      <span className="history-current-tag">当前版本</span>
+      <div
+        className="history-drawer-overlay"
+        onClick={onClose}
+        style={{
+          background: visible ? "rgba(0, 0, 0, 0.3)" : "transparent",
+          pointerEvents: visible ? "auto" : "none",
+        }}
+      >
+        <div className={`history-drawer ${visible ? "visible" : ""}`}>
+          <div className="history-drawer-header">
+            <h3>历史版本</h3>
+            <IconButton
+              ariaLabel="关闭历史版本"
+              className="history-close-btn"
+              onClick={onClose}
+            >
+              ×
+            </IconButton>
+          </div>
+
+          <div className="history-drawer-content">
+            {versions.length === 0 ? (
+              <div className="history-empty">
+                <div className="history-empty-icon">📜</div>
+                <div className="history-empty-text">暂无历史版本</div>
+              </div>
+            ) : (
+              <div className="history-list">
+                {versions.map((version) => (
+                  <div
+                    key={version.id}
+                    className={`history-item ${version.isCurrent ? "current" : ""}`}
+                  >
+                    <div className="history-item-header">
+                      <span className="history-item-title">
+                        {version.title}
+                      </span>
+                      {version.isCurrent && (
+                        <span className="history-current-tag">当前版本</span>
+                      )}
+                    </div>
+                    <div className="history-item-time">{version.timestamp}</div>
+                    {!version.isCurrent && (
+                      <Button
+                        variant="primary"
+                        size="small"
+                        className="history-restore-btn"
+                        onClick={() => onRestore(version)}
+                      >
+                        恢复此版本
+                      </Button>
                     )}
                   </div>
-                  <div className="history-item-time">{version.timestamp}</div>
-                  {!version.isCurrent && (
-                    <Button 
-                      variant="primary" 
-                      size="small" 
-                      className="history-restore-btn"
-                      onClick={() => onRestore(version)}
-                    >
-                      恢复此版本
-                    </Button>
-                  )}
-                </div>
-              ))}
-            </div>
-          )}
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </>

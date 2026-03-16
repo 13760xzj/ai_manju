@@ -6,14 +6,19 @@ interface AtUploadProps extends Omit<UploadProps, "onChange"> {
   /** 上传成功回调，会返回 url 和文件信息 */
   onSuccess?: (url: string, file: UploadFile) => void;
   children: React.ReactNode;
+  acceptType?: "picture" | "doc";
 }
 
 const AtUpload: React.FC<AtUploadProps> = ({
   onSuccess,
   children,
+  acceptType,
+
   ...props
 }) => {
   const [loading, setLoading] = useState(false);
+  const accept =
+    acceptType === "picture" ? ".png,.jpg,.webp,.jpeg" : ".doc,.docx,.md,.pdf";
 
   const handleChange: UploadProps["onChange"] = (info) => {
     const { file } = info;
@@ -41,7 +46,12 @@ const AtUpload: React.FC<AtUploadProps> = ({
   };
 
   return (
-    <Upload {...props} showUploadList={false} onChange={handleChange}>
+    <Upload
+      {...props}
+      accept={accept}
+      showUploadList={false}
+      onChange={handleChange}
+    >
       <div style={{ position: "relative", display: "inline-block" }}>
         {children}
 

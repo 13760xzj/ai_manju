@@ -65,12 +65,12 @@
 .collapse-btn {
   position: absolute;
   left: 200px;
-  top: 10px;
+  bottom: 10px;
   /* 左侧折叠按钮：纯苏梅色，避免一半粉一半绿 */
   background: linear-gradient(
     135deg,
-    rgba(var(--primary-color-rgb), 0.95) 0%,
-    rgba(var(--primary-color-rgb), 1) 100%
+    rgba(var(--primary-rgb), 0.95) 0%,
+    rgba(var(--primary-rgb), 1) 100%
   );
   border: none;
   border-radius: 0 8px 8px 0;
@@ -95,7 +95,6 @@
 
 .collapse-btn.show {
   left: 0;
-  border-radius: 8px 0 0 8px;
   box-shadow: var(--shadow-primary);
 }
 

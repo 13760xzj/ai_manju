@@ -2,7 +2,7 @@ import React from "react";
 import { ContentModal } from "@/components/common";
 import {
   StoryboardLayout,
-  GenerateMultiToPic,
+  GeneratePicToPic,
   GenerateTxtToPic,
   PicListItem,
   PicCardItem,
@@ -14,8 +14,12 @@ export interface StoryboardScriptProps {
   onCancel: () => void;
 }
 
-const StoryboardScript: React.FC<StoryboardScriptProps> = ({ visible, onCancel }) => {
-  type RightItem = { index: number; selected?: boolean; url?: string };
+type RightItem = { index: number; selected?: boolean; url?: string };
+
+const StoryboardScript: React.FC<StoryboardScriptProps> = ({
+  visible,
+  onCancel,
+}) => {
   return (
     <ContentModal
       visible={visible}
@@ -27,7 +31,7 @@ const StoryboardScript: React.FC<StoryboardScriptProps> = ({ visible, onCancel }
       <StoryboardLayout
         onCancel={onCancel}
         leftPanelTabs={[
-          { label: "生成分镜图", content: <GenerateMultiToPic /> },
+          { label: "生成场景图", content: <GeneratePicToPic /> },
           { label: "对话作图", content: <GenerateTxtToPic /> },
           { label: "九宫格", content: <GenerateNineGrid /> },
         ]}
@@ -37,11 +41,15 @@ const StoryboardScript: React.FC<StoryboardScriptProps> = ({ visible, onCancel }
         }))}
         buildRightListItem={(item) => <PicListItem item={item} />}
         buildRightCardItem={(item) => <PicCardItem item={item} />}
-        rightData={Array.from({ length: 10 }, (_, i) => ({ index: i, selected: i === 0 })) as RightItem[]}
+        rightData={
+          Array.from({ length: 10 }, (_, i) => ({
+            index: i,
+            selected: i === 0,
+          })) as RightItem[]
+        }
       />
     </ContentModal>
   );
 };
 
 export { StoryboardScript };
-

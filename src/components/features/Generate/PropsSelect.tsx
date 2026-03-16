@@ -52,11 +52,13 @@ export const PropsSelect: React.FC<PropsSelectProps> = ({ position }) => {
             <div className="flex items-center gap-2">
               <img src={option.icon} className="w-10 h-10 rounded-full" />
               <div>
-                <div className="text-md text-white">{option.label}</div>
-                <div className="text-xs text-white/50 my-0.5!">
+                <div className="text-md text-(--text-color)">
+                  {option.label}
+                </div>
+                <div className="text-xs text-(--text-color)/50 my-0.5!">
                   {option.desc}
                 </div>
-                <div className="text-xs text-white">
+                <div className="text-xs text-(--text-color)">
                   {option.dpi} {option.price}
                 </div>
               </div>

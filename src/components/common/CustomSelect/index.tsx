@@ -127,8 +127,12 @@ export const CustomSelect: React.FC<Props> = ({
   }, [open, options.length, position, panelWidth]);
 
   return (
-    <div ref={ref} className="custom_select w-full" style={style}>
-      <div className="select_input w-full" onClick={toggle}>
+    <div ref={ref} className="custom_select w-full">
+      <div
+        className="select_input w-full border border-(--text-color)/20"
+        style={style}
+        onClick={toggle}
+      >
         {children ? (
           children
         ) : (
@@ -150,7 +154,7 @@ export const CustomSelect: React.FC<Props> = ({
         createPortal(
           <div
             ref={dropdownRef}
-            className={`select_dropdown ${direction}`}
+            className={`select_dropdown ${direction} border border-(--text-color)/20`}
             style={{
               position: "fixed",
               top: dropdownPos.top,
@@ -167,7 +171,7 @@ export const CustomSelect: React.FC<Props> = ({
                   highlight && selected?.value === item.value ? "selected" : ""
                 }`}
               >
-                <div className="text-white text-sm">
+                <div className="text-(--text-color) text-sm">
                   {renderItem
                     ? renderItem(item, selected?.value === item.value)
                     : item.label}

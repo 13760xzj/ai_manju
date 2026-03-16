@@ -179,7 +179,11 @@ function SortableCardView({
         setActiveDropdown(null);
         return;
       }
-      if (target.closest(".dubbing-card-menu-btn") || target.closest(".dubbing-card-dropdown")) return;
+      if (
+        target.closest(".dubbing-card-menu-btn") ||
+        target.closest(".dubbing-card-dropdown")
+      )
+        return;
       setActiveDropdown(null);
     };
     document.addEventListener("mousedown", onDocMouseDown);
@@ -364,47 +368,49 @@ export function DubbingPage() {
 
   return (
     <div className="dubbing-page">
-      <div className="page-toolbar ui-toolbar">
-        <div className="toolbar-left">
-          <div className="toggle-group">
-            <Button
-              variant={viewMode === "list" ? "primary" : "secondary"}
-              size="small"
-              className={
-                viewMode === "list" ? "toggle-btn text-white!" : "toggle-btn"
-              }
-              onClick={(e) => {
-                e.stopPropagation();
-                setViewMode("list");
-              }}
-            >
-              列表
+      <div className="page-toolbar mb-2!">
+        <div className="navigation-box ui-toolbar">
+          <div className="toolbar-left">
+            <div className="toggle-group">
+              <Button
+                variant={viewMode === "list" ? "primary" : "secondary"}
+                size="small"
+                className={
+                  viewMode === "list" ? "toggle-btn text-white!" : "toggle-btn"
+                }
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setViewMode("list");
+                }}
+              >
+                列表
+              </Button>
+              <Button
+                variant={viewMode === "card" ? "primary" : "secondary"}
+                size="small"
+                className={
+                  viewMode === "card" ? "toggle-btn text-white!" : "toggle-btn"
+                }
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setViewMode("card");
+                }}
+              >
+                卡片
+              </Button>
+            </div>
+            <div className="progress-info">
+              配音完成进度：<span>{progressCount}</span>/16
+            </div>
+          </div>
+          <div className="toolbar-right">
+            <Button variant="secondary" size="small" onClick={handleRegenerate}>
+              重新生成配音
             </Button>
-            <Button
-              variant={viewMode === "card" ? "primary" : "secondary"}
-              size="small"
-              className={
-                viewMode === "card" ? "toggle-btn text-white!" : "toggle-btn"
-              }
-              onClick={(e) => {
-                e.stopPropagation();
-                setViewMode("card");
-              }}
-            >
-              卡片
+            <Button variant="primary" size="small" onClick={handleNext}>
+              下一步
             </Button>
           </div>
-          <div className="progress-info">
-            配音完成进度：<span>{progressCount}</span>/16
-          </div>
-        </div>
-        <div className="toolbar-right">
-          <Button variant="secondary" size="small" onClick={handleRegenerate}>
-            重新生成配音
-          </Button>
-          <Button variant="primary" size="small" onClick={handleNext}>
-            下一步
-          </Button>
         </div>
       </div>
 

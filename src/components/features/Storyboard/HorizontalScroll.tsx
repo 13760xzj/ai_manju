@@ -74,7 +74,7 @@ function HorizontalScroll<T>({
         <div
           className={`absolute top-0 bottom-0 flex items-center justify-center z-10 left-0`}
           style={{
-            background: `linear-gradient(to left,transparent 0%,${markColor || "#1c1e20"} 70%,${markColor || "#1c1e20"} 100%)`,
+            background: `linear-gradient(to left,transparent 0%,${markColor || "var(--bg-color)"} 70%,${markColor || "var(--bg-color)"} 100%)`,
           }}
         >
           <button
@@ -83,11 +83,13 @@ function HorizontalScroll<T>({
             className={`w-8 h-8 rounded-full flex items-center justify-center mx-2! cursor-pointer
                       ${
                         canPrev
-                          ? "bg-[rgba(255,255,255,0.1)] border border-[rgba(255,255,255,0.1)]"
+                          ? "bg-(--text-color)/10 border border-(--text-color)/30"
                           : "bg-gray-700 opacity-40 cursor-not-allowed"
                       }`}
           >
-            <IoChevronBack style={{ width: 20, height: 20, color: "#fff" }} />
+            <IoChevronBack
+              style={{ width: 20, height: 20, color: "var(--text-color)" }}
+            />
           </button>
         </div>
       )}
@@ -121,27 +123,29 @@ function HorizontalScroll<T>({
           <button
             onClick={() => scroll("prev")}
             disabled={!canPrev}
-            className={`w-8 h-8 rounded-full flex items-center justify-center cursor-pointer
+            className={`w-8 h-8 rounded-full flex items-center justify-center 
                       ${
                         canPrev
-                          ? "bg-[rgba(255,255,255,0.1)] border border-[rgba(255,255,255,0.1)]"
-                          : "bg-gray-700 opacity-40 cursor-not-allowed"
+                          ? "bg-(--text-color)/10 border border-(--text-color)/30 cursor-pointer"
+                          : "bg-(--text-color)/20 opacity-40 cursor-not-allowed"
                       }`}
           >
-            <IoChevronBack style={{ width: 20, height: 20, color: "#fff" }} />
+            <IoChevronBack
+              style={{ width: 20, height: 20, color: "var(--text-color)" }}
+            />
           </button>
           <button
             onClick={() => scroll("next")}
             disabled={!canNext}
-            className={`w-8 h-8 rounded-full flex items-center justify-center cursor-pointer
+            className={`w-8 h-8 rounded-full flex items-center justify-center 
                       ${
                         canNext
-                          ? "bg-[rgba(255,255,255,0.1)] border border-[rgba(255,255,255,0.1)]"
-                          : "bg-gray-700 opacity-40 cursor-not-allowed"
+                          ? "bg-(--text-color)/10 border border-(--text-color)/30 cursor-pointer"
+                          : "bg-(--text-color)/20 opacity-40 cursor-not-allowed"
                       }`}
           >
             <IoIosArrowForward
-              style={{ width: 20, height: 20, color: "#fff" }}
+              style={{ width: 20, height: 20, color: "var(--text-color)" }}
             />
           </button>
         </div>
@@ -152,7 +156,7 @@ function HorizontalScroll<T>({
         <div
           className={`absolute top-0 bottom-0 flex items-center justify-center z-10 right-0`}
           style={{
-            background: `linear-gradient(to right,transparent 0%,${markColor || "#1c1e20"} 70%,${markColor || "#1c1e20"} 100%)`,
+            background: `linear-gradient(to right,transparent 0%,${markColor || "var(--bg-color)"} 70%,${markColor || "var(--bg-color)"} 100%)`,
           }}
         >
           <button
@@ -161,12 +165,12 @@ function HorizontalScroll<T>({
             className={`w-8 h-8 rounded-full flex items-center justify-center mx-2! cursor-pointer
                       ${
                         canNext
-                          ? "bg-[rgba(255,255,255,0.1)] border border-[rgba(255,255,255,0.1)]"
+                          ? "bg-(--text-color)/10 border border-(--text-color)/30"
                           : "bg-gray-700 opacity-40 cursor-not-allowed"
                       }`}
           >
             <IoIosArrowForward
-              style={{ width: 20, height: 20, color: "#fff" }}
+              style={{ width: 20, height: 20, color: "var(--text-color)" }}
             />
           </button>
         </div>
